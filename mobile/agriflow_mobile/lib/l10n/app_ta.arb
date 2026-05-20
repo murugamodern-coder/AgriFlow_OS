@@ -102,5 +102,42 @@
   "stageMaterialDispatched": "பொருள் அனுப்பப்பட்டது",
   "stageInstallationDone": "நிறுவல் முடிந்தது",
   "stagePostInspectionApproval": "பின் ஆய்வு ஒப்புதல்",
-  "stageSubsidyReleased": "உதவித்தொகை வழங்கப்பட்டது"
+  "stageSubsidyReleased": "உதவித்தொகை வழங்கப்பட்டது",
+  "timelineStageToday": "இன்று",
+  "timelineStagePending": "நிலுவை",
+  "timelineStageLocked": "பூட்டப்பட்டது",
+  "timelineStageBy": "{name} மூலம்",
+  "@timelineStageBy": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineActionCall": "அழை",
+  "timelineActionWhatsapp": "வாட்ஸ்அப்",
+  "timelineActionNote": "குறிப்பு",
+  "timelineBlockerMissing": "காணவில்லை: {item}",
+  "@timelineBlockerMissing": {
+    "placeholders": { "item": { "type": "String" } }
+  },
+  "timelineHeaderLocation": "{block} · {village}{acres}",
+  "@timelineHeaderLocation": {
+    "placeholders": {
+      "block": { "type": "String" },
+      "village": { "type": "String" },
+      "acres": { "type": "String" }
+    }
+  },
+  "timelineHeaderSchemeDrip": "டிரிப் பாசனம் · உதவித்தொகை திட்டம்",
+  "timelineHeaderSchemeSubsidy": "உதவித்தொகை டிரிப் திட்டம்",
+  "timelineHeaderProject": "திட்டம் {id}",
+  "@timelineHeaderProject": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "timelineHeaderOfficer": "அலுவலர்: {name}",
+  "@timelineHeaderOfficer": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineHeaderReferral": "பரிந்துரை: {name}",
+  "@timelineHeaderReferral": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineAcres": "ஏக்கர்"
 }

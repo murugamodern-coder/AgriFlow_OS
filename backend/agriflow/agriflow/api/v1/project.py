@@ -26,8 +26,12 @@ def _iso(dt) -> str | None:
 
 
 def _project_summary(project: dict) -> dict[str, Any]:
+	officer_name = None
+	if project.officer:
+		officer_name = frappe.db.get_value("Officer", project.officer, "officer_name")
 	return {
 		"name": project.name,
+		"project_title": project.project_title,
 		"farmer": project.farmer,
 		"current_stage": project.current_stage,
 		"stage_sequence": project.stage_sequence,
@@ -37,6 +41,11 @@ def _project_summary(project: dict) -> dict[str, Any]:
 		"cluster": project.cluster,
 		"village": project.village,
 		"officer": project.officer,
+		"officer_name": officer_name,
+		"mimis_registration_number": project.mimis_registration_number,
+		"quoted_amount": project.quoted_amount,
+		"work_order_number": project.work_order_number,
+		"remarks": project.remarks,
 		"modified": _iso(project.modified),
 	}
 

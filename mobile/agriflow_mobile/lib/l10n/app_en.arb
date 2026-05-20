@@ -152,5 +152,42 @@
   "stageMaterialDispatched": "Material dispatched",
   "stageInstallationDone": "Installation done",
   "stagePostInspectionApproval": "Post-inspection approval",
-  "stageSubsidyReleased": "Subsidy released"
+  "stageSubsidyReleased": "Subsidy released",
+  "timelineStageToday": "TODAY",
+  "timelineStagePending": "Pending",
+  "timelineStageLocked": "Locked",
+  "timelineStageBy": "By {name}",
+  "@timelineStageBy": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineActionCall": "Call",
+  "timelineActionWhatsapp": "WhatsApp",
+  "timelineActionNote": "Note",
+  "timelineBlockerMissing": "Missing: {item}",
+  "@timelineBlockerMissing": {
+    "placeholders": { "item": { "type": "String" } }
+  },
+  "timelineHeaderLocation": "{block} · {village}{acres}",
+  "@timelineHeaderLocation": {
+    "placeholders": {
+      "block": { "type": "String" },
+      "village": { "type": "String" },
+      "acres": { "type": "String" }
+    }
+  },
+  "timelineHeaderSchemeDrip": "Drip irrigation · subsidy project",
+  "timelineHeaderSchemeSubsidy": "Subsidy drip project",
+  "timelineHeaderProject": "Project {id}",
+  "@timelineHeaderProject": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "timelineHeaderOfficer": "Officer: {name}",
+  "@timelineHeaderOfficer": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineHeaderReferral": "Referred by: {name}",
+  "@timelineHeaderReferral": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "timelineAcres": "acres"
 }

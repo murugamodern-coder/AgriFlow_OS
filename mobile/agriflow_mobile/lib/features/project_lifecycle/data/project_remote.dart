@@ -11,6 +11,33 @@ class ProjectRemote {
   final ApiConfig _config;
   final _uuid = const Uuid();
 
+  Future<Map<String, dynamic>> fetchTimelineBundle(String projectName) async {
+    final timeline = await fetchTimeline(projectName);
+    final project = Map<String, dynamic>.from(timeline['project'] as Map? ?? {});
+    final farmerName = project['farmer'] as String?;
+    Map<String, dynamic> farmer = {};
+    if (farmerName != null && farmerName.isNotEmpty) {
+      try {
+        farmer = await _farmerGet(farmerName);
+      } catch (_) {
+        farmer = {'name': farmerName, 'farmer_name': project['project_title']};
+      }
+    }
+    return {
+      'timeline': timeline,
+      'farmer': farmer,
+    };
+  }
+
+  Future<Map<String, dynamic>> _farmerGet(String name) async {
+    final envelope = await _api.postMethod<Map<String, dynamic>>(
+      methodUrl: _config.methodUrl('agriflow.api.v1.farmer.get'),
+      data: {'name': name},
+      parseData: (json) => Map<String, dynamic>.from(json as Map),
+    );
+    return envelope.data!;
+  }
+
   Future<Map<String, dynamic>> fetchTimeline(String projectName) async {
     final envelope = await _api.postMethod<Map<String, dynamic>>(
       methodUrl: _config.methodUrl('agriflow.api.v1.project.timeline'),

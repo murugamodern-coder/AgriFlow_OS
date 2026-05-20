@@ -1,16 +1,30 @@
 import 'package:agriflow_mobile/core/demo/demo_selection.dart';
-import 'package:agriflow_mobile/core/i18n/agriflow_i18n.dart';
 import 'package:agriflow_mobile/core/providers/core_providers.dart';
-import 'package:agriflow_mobile/features/project_lifecycle/domain/project_stages.dart';
+import 'package:agriflow_mobile/core/design_tokens/spacing.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/data/project_timeline_mapper.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/domain/project_timeline_detail.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/presentation/timeline_feed_screen.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_actions_bar.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_header_card.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_stage_row.dart';
+import 'package:agriflow_mobile/shared/widgets/empty_state.dart';
 import 'package:agriflow_mobile/shared/widgets/error_view.dart';
-import 'package:agriflow_mobile/shared/widgets/loading_view.dart';
+import 'package:agriflow_mobile/shared/widgets/timeline_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final projectTimelineProvider =
-    FutureProvider.family<Map<String, dynamic>, String>((ref, projectName) {
-  return ref.read(projectRemoteProvider).fetchTimeline(projectName);
+final projectTimelineDetailProvider =
+    FutureProvider.family<ProjectTimelineDetail, String>((ref, projectName) async {
+  final remote = ref.read(projectRemoteProvider);
+  final bundle = await remote.fetchTimelineBundle(projectName);
+  final timeline = Map<String, dynamic>.from(bundle['timeline'] as Map);
+  final farmer = Map<String, dynamic>.from(bundle['farmer'] as Map? ?? {});
+  return ProjectTimelineMapper.fromApi(
+    projectName: projectName,
+    bundle: timeline,
+    farmer: farmer,
+  );
 });
 
 class ProjectTimelineScreen extends ConsumerStatefulWidget {
@@ -24,10 +38,17 @@ class ProjectTimelineScreen extends ConsumerStatefulWidget {
 }
 
 class _ProjectTimelineScreenState extends ConsumerState<ProjectTimelineScreen> {
+  final Set<String> _expanded = {};
   bool _transitioning = false;
 
-  Future<void> _advanceStage(Map<String, dynamic> project, Map workflow) async {
+  Future<void> _refresh() async {
+    ref.invalidate(projectTimelineDetailProvider(widget.projectName));
+    await ref.read(syncOrchestratorProvider).syncNow();
+  }
+
+  Future<void> _advanceStage(ProjectTimelineDetail detail) async {
     final l10n = AppLocalizations.of(context)!;
+    final workflow = detail.workflow;
     final nextStage = workflow['next_stage'] as String?;
     if (nextStage == null) return;
     setState(() => _transitioning = true);
@@ -35,16 +56,15 @@ class _ProjectTimelineScreenState extends ConsumerState<ProjectTimelineScreen> {
       await ref.read(projectRemoteProvider).transition(
             projectName: widget.projectName,
             targetStage: nextStage,
-            docVersion: project['doc_version'] as int? ?? 1,
+            docVersion: detail.project['doc_version'] as int? ?? 1,
           );
-      await ref.read(syncOrchestratorProvider).syncNow();
-      ref.invalidate(projectTimelineProvider(widget.projectName));
+      await _refresh();
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l10n.stageTransitionSuccess)),
         );
       }
-    } catch (e) {
+    } catch (_) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(l10n.errorGeneric)),
@@ -59,102 +79,131 @@ class _ProjectTimelineScreenState extends ConsumerState<ProjectTimelineScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     ref.watch(selectedProjectProvider);
-    final data = ref.watch(projectTimelineProvider(widget.projectName));
+    final asyncDetail = ref.watch(projectTimelineDetailProvider(widget.projectName));
 
     return Scaffold(
       appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.projectTimelineTitle),
-            Text(
-              widget.projectName,
-              style: Theme.of(context).textTheme.bodySmall,
-            ),
-          ],
-        ),
+        title: Text(l10n.projectTimelineTitle),
       ),
-      body: data.when(
-        loading: () => const LoadingView(),
-        error: (e, _) => ErrorView(
-          onRetry: () =>
-              ref.invalidate(projectTimelineProvider(widget.projectName)),
-        ),
-        data: (bundle) {
-          final project = Map<String, dynamic>.from(
-            bundle['project'] as Map? ?? {},
+      body: asyncDetail.when(
+        loading: () => const TimelineShimmer(),
+        error: (_, __) => ErrorView(onRetry: _refresh),
+        data: (detail) {
+          if (detail.stages.isEmpty) {
+            return EmptyState(message: l10n.emptyTimeline);
+          }
+          final farmer = detail.farmer;
+          final tags = _parseTags(farmer['tags'] as String?);
+          final location = _locationLine(farmer, l10n);
+          final scheme = _schemeLine(farmer, l10n);
+          final project = detail.project;
+          final projectLabel = (project['project_title'] as String?)?.contains('#')
+                  == true
+              ? (project['project_title'] as String).split('·').last.trim()
+              : widget.projectName;
+          final projectLine = l10n.timelineHeaderProject(projectLabel);
+          final officer = l10n.timelineHeaderOfficer(
+            project['officer_name'] as String? ??
+                farmer['officer_name'] as String? ??
+                '—',
           );
-          final history = (bundle['stage_history'] as List? ?? [])
-              .map((e) => Map<String, dynamic>.from(e as Map))
-              .toList();
-          final workflow = Map<String, dynamic>.from(
-            bundle['workflow'] as Map? ?? {},
-          );
-          final currentStage = project['current_stage'] as String? ?? '';
-          final currentIndex = ProjectStages.indexOf(currentStage);
+          final referralRaw = _referralLine(farmer);
+          final referral =
+              referralRaw != null ? l10n.timelineHeaderReferral(referralRaw) : null;
 
           return RefreshIndicator(
-            onRefresh: () async {
-              ref.invalidate(projectTimelineProvider(widget.projectName));
-              await ref.read(syncOrchestratorProvider).syncNow();
-            },
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                Text(
-                  project['project_title'] as String? ?? widget.projectName,
-                  style: Theme.of(context).textTheme.titleMedium,
+            onRefresh: _refresh,
+            child: CustomScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AgriFlowSpacing.space16,
+                    AgriFlowSpacing.space16,
+                    AgriFlowSpacing.space16,
+                    AgriFlowSpacing.space8,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: TimelineHeaderCard(
+                      farmerName: farmer['farmer_name'] as String? ?? '—',
+                      tags: tags,
+                      locationLine: location,
+                      schemeLine: scheme,
+                      projectLine: projectLine,
+                      officerLine: officer,
+                      referralLine: referral,
+                    ),
+                  ),
                 ),
-                const SizedBox(height: 16),
-                ...List.generate(ProjectStages.ordered.length, (index) {
-                  final stageKey = ProjectStages.ordered[index];
-                  final done = index < currentIndex;
-                  final current = index == currentIndex;
-                  Map<String, dynamic>? hist;
-                  for (final h in history) {
-                    if (h['to_stage'] == stageKey) {
-                      hist = h;
-                      break;
-                    }
-                  }
-                  final transitionedOn = hist?['transitioned_on']?.toString();
-
-                  return _StageTile(
-                    sequence: index + 1,
-                    label: AgriFlowI18n.stageLabel(context, stageKey),
-                    done: done,
-                    current: current,
-                    dateLabel: transitionedOn,
-                  );
-                }),
-                const SizedBox(height: 24),
-                if (workflow['can_transition'] == true) ...[
-                  FilledButton(
-                    onPressed: _transitioning
-                        ? null
-                        : () => _advanceStage(project, workflow),
-                    child: _transitioning
-                        ? const SizedBox(
-                            height: 22,
-                            width: 22,
-                            child: CircularProgressIndicator(strokeWidth: 2),
-                          )
-                        : Text(
-                            l10n.advanceStage(
-                              AgriFlowI18n.stageLabel(
-                                context,
-                                workflow['next_stage'] as String? ?? '',
-                              ),
-                            ),
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AgriFlowSpacing.space16,
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final stage = detail.stages[index];
+                        return TimelineStageRow(
+                          stage: stage,
+                          expanded: _expanded.contains(stage.stageKey),
+                          onToggleExpand: stage.isDone
+                              ? () {
+                                  setState(() {
+                                    if (_expanded.contains(stage.stageKey)) {
+                                      _expanded.remove(stage.stageKey);
+                                    } else {
+                                      _expanded.add(stage.stageKey);
+                                    }
+                                  });
+                                }
+                              : null,
+                        );
+                      },
+                      childCount: detail.stages.length,
+                    ),
+                  ),
+                ),
+                SliverPadding(
+                  padding: const EdgeInsets.all(AgriFlowSpacing.space16),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (detail.workflow['can_transition'] == true)
+                          FilledButton(
+                            onPressed: _transitioning
+                                ? null
+                                : () => _advanceStage(detail),
+                            child: _transitioning
+                                ? const SizedBox(
+                                    height: 22,
+                                    width: 22,
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Text(l10n.advanceStage(
+                                    detail.workflow['next_stage']
+                                            ?.toString() ??
+                                        '',
+                                  )),
                           ),
+                        const SizedBox(height: AgriFlowSpacing.space16),
+                        TimelineActionsBar(
+                          projectName: widget.projectName,
+                          mobile: farmer['mobile'] as String?,
+                          blockers: detail.blockers,
+                          onNote: () => showTimelineNoteSheet(
+                            context,
+                            ref,
+                            widget.projectName,
+                          ),
+                        ),
+                        const SizedBox(height: AgriFlowSpacing.space24),
+                      ],
+                    ),
                   ),
-                ] else if ((workflow['blocking_reasons'] as List?)?.isNotEmpty ??
-                    false) ...[
-                  Text(
-                    (workflow['blocking_reasons'] as List).first.toString(),
-                    style: TextStyle(color: Theme.of(context).colorScheme.error),
-                  ),
-                ],
+                ),
               ],
             ),
           );
@@ -162,60 +211,40 @@ class _ProjectTimelineScreenState extends ConsumerState<ProjectTimelineScreen> {
       ),
     );
   }
-}
 
-class _StageTile extends StatelessWidget {
-  const _StageTile({
-    required this.sequence,
-    required this.label,
-    required this.done,
-    required this.current,
-    this.dateLabel,
-  });
+  List<String> _parseTags(String? raw) {
+    if (raw == null || raw.isEmpty) return [];
+    return raw
+        .split(',')
+        .map((s) => s.trim())
+        .where((s) => s.isNotEmpty)
+        .map((s) {
+          if (s.toUpperCase() == 'VIP') return 'VIP ⭐';
+          if (s.contains('Friend')) return 'FF';
+          return s;
+        })
+        .toList();
+  }
 
-  final int sequence;
-  final String label;
-  final bool done;
-  final bool current;
-  final String? dateLabel;
+  String _locationLine(Map<String, dynamic> farmer, AppLocalizations l10n) {
+    final block = farmer['block_name'] ?? farmer['block'] ?? '';
+    final village = farmer['village_name'] ?? farmer['village'] ?? '';
+    final acres = farmer['land_extent_acres'];
+    final acresStr = acres != null ? ' · $acres ${l10n.timelineAcres}' : '';
+    return l10n.timelineHeaderLocation('$block', '$village', acresStr);
+  }
 
-  @override
-  Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final icon = done
-        ? Icons.check_circle
-        : current
-            ? Icons.radio_button_checked
-            : Icons.radio_button_off;
-    final iconColor = done
-        ? colorScheme.primary
-        : current
-            ? colorScheme.secondary
-            : colorScheme.outline;
+  String _schemeLine(Map<String, dynamic> farmer, AppLocalizations l10n) {
+    final tags = (farmer['tags'] as String? ?? '').toLowerCase();
+    if (tags.contains('drip')) {
+      return l10n.timelineHeaderSchemeDrip;
+    }
+    return l10n.timelineHeaderSchemeSubsidy;
+  }
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(icon, color: iconColor),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('$sequence. $label',
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight:
-                              current ? FontWeight.bold : FontWeight.normal,
-                        )),
-                if (dateLabel != null && dateLabel!.isNotEmpty)
-                  Text(dateLabel!, style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
+  String? _referralLine(Map<String, dynamic> farmer) {
+    final notes = farmer['notes'] as String? ?? '';
+    if (!notes.contains('referred_by:')) return null;
+    return notes.split('referred_by:').last.trim();
   }
 }
