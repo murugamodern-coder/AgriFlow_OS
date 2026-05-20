@@ -232,5 +232,57 @@
   "notificationStageStuck": "Stage stuck",
   "notificationOfficerTransfer": "Officer transfer",
   "notificationLowStock": "Low stock alert",
-  "notificationTaskCompleted": "Task completed"
+  "notificationTaskCompleted": "Task completed",
+  "syncBarOnline": "Online · {count} pending",
+  "@syncBarOnline": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncBarOffline": "Offline · {count} pending",
+  "@syncBarOffline": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncBarSyncing": "Syncing {current} of {total}…",
+  "@syncBarSyncing": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "syncBarJustSynced": "All synced just now",
+  "syncBarTapHintOnline": "Tap Sync tab to force refresh",
+  "syncBarTapHintOffline": "Changes saved locally — sync when online",
+  "syncToastSavedOffline": "Saved offline ✓",
+  "syncToastComplete": "Synced ✓",
+  "syncToastStarted": "Syncing your changes…",
+  "syncForceNow": "Force sync now",
+  "syncLastSuccessLabel": "Last successful sync: {time}",
+  "@syncLastSuccessLabel": {
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "syncPendingChanges": "Pending changes: {count} items",
+  "@syncPendingChanges": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncPendingListTitle": "Pending queue",
+  "syncPendingListEmpty": "No pending changes in queue",
+  "syncHistoryTitle": "Sync history (last 10)",
+  "syncHistoryEmpty": "No sync runs logged yet",
+  "syncHistoryOk": "OK",
+  "syncHistoryFail": "Failed",
+  "syncDeveloperTitle": "Developer (demo)",
+  "syncSimulateOffline": "Simulate offline",
+  "syncSimulateOfflineHint": "Queue writes without network — for live demo",
+  "syncSimulateOfflineOn": "Simulated offline ON",
+  "syncSimulateOfflineOff": "Simulated offline OFF",
+  "syncDemoFlowButton": "Demo: go online & sync",
+  "syncNever": "Never",
+  "syncJustNow": "Just now",
+  "syncMinutesAgo": "{minutes} min ago",
+  "@syncMinutesAgo": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "syncHoursAgo": "{hours} hr ago",
+  "@syncHoursAgo": {
+    "placeholders": { "hours": { "type": "int" } }
+  }
 }

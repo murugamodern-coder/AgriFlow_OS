@@ -34,6 +34,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   workmanager: ^0.5.2
   flutter_animate: ^4.5.2
+  lottie: ^3.1.2
   shimmer: ^3.0.0
   url_launcher: ^6.3.1
 
@@ -50,3 +51,4 @@ flutter:
   generate: true
   assets:
     - assets/design_tokens/
+    - assets/lottie/

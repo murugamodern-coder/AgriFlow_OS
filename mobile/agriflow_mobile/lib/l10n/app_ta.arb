@@ -182,5 +182,57 @@
   "notificationStageStuck": "நிலை சிக்கல்",
   "notificationOfficerTransfer": "அலுவலர் மாற்றம்",
   "notificationLowStock": "குறைந்த சரக்கு",
-  "notificationTaskCompleted": "பணி முடிந்தது"
+  "notificationTaskCompleted": "பணி முடிந்தது",
+  "syncBarOnline": "ஆன்லைன் · {count} நிலுவை",
+  "@syncBarOnline": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncBarOffline": "ஆஃப்லைன் · {count} நிலுவை",
+  "@syncBarOffline": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncBarSyncing": "ஒத்திசைவு {current} / {total}…",
+  "@syncBarSyncing": {
+    "placeholders": {
+      "current": { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+  "syncBarJustSynced": "இப்போது ஒத்திசைக்கப்பட்டது",
+  "syncBarTapHintOnline": "ஒத்திசைவு தாவலில் கட்டாய புதுப்பிப்பு",
+  "syncBarTapHintOffline": "மாற்றங்கள் சேமிக்கப்பட்டன — ஆன்லைனில் ஒத்திசைக்கவும்",
+  "syncToastSavedOffline": "ஆஃப்லைனில் சேமிக்கப்பட்டது ✓",
+  "syncToastComplete": "ஒத்திசைவு முடிந்தது ✓",
+  "syncToastStarted": "மாற்றங்கள் ஒத்திசைக்கப்படுகின்றன…",
+  "syncForceNow": "இப்போது கட்டாய ஒத்திசைவு",
+  "syncLastSuccessLabel": "கடைசி வெற்றி ஒத்திசைவு: {time}",
+  "@syncLastSuccessLabel": {
+    "placeholders": { "time": { "type": "String" } }
+  },
+  "syncPendingChanges": "நிலுவை மாற்றங்கள்: {count}",
+  "@syncPendingChanges": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "syncPendingListTitle": "நிலுவை வரிசை",
+  "syncPendingListEmpty": "வரிசையில் மாற்றங்கள் இல்லை",
+  "syncHistoryTitle": "ஒத்திசைவு வரலாறு (கடைசி 10)",
+  "syncHistoryEmpty": "ஒத்திசைவு பதிவு இல்லை",
+  "syncHistoryOk": "சரி",
+  "syncHistoryFail": "தோல்வி",
+  "syncDeveloperTitle": "டெவலப்பர் (டெமோ)",
+  "syncSimulateOffline": "ஆஃப்லைன் சோதனை",
+  "syncSimulateOfflineHint": "நெட்வொர்க் இல்லாமல் வரிசை — நேரடி டெமோவுக்கு",
+  "syncSimulateOfflineOn": "ஆஃப்லைன் சோதனை இயக்கம்",
+  "syncSimulateOfflineOff": "ஆஃப்லைன் சோதனை அணைப்பு",
+  "syncDemoFlowButton": "டெமோ: ஆன்லைன் + ஒத்திசைவு",
+  "syncNever": "இதுவரை இல்லை",
+  "syncJustNow": "இப்போதே",
+  "syncMinutesAgo": "{minutes} நிமி முன்பு",
+  "@syncMinutesAgo": {
+    "placeholders": { "minutes": { "type": "int" } }
+  },
+  "syncHoursAgo": "{hours} மணி முன்பு",
+  "@syncHoursAgo": {
+    "placeholders": { "hours": { "type": "int" } }
+  }
 }

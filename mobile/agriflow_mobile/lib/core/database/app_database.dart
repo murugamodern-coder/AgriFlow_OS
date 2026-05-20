@@ -287,15 +287,26 @@ INSERT INTO sync_runs (
       readsFrom: {},
     ).getSingleOrNull();
     if (row == null) return null;
-    return SyncRunRow(
-      phase: row.read<String>('phase')!,
-      success: (row.read<int>('success') ?? 0) == 1,
-      errorCode: row.read<String?>('error_code'),
-      requestId: row.read<String?>('request_id'),
-      startedAt: row.read<String>('started_at')!,
-      finishedAt: row.read<String?>('finished_at'),
-    );
+    return _mapSyncRunRow(row);
   }
+
+  Future<List<SyncRunRow>> recentSyncRuns({int limit = 10}) async {
+    final rows = await customSelect(
+      'SELECT * FROM sync_runs ORDER BY started_at DESC LIMIT ?',
+      variables: [Variable.withInt(limit)],
+      readsFrom: {},
+    ).get();
+    return rows.map(_mapSyncRunRow).toList();
+  }
+
+  SyncRunRow _mapSyncRunRow(QueryRow row) => SyncRunRow(
+        phase: row.read<String>('phase')!,
+        success: (row.read<int>('success') ?? 0) == 1,
+        errorCode: row.read<String?>('error_code'),
+        requestId: row.read<String?>('request_id'),
+        startedAt: row.read<String>('started_at')!,
+        finishedAt: row.read<String?>('finished_at'),
+      );
 
   Future<void> upsertProjection({
     required String kind,

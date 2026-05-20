@@ -11,7 +11,10 @@ import 'package:agriflow_mobile/features/readiness/data/readiness_remote.dart';
 
 import 'package:agriflow_mobile/shared/widgets/offline_banner.dart';
 
-import 'package:agriflow_mobile/shared/widgets/sync_status_chip.dart';
+import 'package:agriflow_mobile/features/sync/presentation/widgets/sync_app_bar_status.dart';
+import 'package:agriflow_mobile/features/sync/presentation/widgets/sync_feedback_listener.dart';
+import 'package:agriflow_mobile/features/sync/presentation/widgets/sync_flying_overlay.dart';
+import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 
@@ -128,6 +131,7 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
         await ref.read(syncOrchestratorProvider).syncNow(force: false);
 
         ref.invalidate(syncStatusProvider);
+        await ref.read(syncVisualControllerProvider).refresh();
 
       } catch (_) {
 
@@ -174,8 +178,9 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
     final l10n = AppLocalizations.of(context)!;
 
     final syncAsync = ref.watch(syncStatusProvider);
-
-
+    final visual = ref.watch(syncVisualControllerProvider);
+    final unreadNotif = ref.watch(notificationUnreadCountProvider);
+    final showOfflineBanner = _offline || visual.simulateOffline;
 
     return Scaffold(
 
@@ -219,47 +224,25 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
 
             ),
 
-          syncAsync.when(
-
-            data: (status) {
-
-              final at = status.lastSuccessAt;
-
-              if (at != null) {
-
-                _lastSyncLabel = at.toLocal().toString().substring(0, 16);
-
-              }
-
-              return Padding(
-
-                padding: const EdgeInsets.only(right: 8),
-
-                child: SyncStatusChip(status: status),
-
-              );
-
-            },
-
-            loading: () => const SizedBox.shrink(),
-
-            error: (_, __) => const SizedBox.shrink(),
-
-          ),
+          const SyncAppBarStatus(),
 
         ],
 
       ),
 
-      body: Column(
+      body: SyncFeedbackListener(
+
+        child: SyncFlyingOverlay(
+
+          child: Column(
 
         children: [
 
           OfflineBanner(
 
-            visible: _offline,
+            visible: showOfflineBanner,
 
-            pendingCount: syncAsync.valueOrNull?.pendingCount,
+            pendingCount: visual.pendingCount,
 
             lastSyncLabel: _lastSyncLabel,
 
@@ -272,6 +255,10 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
           Expanded(child: widget.navigationShell),
 
         ],
+
+      ),
+
+        ),
 
       ),
 

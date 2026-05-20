@@ -14,6 +14,7 @@ import 'package:agriflow_mobile/core/sync/sync_correlation.dart';
 import 'package:agriflow_mobile/core/sync/sync_remote.dart';
 import 'package:agriflow_mobile/core/sync/sync_single_flight.dart';
 import 'package:agriflow_mobile/core/sync/sync_status.dart';
+import 'package:agriflow_mobile/core/sync/sync_visual_controller.dart';
 import 'package:agriflow_mobile/core/network/tracing_interceptor.dart';
 import 'package:agriflow_mobile/features/inventory/data/inventory_remote.dart';
 import 'package:agriflow_mobile/features/notifications/data/notification_remote.dart';
@@ -31,6 +32,7 @@ class SyncOrchestrator {
     PilotTelemetryService? telemetry,
     InventoryQueue? inventoryQueue,
     InventoryRemote? inventoryRemote,
+    SyncVisualController? visual,
   })  : _db = db,
         _hive = hive,
         _remote = remote,
@@ -40,7 +42,8 @@ class SyncOrchestrator {
         _tracing = tracing,
         _telemetry = telemetry,
         _inventoryQueue = inventoryQueue,
-        _inventoryRemote = inventoryRemote;
+        _inventoryRemote = inventoryRemote,
+        _visual = visual;
 
   final AppDatabase _db;
   final HiveStorage _hive;
@@ -52,6 +55,7 @@ class SyncOrchestrator {
   final PilotTelemetryService? _telemetry;
   final InventoryQueue? _inventoryQueue;
   final InventoryRemote? _inventoryRemote;
+  final SyncVisualController? _visual;
   final SyncSingleFlight _lock = SyncSingleFlight();
 
   static const _longOfflineHours = 72;
@@ -102,8 +106,12 @@ class SyncOrchestrator {
     final runStarted = DateTime.now().toUtc();
 
     onPhase?.call('repair');
+    _visual?.onSyncPhase('repair');
     await repairQueue();
 
+    if (_visual != null && !_visual!.isEffectivelyOnline) {
+      throw const NetworkFailure(code: 'OFFLINE');
+    }
     final connectivity = await _connectivity.checkConnectivity();
     if (connectivity.contains(ConnectivityResult.none)) {
       throw const NetworkFailure(code: 'OFFLINE');
@@ -112,6 +120,7 @@ class SyncOrchestrator {
 
     try {
       final pending = await _db.pendingQueue();
+      _visual?.onSyncStarted(total: pending.length + 3);
       for (final row in pending) {
         await _db.markQueueRow(
           clientMutationId: row.clientMutationId,
@@ -121,12 +130,14 @@ class SyncOrchestrator {
 
       if (pending.isNotEmpty) {
         onPhase?.call('push');
+        _visual?.onSyncPhase('push', current: 0, total: pending.length);
         final pushStarted = DateTime.now().toUtc();
         final pushEnvelope = await _retry.run(
           () => _remote.pushBatch(pending),
           shouldRetry: (e) => e is! ApiFailure || e.code?.startsWith('SYNC_') != true,
           extraDelay: networkDelay,
         );
+        _visual?.onSyncPhase('push', current: pending.length, total: pending.length);
         await _logDiag(
           SyncDiagnostics(
             correlationId: _correlation.current,
@@ -139,6 +150,7 @@ class SyncOrchestrator {
       }
 
       onPhase?.call('pull');
+      _visual?.onSyncPhase('pull', current: pending.length + 1, total: pending.length + 3);
       final pullStarted = DateTime.now().toUtc();
       final modifiedSince = _resolvePullWatermarks();
       final pullEnvelope = await _retry.run(
@@ -156,6 +168,7 @@ class SyncOrchestrator {
       );
 
       onPhase?.call('notifications');
+      _visual?.onSyncPhase('notifications', current: pending.length + 2, total: pending.length + 3);
       final notifStarted = DateTime.now().toUtc();
       await _retry.run(() async {
         final notifList = await _notificationRemote.fetchInbox(limit: 50);
@@ -202,6 +215,7 @@ class SyncOrchestrator {
         'duration_ms': DateTime.now().toUtc().difference(runStarted).inMilliseconds,
       });
       await _telemetry?.reportHeartbeat(correlationId: _correlation.current);
+      _visual?.onSyncFinished(success: true);
       return summary;
     } catch (e, st) {
       final category = SyncFailureCategory.categorize(
@@ -227,6 +241,7 @@ class SyncOrchestrator {
         error: e,
       );
       await repairQueue();
+      _visual?.onSyncFinished(success: false);
       rethrow;
     } finally {
       _tracing?.clearSyncCorrelationId();

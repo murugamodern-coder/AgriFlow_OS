@@ -18,6 +18,8 @@ import 'package:agriflow_mobile/core/sync/push_result_applier.dart';
 import 'package:agriflow_mobile/core/sync/queue_repair.dart';
 import 'package:agriflow_mobile/core/sync/sync_orchestrator.dart';
 import 'package:agriflow_mobile/core/sync/sync_remote.dart';
+import 'package:agriflow_mobile/core/sync/sync_visual_controller.dart';
+import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
 import 'package:agriflow_mobile/features/auth/data/auth_repository.dart';
 import 'package:agriflow_mobile/features/inventory/data/inventory_remote.dart';
 import 'package:agriflow_mobile/features/notifications/data/notification_remote.dart';
@@ -68,6 +70,11 @@ Future<void> bootstrap() async {
     db: db,
     hive: hive,
   );
+  final syncVisualController = SyncVisualController(
+    db: db,
+    hive: hive,
+    connectivity: connectivity,
+  );
   final syncOrchestrator = SyncOrchestrator(
     db: db,
     hive: hive,
@@ -84,6 +91,7 @@ Future<void> bootstrap() async {
     telemetry: pilotTelemetry,
     inventoryQueue: inventoryQueue,
     inventoryRemote: inventoryRemote,
+    visual: syncVisualController,
   );
   BackgroundSyncCoordinator(
     orchestrator: syncOrchestrator,
@@ -117,6 +125,7 @@ Future<void> bootstrap() async {
           (ref) => AuthSessionNotifier(ref.watch(authRepositoryProvider)),
         ),
         syncOrchestratorProvider.overrideWithValue(syncOrchestrator),
+        syncVisualControllerProvider.overrideWithValue(syncVisualController),
       ],
       child: const AgriFlowApp(),
     ),

@@ -1,4 +1,6 @@
 import 'package:agriflow_mobile/core/providers/core_providers.dart';
+import 'package:agriflow_mobile/features/sync/presentation/widgets/sync_feedback_listener.dart';
+import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
 import 'package:agriflow_mobile/features/auth/data/auth_repository.dart';
 import 'package:agriflow_mobile/features/tasks/domain/task_inbox_logic.dart';
 import 'package:agriflow_mobile/features/tasks/domain/task_summary.dart';
@@ -33,11 +35,16 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
 
   Future<void> _complete(TaskSummary task) async {
     setState(() => _completing.add(task.name));
+    final offline = await isEffectivelyOffline(ref);
     await ref.read(taskRepositoryProvider).completeTask(task);
     if (mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.syncPending(1))),
-      );
+      if (offline) {
+        showSavedOfflineToast(context);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(AppLocalizations.of(context)!.syncPending(1))),
+        );
+      }
     }
     await Future<void>.delayed(const Duration(milliseconds: 320));
     if (mounted) setState(() => _completing.remove(task.name));
