@@ -15,7 +15,7 @@ class TimelineShimmer extends StatelessWidget {
       child: ListView(
         padding: const EdgeInsets.all(AgriFlowSpacing.space16),
         children: [
-          _box(height: 140, radius: 16),
+          _box(context, height: 140, radius: 16),
           const SizedBox(height: AgriFlowSpacing.space16),
           ...List.generate(
             8,
@@ -23,9 +23,9 @@ class TimelineShimmer extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: AgriFlowSpacing.space12),
               child: Row(
                 children: [
-                  _box(width: 28, height: 28, radius: 14),
+                  _box(context, width: 28, height: 28, radius: 14),
                   const SizedBox(width: AgriFlowSpacing.space12),
-                  Expanded(child: _box(height: 52, radius: 12)),
+                  Expanded(child: _box(context, height: 52, radius: 12)),
                 ],
               ),
             ),
@@ -40,7 +40,7 @@ class TimelineShimmer extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(radius),
       ),
     );

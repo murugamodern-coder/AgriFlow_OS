@@ -164,7 +164,10 @@ class _NotificationInboxScreenState extends ConsumerState<NotificationInboxScree
       sections.add(
         Padding(
           padding: const EdgeInsets.only(bottom: 8, top: 4),
-          child: Text(title, style: const TextStyle(fontWeight: FontWeight.w700)),
+          child: Text(
+            l10n.sectionWithCount(title, items.length),
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
         ),
       );
       for (final item in items) {

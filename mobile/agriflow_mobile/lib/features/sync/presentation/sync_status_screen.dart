@@ -129,7 +129,7 @@ class _SyncStatusScreenState extends ConsumerState<SyncStatusScreen> {
             ..._pending.map(
               (row) => ListTile(
                 leading: Icon(_iconForEntity(row.entity)),
-                title: Text('${row.entity} · ${row.opType}'),
+                title: Text(l10n.syncQueueItemTitle(row.entity, row.opType)),
                 subtitle: Text(
                   row.farmerProject ?? row.clientMutationId,
                   maxLines: 1,
@@ -195,7 +195,9 @@ class _SyncStatusScreenState extends ConsumerState<SyncStatusScreen> {
             ..._conflicts.map(
               (row) => ListTile(
                 title: Text(row.clientMutationId),
-                subtitle: Text(row.lastErrorCode ?? 'SYNC_CONFLICT_LWW'),
+                subtitle: Text(
+                  row.lastErrorCode ?? l10n.conflictCodeDefault,
+                ),
                 trailing: IconButton(
                   icon: const Icon(Icons.refresh),
                   onPressed: () => ConflictSheet.show(

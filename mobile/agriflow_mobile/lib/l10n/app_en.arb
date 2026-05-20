@@ -284,5 +284,67 @@
   "syncHoursAgo": "{hours} hr ago",
   "@syncHoursAgo": {
     "placeholders": { "hours": { "type": "int" } }
+  },
+  "sectionWithCount": "{label} ({count})",
+  "@sectionWithCount": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "syncFlyingItem": "Upload {index}",
+  "@syncFlyingItem": {
+    "placeholders": { "index": { "type": "int" } }
+  },
+  "conflictStepNumbered": "{step}. {text}",
+  "@conflictStepNumbered": {
+    "placeholders": {
+      "step": { "type": "int" },
+      "text": { "type": "String" }
+    }
+  },
+  "conflictMutationId": "Mutation: {id}",
+  "@conflictMutationId": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "conflictVersionLine": "Server v{server} · Client v{client}",
+  "@conflictVersionLine": {
+    "placeholders": {
+      "server": { "type": "int" },
+      "client": { "type": "int" }
+    }
+  },
+  "conflictCodeDefault": "Sync conflict",
+  "syncQueueItemTitle": "{entity} · {op}",
+  "@syncQueueItemTitle": {
+    "placeholders": {
+      "entity": { "type": "String" },
+      "op": { "type": "String" }
+    }
+  },
+  "taskFarmerVillageLine": "{farmer} · {village}",
+  "@taskFarmerVillageLine": {
+    "placeholders": {
+      "farmer": { "type": "String" },
+      "village": { "type": "String" }
+    }
+  },
+  "taskStatusProjectLine": "{status} · {project}",
+  "@taskStatusProjectLine": {
+    "placeholders": {
+      "status": { "type": "String" },
+      "project": { "type": "String" }
+    }
+  },
+  "taskReservedQty": "Reserved {qty} · {status}",
+  "@taskReservedQty": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "status": { "type": "String" }
+    }
+  },
+  "updateRequiredMessage": "Update required (minimum {version})",
+  "@updateRequiredMessage": {
+    "placeholders": { "version": { "type": "String" } }
   }
 }

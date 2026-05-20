@@ -7,49 +7,74 @@ ThemeData buildAgriFlowTheme({required Brightness brightness}) {
     brightness: brightness,
     primary: AgriFlowColors.primary,
     onPrimary: AgriFlowColors.onPrimary,
-    primaryContainer: AgriFlowColors.primaryContainer,
-    onPrimaryContainer: AgriFlowColors.onPrimaryContainer,
+    primaryContainer: isLight
+        ? AgriFlowColors.primaryContainer
+        : AgriFlowColors.primary.withValues(alpha: 0.25),
+    onPrimaryContainer: isLight
+        ? AgriFlowColors.onPrimaryContainer
+        : AgriFlowColors.primaryContainer,
     secondary: AgriFlowColors.secondary,
     onSecondary: AgriFlowColors.onPrimary,
+    tertiary: AgriFlowColors.alertOrange,
+    onTertiary: AgriFlowColors.onPrimary,
     error: AgriFlowColors.error,
     onError: AgriFlowColors.onPrimary,
-    surface: isLight ? AgriFlowColors.surface : const Color(0xFF1E293B),
-    onSurface: isLight ? AgriFlowColors.onSurface : AgriFlowColors.surface,
+    surface: isLight ? AgriFlowColors.surface : AgriFlowColors.surfaceDark,
+    onSurface: isLight ? AgriFlowColors.onSurface : AgriFlowColors.onSurfaceDark,
+    onSurfaceVariant: isLight
+        ? AgriFlowColors.onSurfaceVariant
+        : AgriFlowColors.onSurfaceDark.withValues(alpha: 0.7),
+    outline: isLight
+        ? AgriFlowColors.outline
+        : AgriFlowColors.onSurfaceVariant.withValues(alpha: 0.35),
+    surfaceContainerHighest: isLight
+        ? AgriFlowColors.background
+        : AgriFlowColors.backgroundDark,
   );
 
   return ThemeData(
     useMaterial3: true,
+    brightness: brightness,
     colorScheme: scheme,
     scaffoldBackgroundColor:
-        isLight ? AgriFlowColors.background : scheme.surface,
-    appBarTheme: const AppBarTheme(
+        isLight ? AgriFlowColors.background : AgriFlowColors.backgroundDark,
+    appBarTheme: AppBarTheme(
       centerTitle: false,
       elevation: 0,
       scrolledUnderElevation: 1,
+      backgroundColor: scheme.surface,
+      foregroundColor: scheme.onSurface,
     ),
     navigationBarTheme: NavigationBarThemeData(
-      indicatorColor: AgriFlowColors.primaryContainer,
+      indicatorColor: scheme.primaryContainer,
+      backgroundColor: scheme.surface,
       labelTextStyle: WidgetStateProperty.resolveWith((states) {
         if (states.contains(WidgetState.selected)) {
-          return const TextStyle(
+          return TextStyle(
             fontWeight: FontWeight.w600,
-            color: AgriFlowColors.primary,
+            color: scheme.primary,
           );
         }
-        return const TextStyle(color: AgriFlowColors.onSurfaceVariant);
+        return TextStyle(color: scheme.onSurfaceVariant);
       }),
     ),
     cardTheme: CardThemeData(
       elevation: 0,
+      color: scheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(color: AgriFlowColors.outline),
+        side: BorderSide(color: scheme.outline),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AgriFlowColors.surface,
+      fillColor: scheme.surface,
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+    ),
+    snackBarTheme: SnackBarThemeData(
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: scheme.onSurface,
+      contentTextStyle: TextStyle(color: scheme.surface),
     ),
   );
 }

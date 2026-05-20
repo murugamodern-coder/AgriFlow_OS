@@ -234,5 +234,67 @@
   "syncHoursAgo": "{hours} மணி முன்பு",
   "@syncHoursAgo": {
     "placeholders": { "hours": { "type": "int" } }
+  },
+  "sectionWithCount": "{label} ({count})",
+  "@sectionWithCount": {
+    "placeholders": {
+      "label": { "type": "String" },
+      "count": { "type": "int" }
+    }
+  },
+  "syncFlyingItem": "பதிவேற்றம் {index}",
+  "@syncFlyingItem": {
+    "placeholders": { "index": { "type": "int" } }
+  },
+  "conflictStepNumbered": "{step}. {text}",
+  "@conflictStepNumbered": {
+    "placeholders": {
+      "step": { "type": "int" },
+      "text": { "type": "String" }
+    }
+  },
+  "conflictMutationId": "மாற்றம்: {id}",
+  "@conflictMutationId": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "conflictVersionLine": "சேவையகம் v{server} · கிளையன்ட் v{client}",
+  "@conflictVersionLine": {
+    "placeholders": {
+      "server": { "type": "int" },
+      "client": { "type": "int" }
+    }
+  },
+  "conflictCodeDefault": "ஒத்திசைவு முரண்பாடு",
+  "syncQueueItemTitle": "{entity} · {op}",
+  "@syncQueueItemTitle": {
+    "placeholders": {
+      "entity": { "type": "String" },
+      "op": { "type": "String" }
+    }
+  },
+  "taskFarmerVillageLine": "{farmer} · {village}",
+  "@taskFarmerVillageLine": {
+    "placeholders": {
+      "farmer": { "type": "String" },
+      "village": { "type": "String" }
+    }
+  },
+  "taskStatusProjectLine": "{status} · {project}",
+  "@taskStatusProjectLine": {
+    "placeholders": {
+      "status": { "type": "String" },
+      "project": { "type": "String" }
+    }
+  },
+  "taskReservedQty": "ஒதுக்கப்பட்டது {qty} · {status}",
+  "@taskReservedQty": {
+    "placeholders": {
+      "qty": { "type": "String" },
+      "status": { "type": "String" }
+    }
+  },
+  "updateRequiredMessage": "புதுப்பிப்பு தேவை (குறைந்தபட்சம் {version})",
+  "@updateRequiredMessage": {
+    "placeholders": { "version": { "type": "String" } }
   }
 }

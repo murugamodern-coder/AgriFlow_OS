@@ -16,4 +16,8 @@ abstract final class AgriFlowColors {
   static const Color warning = Color(0xFFD97706);
   static const Color error = Color(0xFFDC2626);
   static const Color info = Color(0xFF0284C7);
+  static const Color alertOrange = Color(0xFFE65100);
+  static const Color surfaceDark = Color(0xFF1E293B);
+  static const Color backgroundDark = Color(0xFF0F172A);
+  static const Color onSurfaceDark = Color(0xFFF1F5F9);
 }

@@ -1,7 +1,9 @@
 import 'package:agriflow_mobile/core/design_tokens/spacing.dart';
+import 'package:agriflow_mobile/core/design_tokens/status_semantics.dart';
 import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lottie/lottie.dart';
 
@@ -14,6 +16,7 @@ class SyncFlyingOverlay extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final visual = ref.watch(syncVisualControllerProvider);
+    final l10n = AppLocalizations.of(context)!;
     return Stack(
       children: [
         child,
@@ -21,7 +24,7 @@ class SyncFlyingOverlay extends ConsumerWidget {
           Positioned.fill(
             child: IgnorePointer(
               child: Container(
-                color: Colors.black.withValues(alpha: 0.35),
+                color: AgriFlowStatusSemantics.onScrim(context),
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -45,7 +48,7 @@ class SyncFlyingOverlay extends ConsumerWidget {
                         3,
                         (i) => Padding(
                           padding: const EdgeInsets.only(bottom: 8),
-                          child: _flyingChip(context, i),
+                          child: _flyingChip(context, l10n, i),
                         ),
                       ),
                     ],
@@ -58,10 +61,10 @@ class SyncFlyingOverlay extends ConsumerWidget {
     );
   }
 
-  Widget _flyingChip(BuildContext context, int index) {
+  Widget _flyingChip(BuildContext context, AppLocalizations l10n, int index) {
     return Chip(
       avatar: const Icon(Icons.upload_file, size: 16),
-      label: Text('↑ ${index + 1}'),
+      label: Text(l10n.syncFlyingItem(index + 1)),
     )
         .animate(onPlay: (c) => c.repeat())
         .moveY(

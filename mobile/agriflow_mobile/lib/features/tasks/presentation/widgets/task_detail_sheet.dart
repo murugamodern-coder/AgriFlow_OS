@@ -59,7 +59,7 @@ class _TaskDetailSheetBodyState extends ConsumerState<_TaskDetailSheetBody> {
         children: [
           Text(task.subject, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AgriFlowSpacing.space8),
-          Text('${task.displayFarmer} · ${task.displayVillage}'),
+          Text(l10n.taskFarmerVillageLine(task.displayFarmer, task.displayVillage)),
           if (task.stageKey != null)
             Text(AgriFlowI18n.stageLabel(context, task.stageKey!)),
           const SizedBox(height: AgriFlowSpacing.space16),

@@ -1,3 +1,4 @@
+import 'package:agriflow_mobile/core/design_tokens/app_dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -39,7 +40,7 @@ class ConflictSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(AppDimensions.pagePaddingLarge),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,13 +51,22 @@ class ConflictSheet extends StatelessWidget {
           const SizedBox(height: 12),
           Text(l10n.conflictStepsTitle, style: Theme.of(context).textTheme.titleSmall),
           const SizedBox(height: 4),
-          Text('1. ${l10n.conflictStepRefresh}'),
-          Text('2. ${l10n.conflictStepReview}'),
-          Text('3. ${l10n.conflictStepRetry}'),
+          Text(l10n.conflictStepNumbered(1, l10n.conflictStepRefresh)),
+          Text(l10n.conflictStepNumbered(2, l10n.conflictStepReview)),
+          Text(l10n.conflictStepNumbered(3, l10n.conflictStepRetry)),
           const SizedBox(height: 8),
-          Text('Mutation: $clientMutationId', style: Theme.of(context).textTheme.bodySmall),
+          Text(
+            l10n.conflictMutationId(clientMutationId),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
           if (serverDocVersion != null || clientDocVersion != null)
-            Text('Server v$serverDocVersion · Client v$clientDocVersion'),
+            Text(
+              l10n.conflictVersionLine(
+                serverDocVersion ?? 0,
+                clientDocVersion ?? 0,
+              ),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           const SizedBox(height: 24),
           FilledButton(
             onPressed: () {

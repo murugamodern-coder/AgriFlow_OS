@@ -86,7 +86,7 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
 
             if (release.updateRequired && mounted) {
 
-              final title = AppLocalizations.of(context)!.appTitle;
+              final dialogL10n = AppLocalizations.of(context)!;
 
               showDialog<void>(
 
@@ -94,11 +94,11 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
 
                 builder: (ctx) => AlertDialog(
 
-                  title: Text(title),
+                  title: Text(dialogL10n.appTitle),
 
                   content: Text(
 
-                    'Update required (min ${release.minVersion})',
+                    dialogL10n.updateRequiredMessage(release.minVersion),
 
                   ),
 

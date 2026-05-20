@@ -1,4 +1,6 @@
 import 'package:agriflow_mobile/core/design_tokens/spacing.dart';
+import 'package:agriflow_mobile/core/design_tokens/status_semantics.dart';
+import 'package:agriflow_mobile/shared/widgets/agriflow_status_icon.dart';
 import 'package:agriflow_mobile/core/i18n/agriflow_i18n.dart';
 import 'package:agriflow_mobile/features/notifications/domain/notification_inbox_logic.dart';
 import 'package:agriflow_mobile/features/notifications/domain/notification_item.dart';
@@ -30,13 +32,13 @@ class NotificationFeedCard extends StatelessWidget {
     Widget card = Card(
       margin: const EdgeInsets.only(bottom: AgriFlowSpacing.space8),
       color: item.isUnread
-          ? tone.background.withValues(alpha: 0.08)
+          ? tone.foreground.withValues(alpha: 0.08)
           : theme.colorScheme.surface,
       child: ListTile(
         onTap: onTap,
         leading: CircleAvatar(
-          backgroundColor: tone.background.withValues(alpha: 0.2),
-          child: Icon(tone.icon, color: tone.foreground, size: 22),
+          backgroundColor: tone.foreground.withValues(alpha: 0.15),
+          child: AgriFlowStatusIcon(kind: tone.kind, size: 22),
         ),
         title: Text(
           title,
@@ -78,26 +80,39 @@ class NotificationFeedCard extends StatelessWidget {
     );
   }
 
-  _ToneStyle _toneStyle(ThemeData theme, NotificationTone tone) {
+  _ToneStyle _toneStyle(BuildContext context, NotificationTone tone) {
     switch (tone) {
       case NotificationTone.urgent:
-        return _ToneStyle(theme.colorScheme.error, Icons.warning_amber_rounded);
+        return _ToneStyle(
+          AgriFlowStatusSemantics.error(context),
+          AgriFlowStatusKind.overdue,
+        );
       case NotificationTone.warning:
-        return _ToneStyle(theme.colorScheme.tertiary, Icons.schedule);
+        return _ToneStyle(
+          AgriFlowStatusSemantics.warning(context),
+          AgriFlowStatusKind.warning,
+        );
       case NotificationTone.orange:
-        return _ToneStyle(const Color(0xFFE65100), Icons.inventory_2_outlined);
+        return _ToneStyle(
+          AgriFlowStatusSemantics.alertOrange(context),
+          AgriFlowStatusKind.warning,
+        );
       case NotificationTone.success:
-        return _ToneStyle(theme.colorScheme.primary, Icons.check_circle_outline);
+        return _ToneStyle(
+          AgriFlowStatusSemantics.success(context),
+          AgriFlowStatusKind.done,
+        );
       case NotificationTone.info:
-        return _ToneStyle(theme.colorScheme.primary, Icons.info_outline);
+        return _ToneStyle(
+          AgriFlowStatusSemantics.info(context),
+          AgriFlowStatusKind.info,
+        );
     }
   }
 }
 
 class _ToneStyle {
-  const _ToneStyle(this.foreground, this.icon);
+  const _ToneStyle(this.foreground, this.kind);
   final Color foreground;
-  final IconData icon;
-
-  Color get background => foreground;
+  final AgriFlowStatusKind kind;
 }

@@ -1,3 +1,4 @@
+import 'package:agriflow_mobile/core/design_tokens/status_semantics.dart';
 import 'package:agriflow_mobile/core/providers/core_providers.dart';
 import 'package:agriflow_mobile/features/sync/presentation/widgets/sync_feedback_listener.dart';
 import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
@@ -103,7 +104,11 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
               _filterBar(l10n),
               const SizedBox(height: 16),
               if (grouped.overdue.isNotEmpty) ...[
-                _sectionTitle(l10n.taskSectionOverdue, grouped.overdue.length, Colors.red),
+                _sectionTitle(
+                  l10n.taskSectionOverdue,
+                  grouped.overdue.length,
+                  AgriFlowStatusSemantics.error(context),
+                ),
                 ...grouped.overdue.map(
                   (t) => TaskFeedCard(
                     task: t,
@@ -175,7 +180,10 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
         children: [
           Icon(Icons.circle, size: 10, color: color),
           const SizedBox(width: 8),
-          Text('$label ($count)', style: const TextStyle(fontWeight: FontWeight.w700)),
+          Text(
+            l10n.sectionWithCount(label, count),
+            style: const TextStyle(fontWeight: FontWeight.w700),
+          ),
         ],
       ),
     );

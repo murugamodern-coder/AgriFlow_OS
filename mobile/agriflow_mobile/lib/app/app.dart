@@ -14,6 +14,7 @@ class AgriFlowApp extends ConsumerWidget {
     return MaterialApp.router(
       onGenerateTitle: (context) => AppLocalizations.of(context)!.appTitle,
       theme: buildAgriFlowTheme(brightness: Brightness.light),
+      darkTheme: buildAgriFlowTheme(brightness: Brightness.dark),
       locale: const Locale('ta'),
       supportedLocales: AppLocalizations.supportedLocales,
       localizationsDelegates: const [

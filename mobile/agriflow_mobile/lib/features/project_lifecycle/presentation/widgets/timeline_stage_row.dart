@@ -1,5 +1,6 @@
 import 'package:agriflow_mobile/core/design_tokens/spacing.dart';
 import 'package:agriflow_mobile/core/i18n/agriflow_i18n.dart';
+import 'package:agriflow_mobile/shared/widgets/agriflow_status_icon.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/domain/project_timeline_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -35,7 +36,7 @@ class TimelineStageRow extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _StageIcon(state: stage.visualState),
+            AgriFlowStatusIcon(kind: _kindFor(stage.visualState)),
             const SizedBox(width: AgriFlowSpacing.space12),
             Expanded(
               child: Column(
@@ -128,25 +129,17 @@ class TimelineStageRow extends StatelessWidget {
       ],
     );
   }
-}
 
-class _StageIcon extends StatelessWidget {
-  const _StageIcon({required this.state});
-
-  final StageVisualState state;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+  AgriFlowStatusKind _kindFor(StageVisualState state) {
     switch (state) {
       case StageVisualState.done:
-        return Icon(Icons.check_circle, color: scheme.primary, size: 26);
+        return AgriFlowStatusKind.done;
       case StageVisualState.current:
-        return Icon(Icons.sync, color: scheme.secondary, size: 26);
+        return AgriFlowStatusKind.active;
       case StageVisualState.pending:
-        return Icon(Icons.radio_button_unchecked, color: scheme.outline, size: 26);
+        return AgriFlowStatusKind.pending;
       case StageVisualState.locked:
-        return Icon(Icons.lock_outline, color: scheme.outline.withValues(alpha: 0.5), size: 24);
+        return AgriFlowStatusKind.locked;
     }
   }
 }

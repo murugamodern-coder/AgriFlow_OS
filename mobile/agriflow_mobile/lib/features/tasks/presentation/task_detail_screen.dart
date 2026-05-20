@@ -141,7 +141,7 @@ class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen> {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Text('${task.status} · ${task.farmerProject ?? ''}'),
+          Text(l10n.taskStatusProjectLine(task.status, task.farmerProject ?? '')),
           const SizedBox(height: 16),
           FilledButton(
             onPressed: task.status == 'completed' ? null : _completeQueued,
@@ -155,7 +155,10 @@ class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen> {
               (a) => ListTile(
                 title: Text(a['inventory_item']?.toString() ?? ''),
                 subtitle: Text(
-                  'Reserved ${a['reserved_qty']} · ${a['status']}',
+                  l10n.taskReservedQty(
+                    '${a['reserved_qty']}',
+                    '${a['status']}',
+                  ),
                 ),
                 trailing: TextButton(
                   onPressed: () => _consumePartial(a),
