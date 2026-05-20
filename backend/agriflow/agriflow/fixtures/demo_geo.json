@@ -1,0 +1,18 @@
+{
+  "district": "TVM",
+  "district_name": "Tiruvannamalai",
+  "blocks": [
+    {"code": "POLUR", "name": "Polur"},
+    {"code": "KALAS", "name": "Kalasapakkam"},
+    {"code": "VANDA", "name": "Vandavasi"},
+    {"code": "ARANI", "name": "Arani"},
+    {"code": "KEELN", "name": "Keelnamulloor"},
+    {"code": "ELURU", "name": "Eluru"},
+    {"code": "CHERT", "name": "Cherthupattu"},
+    {"code": "THURI", "name": "Thurinjapuram"},
+    {"code": "JAMUN", "name": "Jamunamaruthur"},
+    {"code": "SURAM", "name": "Suram"},
+    {"code": "CHEYY", "name": "Cheyyar"},
+    {"code": "CHETP", "name": "Chetpet"}
+  ]
+}
