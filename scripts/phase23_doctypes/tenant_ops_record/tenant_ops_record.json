@@ -1,0 +1,35 @@
+{
+  "doctype": "DocType",
+  "name": "Tenant Ops Record",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "format:TEN-{YYYY}-{#####}",
+  "engine": "InnoDB",
+  "field_order": [
+    "tenant_key",
+    "customer_name",
+    "site_name",
+    "segment",
+    "status",
+    "sla_tier",
+    "onboarding_link",
+    "health_score",
+    "last_audit_on",
+    "notes"
+  ],
+  "fields": [
+    {"fieldname": "tenant_key", "fieldtype": "Data", "label": "Tenant Key", "reqd": 1, "unique": 1, "in_list_view": 1},
+    {"fieldname": "customer_name", "fieldtype": "Data", "label": "Customer Name", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "site_name", "fieldtype": "Data", "label": "Site Name", "in_list_view": 1},
+    {"fieldname": "segment", "fieldtype": "Select", "label": "Segment", "options": "pilot\nga\nenterprise", "default": "ga", "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "provisioning\nactive\nsuspended\narchived", "default": "provisioning", "in_list_view": 1},
+    {"fieldname": "sla_tier", "fieldtype": "Select", "label": "SLA Tier", "options": "standard\npremium\nenterprise", "default": "standard"},
+    {"fieldname": "onboarding_link", "fieldtype": "Link", "label": "Customer Onboarding", "options": "Customer Onboarding"},
+    {"fieldname": "health_score", "fieldtype": "Float", "label": "Health Score", "precision": 1},
+    {"fieldname": "last_audit_on", "fieldtype": "Datetime", "label": "Last Audit On"},
+    {"fieldname": "notes", "fieldtype": "Small Text", "label": "Notes"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1}
+  ]
+}

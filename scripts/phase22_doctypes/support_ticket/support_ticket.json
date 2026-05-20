@@ -1,0 +1,36 @@
+{
+  "doctype": "DocType",
+  "name": "Support Ticket",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "format:SUP-{YYYY}-{#####}",
+  "engine": "InnoDB",
+  "field_order": [
+    "subject",
+    "status",
+    "priority",
+    "assigned_to",
+    "incident",
+    "officer_user",
+    "device_id",
+    "description",
+    "opened_on",
+    "resolved_on"
+  ],
+  "fields": [
+    {"fieldname": "subject", "fieldtype": "Data", "label": "Subject", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "open\nescalated\nresolved", "default": "open", "in_list_view": 1},
+    {"fieldname": "priority", "fieldtype": "Select", "label": "Priority", "options": "low\nmedium\nhigh\ncritical", "default": "medium", "in_list_view": 1},
+    {"fieldname": "assigned_to", "fieldtype": "Link", "label": "Assigned To", "options": "User", "in_list_view": 1},
+    {"fieldname": "incident", "fieldtype": "Link", "label": "Operational Incident", "options": "Operational Incident"},
+    {"fieldname": "officer_user", "fieldtype": "Link", "label": "Officer", "options": "User"},
+    {"fieldname": "device_id", "fieldtype": "Data", "label": "Device ID"},
+    {"fieldname": "description", "fieldtype": "Text", "label": "Description"},
+    {"fieldname": "opened_on", "fieldtype": "Datetime", "label": "Opened On", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "resolved_on", "fieldtype": "Datetime", "label": "Resolved On"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1},
+    {"role": "Field Staff", "read": 1, "write": 0, "create": 1, "delete": 0}
+  ]
+}

@@ -36,10 +36,11 @@ AgriFlow OS Phase 1 delivers a **workflow-first, offline-first** mobile operatio
 9. [Phase 9 — Timeline engine](#phase-9--timeline-engine)  
 10. [Phase 10 — Task engine](#phase-10--task-engine)  
 11. [Phase 11 — Offline sync](#phase-11--offline-sync)  
-12. [Phase 12 — Inventory](#phase-12--inventory)  
-13. [Phase 13 — Expense / profit](#phase-13--expense--profit)  
-14. [Phase 14 — MIMIS reconciliation](#phase-14--mimis-reconciliation)  
-15. [Phase 15 — UI system implementation](#phase-15--ui-system-implementation)  
+12. [Phase 12 — Notification Engine](#phase-12--notification-engine)  
+13. [Phase 13 — Inventory](#phase-13--inventory)  
+14. [Phase 14 — Expense / profit](#phase-14--expense--profit)  
+15. [Phase 15 — MIMIS reconciliation](#phase-15--mimis-reconciliation)  
+16. [Phase 16 — UI system implementation](#phase-16--ui-system-implementation)  
 
 ### Operations (16–30)
 
@@ -536,7 +537,36 @@ Week N+2: Offline queue + delta pull + UAT slice
 
 ---
 
-## Phase 12 — Inventory
+## Phase 12 — Notification Engine
+
+### Goals
+
+- User notifications derived from **Timeline Event** (immutable source of truth)  
+- Fanout, unread tracking, inbox APIs, SLA overdue foundation  
+- No websockets / FCM / AI prioritization in this phase  
+
+### Dependencies
+
+- Phase 9 (Timeline), Phase 10 (Task), Phase 11 (Sync — notifications **not** in `sync.pull`)  
+
+### Deliverables
+
+- [x] DocTypes: Notification, Notification Preference, Notification Delivery Log  
+- [x] `notification.list`, `notification.unread_count`, `notification.mark_read`, `notification.mark_all_read`  
+- [x] Timeline fanout hook + duplicate-safe `delivery_key`  
+- [x] Scheduler: `scan_task_overdue_notifications` (foundation)  
+
+### Validation
+
+- [x] `phase12_verify_notifications.execute` on `dev.agriflow.local`  
+
+### Estimated complexity
+
+**M**
+
+---
+
+## Phase 13 — Inventory
 
 ### Goals
 
@@ -558,11 +588,13 @@ Week N+2: Offline queue + delta pull + UAT slice
 
 ### Deliverables
 
-- [ ] Inventory Item DocType + godown fixture  
-- [ ] Stock Entry DocType + child lines  
-- [ ] `inventory.items`, `inventory.stock_entry.create`, `inventory.stock_entry.list`  
-- [ ] Mobile `inventory` feature (Store Keeper shell)  
-- [ ] Audit on stock mutations  
+- [x] Inventory Item, Warehouse, Stock Ledger Entry, Project Material Allocation  
+- [x] Ledger-first services (no mutable Stock Entry header)  
+- [x] `inventory.items`, `inventory.warehouses`, `inventory.stock_on_hand`, `inventory.ledger_list`  
+- [x] `inventory.movement_post`, `inventory.transfer_post`, `inventory.allocation.*`  
+- [x] `inventory.stock_entry_create` legacy alias  
+- [ ] Mobile `inventory` feature (Store Keeper shell) — Flutter Phase 14+  
+- [x] Verify: `phase13_verify_inventory.execute`  
 
 ### Validation checklist
 
@@ -576,7 +608,7 @@ Week N+2: Offline queue + delta pull + UAT slice
 
 ---
 
-## Phase 13 — Expense / profit
+## Phase 14 — Expense / profit
 
 ### Goals
 
@@ -615,7 +647,7 @@ Week N+2: Offline queue + delta pull + UAT slice
 
 ---
 
-## Phase 14 — MIMIS reconciliation
+## Phase 15 — MIMIS reconciliation
 
 ### Goals
 
@@ -657,7 +689,7 @@ Week N+2: Offline queue + delta pull + UAT slice
 
 ---
 
-## Phase 15 — UI system implementation
+## Phase 16 — UI system implementation
 
 ### Goals
 

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Commercial Ops Console</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
+    pre { background: #f5f5f5; padding: 1rem; font-size: 11px; overflow: auto; max-height: 400px; }
+    button { margin-right: 8px; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>AgriFlow Commercial Ops Console</h1>
+  <p>Phase 20 — <code>commercial.operations_console</code> · System Manager</p>
+  <button id="refresh">Refresh</button>
+  <button id="sla">SLA only</button>
+  <button id="export">Export JSON</button>
+  <button id="onboard">Onboarding checklist</button>
+  <h2>KPIs</h2>
+  <div class="grid" id="kpis"></div>
+  <h2>Payload</h2>
+  <pre id="out">Loading…</pre>
+  <script>
+    function kpisFrom(data) {
+      const c = data.commercial || data;
+      const sla = c.sla || {};
+      document.getElementById('kpis').innerHTML = [
+        ['Push success', sla.push_success_rate],
+        ['Avg device health', sla.avg_device_health],
+        ['Stale devices', sla.stale_devices],
+        ['Open incidents', (data.open_incidents || []).length],
+        ['Queue pending', (data.queue_backlog || {}).total_pending],
+      ].map(function (row) {
+        return '<div class="card"><strong>' + row[0] + '</strong><div>' + row[1] + '</div></div>';
+      }).join('');
+    }
+    function load(method) {
+      frappe.call({
+        method: method || 'agriflow.api.v1.commercial.operations_console',
+        callback: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r.message, null, 2);
+          kpisFrom(r.message.data || r.message);
+        }
+      });
+    }
+    document.getElementById('refresh').onclick = function () { load(); };
+    document.getElementById('sla').onclick = function () { load('agriflow.api.v1.commercial.sla_dashboard'); };
+    document.getElementById('export').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.commercial.export_operational_summary', args: { format: 'json' },
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('onboard').onclick = function () {
+      frappe.call({ method: 'agriflow.project_lifecycle.install.phase20_customer_onboarding.onboarding_checklist_admin',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    load();
+  </script>
+</body>
+</html>

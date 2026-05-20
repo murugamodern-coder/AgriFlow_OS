@@ -1,0 +1,31 @@
+{
+  "doctype": "DocType",
+  "name": "Operational Log",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "field_order": [
+    "event_type",
+    "source",
+    "device_id",
+    "user",
+    "request_id",
+    "correlation_id",
+    "payload_json",
+    "recorded_on"
+  ],
+  "fields": [
+    {"fieldname": "event_type", "fieldtype": "Data", "label": "Event Type", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "source", "fieldtype": "Data", "label": "Source", "in_list_view": 1},
+    {"fieldname": "device_id", "fieldtype": "Data", "label": "Device ID"},
+    {"fieldname": "user", "fieldtype": "Link", "label": "User", "options": "User"},
+    {"fieldname": "request_id", "fieldtype": "Data", "label": "Request ID"},
+    {"fieldname": "correlation_id", "fieldtype": "Data", "label": "Correlation ID"},
+    {"fieldname": "payload_json", "fieldtype": "JSON", "label": "Payload JSON"},
+    {"fieldname": "recorded_on", "fieldtype": "Datetime", "label": "Recorded On", "reqd": 1, "in_list_view": 1}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1}
+  ]
+}

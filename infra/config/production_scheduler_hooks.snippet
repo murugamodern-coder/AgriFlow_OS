@@ -1,0 +1,16 @@
+# Merge into agriflow/hooks.py — production/staging scheduler
+scheduler_events = {
+	"hourly": [
+		"agriflow.project_lifecycle.install.phase19_fcm_delivery.execute",
+	],
+	"daily": [
+		"agriflow.project_lifecycle.install.phase19_ops_alerts.execute",
+		"agriflow.project_lifecycle.install.phase22_ga_escalations.execute",
+		"agriflow.project_lifecycle.install.phase23_automation.execute",
+		"agriflow.project_lifecycle.install.phase24_telemetry_aggregate.execute",
+	],
+	"weekly": [
+		"agriflow.project_lifecycle.install.phase23_retention.execute",
+		"agriflow.project_lifecycle.install.phase24_retention_batch.execute",
+	],
+}

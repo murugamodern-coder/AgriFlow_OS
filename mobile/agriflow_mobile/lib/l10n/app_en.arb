@@ -1,0 +1,156 @@
+{
+  "@@locale": "en",
+  "appTitle": "AgriFlow OS",
+  "loginTitle": "Sign in",
+  "loginUsername": "Username",
+  "loginPassword": "Password",
+  "loginSubmit": "Continue",
+  "loginDevStub": "Use dev session (debug only)",
+  "navTimeline": "Timeline",
+  "navTasks": "My Tasks",
+  "navNotifications": "Notifications",
+  "navSync": "Sync",
+  "syncStatusTitle": "Sync status",
+  "syncNow": "Sync now",
+  "syncPending": "{count, plural, =0{No pending changes} one{1 pending change} other{{count} pending changes}}",
+  "@syncPending": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "syncInProgress": "Syncing…",
+  "syncLastSuccess": "Last sync: {time}",
+  "@syncLastSuccess": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "offlineBanner": "You are offline — changes will sync when connected",
+  "degradedNetworkBanner": "Slow or limited connection — sync may take longer",
+  "offlinePendingHint": "{count, plural, one{1 change waiting to sync} other{{count} changes waiting to sync}}",
+  "@offlinePendingHint": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "syncPhaseLabel": "Sync step: {phase}",
+  "@syncPhaseLabel": {
+    "placeholders": {
+      "phase": { "type": "String" }
+    }
+  },
+  "queueRepairResult": "Queue repair: {reset} reset, {deduped} duplicates removed",
+  "@queueRepairResult": {
+    "placeholders": {
+      "reset": { "type": "int" },
+      "deduped": { "type": "int" }
+    }
+  },
+  "conflictStepsTitle": "What to do",
+  "conflictStepRefresh": "Tap Refresh to pull the latest server data",
+  "conflictStepReview": "Review your task or inventory change",
+  "conflictStepRetry": "Make the change again if still needed",
+  "emptyTasks": "No tasks in your inbox",
+  "emptyTimeline": "No timeline events yet",
+  "emptyNotifications": "No notifications",
+  "errorGeneric": "Something went wrong",
+  "retry": "Retry",
+  "taskComplete": "Mark complete",
+  "conflictTitle": "Sync conflict",
+  "conflictExplanation": "The server has a newer version of this record. Your offline change cannot apply until you refresh and try again.",
+  "conflictRefresh": "Refresh from server",
+  "deviceHealthLabel": "Device health: {score}",
+  "@deviceHealthLabel": {
+    "placeholders": {
+      "score": { "type": "String" }
+    }
+  },
+  "deviceStaleWarning": "Device not synced recently — open app on Wi‑Fi",
+  "notificationMarkRead": "Mark read",
+  "logout": "Sign out",
+  "feedbackTitle": "Pilot feedback",
+  "feedbackHint": "Describe what happened in the field. No farmer PII in free text.",
+  "feedbackCategory": "Category",
+  "feedbackSeverity": "Severity",
+  "feedbackBodyLabel": "Details",
+  "feedbackBodyRequired": "Please enter feedback details",
+  "feedbackSubmit": "Send feedback",
+  "feedbackSent": "Feedback sent — thank you",
+  "feedbackCatSync": "Sync",
+  "feedbackCatUx": "App UX",
+  "feedbackCatInventory": "Inventory",
+  "feedbackCatTask": "Tasks",
+  "feedbackCatNetwork": "Network",
+  "feedbackCatOther": "Other",
+  "feedbackSevLow": "Low",
+  "feedbackSevMedium": "Medium",
+  "feedbackSevHigh": "High",
+  "onboardingTitle": "Field onboarding",
+  "onboardingIntro": "Complete these steps before your first pilot day.",
+  "onboardingLogin": "Sign in with your officer account",
+  "onboardingInitialSync": "Run a full sync on Wi‑Fi",
+  "onboardingReviewTasks": "Open My Tasks and review assignments",
+  "onboardingOfflineTest": "Optional: turn off data and confirm cached views",
+  "onboardingFeedback": "Know how to send pilot feedback from the menu",
+  "onboardingRequired": "Recommended",
+  "onboardingDone": "Continue to app",
+  "appVersionLabel": "App version {version}",
+  "@appVersionLabel": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "navHome": "Home",
+  "navFarmers": "Farmers",
+  "dashboardWelcome": "Welcome, {name}",
+  "@dashboardWelcome": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "dashboardRoleLine": "Role: {role}",
+  "@dashboardRoleLine": {
+    "placeholders": { "role": { "type": "String" } }
+  },
+  "dashboardBlocksLine": "Blocks: {blocks}",
+  "@dashboardBlocksLine": {
+    "placeholders": { "blocks": { "type": "String" } }
+  },
+  "dashboardProjects": "Projects",
+  "dashboardOpenTasks": "Open tasks",
+  "dashboardViewFarmers": "View farmers",
+  "roleOwner": "Owner",
+  "roleOfficeManager": "Office Manager",
+  "roleFieldStaff": "Field Staff",
+  "roleUser": "User",
+  "emptyFarmers": "No farmers found",
+  "noProjectForFarmer": "No active project for this farmer",
+  "projectTimelineTitle": "Project timeline",
+  "advanceStage": "Advance to {stage}",
+  "@advanceStage": {
+    "placeholders": { "stage": { "type": "String" } }
+  },
+  "stageTransitionSuccess": "Stage updated — sync to refresh tasks",
+  "timelineNoteLabel": "Note",
+  "timelineNoteQueue": "Queue note",
+  "syncLastRequestId": "Last request ID",
+  "syncRepairQueue": "Repair queue",
+  "taskMaterialsTitle": "Materials",
+  "taskConsumeOne": "Consume 1",
+  "notificationTaskDue": "Task due",
+  "notificationTaskOverdue": "Task overdue",
+  "notificationStageTransition": "Stage updated",
+  "notificationProjectStatus": "Project update",
+  "notificationSlaBreach": "SLA breach",
+  "notificationManual": "Notification",
+  "stageLeadCaptured": "Lead captured",
+  "stageEligibilityCheck": "Eligibility check",
+  "stageDocumentsCollected": "Documents collected",
+  "stageMimisRegistered": "MIMIS registered",
+  "stageFieldSurvey": "Field survey",
+  "stageQuotationGenerated": "Quotation generated",
+  "stagePreInspectionApproval": "Pre-inspection approval",
+  "stageWorkOrderReceived": "Work order received",
+  "stageMaterialDispatched": "Material dispatched",
+  "stageInstallationDone": "Installation done",
+  "stagePostInspectionApproval": "Post-inspection approval",
+  "stageSubsidyReleased": "Subsidy released"
+}

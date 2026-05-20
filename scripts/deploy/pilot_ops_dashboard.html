@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Pilot Ops Dashboard</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 0.75rem; }
+    .card.green { border-color: #2e7d32; }
+    .card.amber { border-color: #f9a825; }
+    .card.red { border-color: #c62828; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { border-bottom: 1px solid #eee; padding: 6px 8px; text-align: left; }
+    pre { background: #f5f5f5; padding: 1rem; font-size: 11px; overflow: auto; max-height: 360px; }
+    input, select { padding: 6px 8px; margin-right: 8px; }
+    button { margin-right: 6px; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Pilot Operations Dashboard</h1>
+  <p>Phase 21 — <code>pilot.pilot_status_dashboard</code></p>
+  <input id="search" type="search" placeholder="Search customer…" />
+  <select id="statusFilter">
+    <option value="">All statuses</option>
+    <option value="in_progress">in_progress</option>
+    <option value="ready">ready</option>
+    <option value="live">live</option>
+  </select>
+  <button id="refresh">Refresh</button>
+  <button id="export">Export audit</button>
+  <button id="rollout">Rollout cadence</button>
+  <h2>Deployment readiness</h2>
+  <div class="grid" id="readiness"></div>
+  <h2>Support metrics</h2>
+  <div class="grid" id="support"></div>
+  <h2>Pilot customers</h2>
+  <table id="customers"><thead><tr>
+    <th>Customer</th><th>Status</th><th>Progress</th><th>Step</th><th>Site</th>
+  </tr></thead><tbody></tbody></table>
+  <h2>Stale device follow-ups</h2>
+  <table id="stale"><thead><tr>
+    <th>Device</th><th>User</th><th>Health</th><th>Action</th><th>Follow-up</th>
+  </tr></thead><tbody></tbody></table>
+  <h2>Raw payload</h2>
+  <pre id="out">Loading…</pre>
+  <script>
+    function renderReadiness(r) {
+      var el = document.getElementById('readiness');
+      if (!r) { el.innerHTML = ''; return; }
+      el.innerHTML = [
+        ['Score', r.score, r.band],
+        ['Push success', r.push_success_rate],
+        ['Open incidents', r.open_incidents],
+        ['Customers ready', r.customers_ready],
+      ].map(function (row) {
+        var cls = row[2] === 'green' || row[2] === 'amber' || row[2] === 'red' ? row[2] : '';
+        return '<div class="card ' + cls + '"><strong>' + row[0] + '</strong><div>' + (row[1] != null ? row[1] : '-') + '</div></div>';
+      }).join('');
+    }
+    function renderSupport(s) {
+      document.getElementById('support').innerHTML = [
+        ['Open tickets', s.open_tickets],
+        ['Avg open (h)', s.avg_open_age_hours],
+        ['Escalated', s.escalated],
+        ['Resolved (window)', s.resolved_last_days],
+      ].map(function (row) {
+        return '<div class="card"><strong>' + row[0] + '</strong><div>' + row[1] + '</div></div>';
+      }).join('');
+    }
+    function renderCustomers(list) {
+      var tb = document.querySelector('#customers tbody');
+      tb.innerHTML = (list || []).map(function (c) {
+        return '<tr><td>' + c.customer_name + '</td><td>' + c.status + '</td><td>' +
+          c.progress_pct + '%</td><td>' + c.current_step + '</td><td>' + c.site_name + '</td></tr>';
+      }).join('');
+    }
+    function renderStale(list) {
+      var tb = document.querySelector('#stale tbody');
+      tb.innerHTML = (list || []).map(function (d) {
+        return '<tr><td>' + d.device_id + '</td><td>' + (d.user || '') + '</td><td>' +
+          d.health_score + '</td><td>' + d.suggested_action + '</td><td>' +
+          (d.follow_up_status || 'pending') + '</td></tr>';
+      }).join('');
+    }
+    function loadFiltered() {
+      var status = document.getElementById('statusFilter').value;
+      var search = document.getElementById('search').value;
+      frappe.call({
+        method: 'agriflow.api.v1.pilot.pilot_status_dashboard',
+        callback: function (r) {
+          var data = (r.message && r.message.data) || r.message || {};
+          document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+          renderReadiness(data.readiness);
+          renderSupport(data.support_metrics || {});
+          var customers = data.customers || [];
+          if (status) customers = customers.filter(function (c) { return c.status === status; });
+          if (search) {
+            var q = search.toLowerCase();
+            customers = customers.filter(function (c) {
+              return (c.customer_name || '').toLowerCase().indexOf(q) >= 0;
+            });
+          }
+          renderCustomers(customers);
+          renderStale(data.stale_followups);
+        }
+      });
+    }
+    document.getElementById('refresh').onclick = loadFiltered;
+    document.getElementById('statusFilter').onchange = loadFiltered;
+    document.getElementById('search').oninput = function () {
+      clearTimeout(window._p21Search);
+      window._p21Search = setTimeout(loadFiltered, 300);
+    };
+    document.getElementById('export').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.pilot.export_pilot_audit', args: { format: 'json' },
+        callback: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r.message, null, 2);
+        }
+      });
+    };
+    document.getElementById('rollout').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.pilot.rollout_cadence_summary',
+        callback: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r.message, null, 2);
+        }
+      });
+    };
+    loadFiltered();
+  </script>
+</body>
+</html>

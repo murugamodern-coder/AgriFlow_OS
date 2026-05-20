@@ -1,0 +1,81 @@
+# AgriFlow OS — production-shaped stack (foundation)
+# NOT a full Frappe image — wire bench/erpnext image in deployment phase.
+# Usage: copy .env.prod.example → .env.prod, then:
+#   docker compose --env-file .env.prod -f docker-compose.prod.yml up -d
+
+name: agriflow-prod
+
+services:
+  mariadb:
+    image: mariadb:11
+    restart: always
+    env_file: .env.prod
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?required}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-agriflow}
+      MARIADB_USER: ${MARIADB_USER:-agriflow}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:?required}
+      TZ: ${TZ:-Asia/Kolkata}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb-file-per-table=1
+    volumes:
+      - mariadb_prod:/var/lib/mysql
+    networks: [agriflow_prod]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: always
+    env_file: .env.prod
+    command: >
+      sh -c 'exec redis-server --appendonly yes --requirepass "$${REDIS_PASSWORD}"'
+    volumes:
+      - redis_prod:/data
+    networks: [agriflow_prod]
+    healthcheck:
+      test: ["CMD", "sh", "-c", "redis-cli -a $$REDIS_PASSWORD ping | grep -q PONG"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    restart: always
+    env_file: .env.prod
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?required}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?required}
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_prod:/data
+    networks: [agriflow_prod]
+
+  # Reverse proxy placeholder — terminate TLS and route to bench workers
+  nginx:
+    image: nginx:1.27-alpine
+    restart: always
+    ports:
+      - "${HTTP_PUBLISH_PORT:-8080}:80"
+    volumes:
+      - ./nginx/agriflow.conf:/etc/nginx/conf.d/default.conf:ro
+    networks: [agriflow_prod]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  mariadb_prod:
+  redis_prod:
+  minio_prod:
+
+networks:
+  agriflow_prod:
+    driver: bridge

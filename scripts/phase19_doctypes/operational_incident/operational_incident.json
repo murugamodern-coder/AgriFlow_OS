@@ -1,0 +1,31 @@
+{
+  "doctype": "DocType",
+  "name": "Operational Incident",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "field_order": [
+    "incident_type",
+    "severity",
+    "status",
+    "summary",
+    "details_json",
+    "assigned_to",
+    "recorded_on",
+    "resolved_on"
+  ],
+  "fields": [
+    {"fieldname": "incident_type", "fieldtype": "Select", "label": "Type", "options": "queue_backlog\nsync_failure\ninventory_mismatch\npush_failure\ndevice_health\nother", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "severity", "fieldtype": "Select", "label": "Severity", "options": "low\nmedium\nhigh\ncritical", "default": "medium", "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "open\ninvestigating\nresolved", "default": "open", "in_list_view": 1},
+    {"fieldname": "summary", "fieldtype": "Data", "label": "Summary", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "details_json", "fieldtype": "JSON", "label": "Details"},
+    {"fieldname": "assigned_to", "fieldtype": "Link", "label": "Assigned To", "options": "User"},
+    {"fieldname": "recorded_on", "fieldtype": "Datetime", "label": "Recorded On", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "resolved_on", "fieldtype": "Datetime", "label": "Resolved On"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "doctype": "DocType",
+  "name": "Customer Onboarding",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "format:ONB-{YYYY}-{#####}",
+  "engine": "InnoDB",
+  "field_order": [
+    "customer_name",
+    "site_name",
+    "status",
+    "current_step",
+    "steps_json",
+    "role_template",
+    "started_on",
+    "completed_on"
+  ],
+  "fields": [
+    {"fieldname": "customer_name", "fieldtype": "Data", "label": "Customer Name", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "site_name", "fieldtype": "Data", "label": "Site Name", "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "draft\nin_progress\nready\nlive", "default": "draft", "in_list_view": 1},
+    {"fieldname": "current_step", "fieldtype": "Data", "label": "Current Step"},
+    {"fieldname": "steps_json", "fieldtype": "JSON", "label": "Steps Completed"},
+    {"fieldname": "role_template", "fieldtype": "Select", "label": "Role Template", "options": "pilot_block\nmulti_block\ndemo"},
+    {"fieldname": "started_on", "fieldtype": "Datetime", "label": "Started On"},
+    {"fieldname": "completed_on", "fieldtype": "Datetime", "label": "Completed On"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

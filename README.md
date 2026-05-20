@@ -189,7 +189,13 @@ Detailed bench and device setup steps will live in `infra/` and phase guides ins
 
 ### 7.2 Current repository state
 
-If `apps/` and `mobile/` are not yet present, the project is in the **documentation-first** gate. Implement [IMPLEMENTATION_PLAN.md](./IMPLEMENTATION_PLAN.md) Phase 2 before expecting runnable services.
+| Path | Status |
+|------|--------|
+| `backend/agriflow/` | Committed Frappe app snapshot — install to bench via [scripts/install_backend_to_bench.sh](./scripts/install_backend_to_bench.sh) |
+| `mobile/agriflow_mobile/` | Flutter pilot app (demo mode: `DEMO_MODE=true`) |
+| `scripts/` | Phase bootstraps + Day 1 demo API extensions |
+
+**Quick start:** [docs/SETUP_FROM_SCRATCH.md](./docs/SETUP_FROM_SCRATCH.md) · **Demo tunnel:** [docs/LOCAL_LIVE_DEMO.md](./docs/LOCAL_LIVE_DEMO.md)
 
 ### 7.3 Environments
 

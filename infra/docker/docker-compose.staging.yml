@@ -1,0 +1,88 @@
+# AgriFlow staging — production-shaped, separate volumes from prod.
+# Usage: cp .env.staging.example .env.staging && docker compose -f docker-compose.staging.yml --env-file .env.staging up -d
+
+name: agriflow-staging
+
+services:
+  mariadb:
+    image: mariadb:11
+    restart: unless-stopped
+    env_file: .env.staging
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?required}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-agriflow_staging}
+      MARIADB_USER: ${MARIADB_USER:-agriflow}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:?required}
+      TZ: ${TZ:-Asia/Kolkata}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    ports:
+      - "${MARIADB_PUBLISH_HOST:-127.0.0.1}:${MARIADB_PUBLISH_PORT:-3307}:3306"
+    volumes:
+      - mariadb_staging:/var/lib/mysql
+    networks: [agriflow_staging]
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    env_file: .env.staging
+    command: >
+      sh -c 'exec redis-server --appendonly yes --requirepass "$${REDIS_PASSWORD}"'
+    ports:
+      - "127.0.0.1:${REDIS_PUBLISH_PORT:-6380}:6379"
+    volumes:
+      - redis_staging:/data
+    networks: [agriflow_staging]
+    healthcheck:
+      test: ["CMD", "sh", "-c", "redis-cli -a $$REDIS_PASSWORD ping | grep -q PONG"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    env_file: .env.staging
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?required}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?required}
+    command: server /data --console-address ":9001"
+    ports:
+      - "127.0.0.1:${MINIO_PUBLISH_PORT:-9000}:9000"
+      - "127.0.0.1:${MINIO_CONSOLE_PORT:-9001}:9001"
+    volumes:
+      - minio_staging:/data
+    networks: [agriflow_staging]
+
+  nginx:
+    image: nginx:1.27-alpine
+    restart: unless-stopped
+    ports:
+      - "${HTTP_PUBLISH_PORT:-80}:80"
+      - "${HTTPS_PUBLISH_PORT:-443}:443"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./nginx/agriflow-staging-vps.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${TLS_CERT_DIR:-./nginx/certs}:/etc/nginx/certs:ro
+    networks: [agriflow_staging]
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+volumes:
+  mariadb_staging:
+  redis_staging:
+  minio_staging:
+
+networks:
+  agriflow_staging:
+    driver: bridge

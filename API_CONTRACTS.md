@@ -644,7 +644,61 @@ Timeline data is served by **`project.timeline`** (aggregate). Stage history is 
 
 ---
 
+### API: `project.timeline_since`
+
+| Property | Value |
+|----------|-------|
+| **Endpoint** | `agriflow.api.v1.project.timeline_since` |
+| **Method** | `POST` |
+| **Purpose** | Delta timeline events for offline replay and dashboards (append-only stream) |
+| **Auth** | Bearer / session required |
+
+**Request `data`**
+
+```json
+{
+  "project": "FP-2026-00124",
+  "farmer": null,
+  "since": "2026-05-20T15:00:00.000Z",
+  "event_types": ["stage_transition", "manual_note"],
+  "limit": 50,
+  "cursor": null
+}
+```
+
+| Field | Required | Validation |
+|-------|----------|------------|
+| `project` or `farmer` | One required | Scope anchor |
+| `since` | ✓ | ISO 8601; returns events with `created_on > since` |
+| `event_types` | No | Subset of timeline event types |
+| `limit` | No | Default 50, max 100 |
+| `cursor` | No | Raw Timeline Event `name`; keyset on `(created_on, name)` |
+
+**Response `data`**
+
+```json
+{
+  "items": [],
+  "next_cursor": null,
+  "has_more": false,
+  "generated_at": "2026-05-20T16:30:00.000Z",
+  "since": "2026-05-20T15:00:00.000Z",
+  "deleted": []
+}
+```
+
+| Ordering | `created_on ASC, name ASC` (replay-safe) |
+| Sync | Mobile watermark per project/farmer; pairs with `sync.pull` in Phase 11 |
+| Failure | `NOT_FOUND`, `PERM_DENIED`, `VAL_INVALID` |
+
+**Note:** `project.timeline` response `timeline` block also exposes `items`, `next_cursor`, `has_more`, `generated_at` (newest-first) alongside `stage_history` and `workflow`.
+
+---
+
 ## 16. Task API contracts
+**Phase 10b updates:** Filters `assigned_officer`, `priority`, `due_before` (alias `due_date_lte`). TaskSummary includes `assigned_officer`, `is_overdue`, `sla`. `task.get` returns `assignment_history`, `timeline_preview`, `sla`, `allowed_transitions`. Priority `medium` accepted as alias for `normal`. `task.complete` supports `assigned` with internal auto-step to `in_progress`.
+
+
 
 ### API: `task.list`
 

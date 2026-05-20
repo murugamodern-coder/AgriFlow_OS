@@ -1,0 +1,183 @@
+# AgriFlow OS — local development infrastructure
+# Development only. Do not use in production.
+#
+# Usage (from this directory):
+#   1. Copy .env.dev.example to .env.dev and adjust values.
+#   2. docker compose --env-file .env.dev -f docker-compose.dev.yml up -d
+#   3. docker compose --env-file .env.dev -f docker-compose.dev.yml ps
+#
+# Frappe / backend containers are intentionally omitted in Phase 1 scaffolding.
+# Connect bench on the host to published ports (MariaDB, Redis, MinIO).
+
+name: agriflow-dev
+
+services:
+  # ---------------------------------------------------------------------------
+  # MariaDB 11 — primary relational store for Frappe (future)
+  # ---------------------------------------------------------------------------
+  mariadb:
+    image: mariadb:11
+    container_name: agriflow-dev-mariadb
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?MARIADB_ROOT_PASSWORD is required}
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-agriflow}
+      MARIADB_USER: ${MARIADB_USER:-agriflow}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:?MARIADB_PASSWORD is required}
+      TZ: ${TZ:-Asia/Kolkata}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb-file-per-table=1
+      - --max-connections=200
+    ports:
+      - "${MARIADB_PUBLISH_PORT:-3306}:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - agriflow_dev
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
+  # ---------------------------------------------------------------------------
+  # Redis 7 — cache, sessions, job queues (future)
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    container_name: agriflow-dev-redis
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    environment:
+      TZ: ${TZ:-Asia/Kolkata}
+    # If REDIS_PASSWORD is set in .env.dev, require authentication.
+    command: >
+      sh -c '
+        if [ -n "$${REDIS_PASSWORD}" ]; then
+          exec redis-server --appendonly yes --requirepass "$${REDIS_PASSWORD}";
+        else
+          exec redis-server --appendonly yes;
+        fi
+      '
+    ports:
+      - "${REDIS_PUBLISH_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - agriflow_dev
+    healthcheck:
+      test: >
+        sh -c '
+          if [ -n "$${REDIS_PASSWORD}" ]; then
+            redis-cli -a "$${REDIS_PASSWORD}" ping | grep -q PONG;
+          else
+            redis-cli ping | grep -q PONG;
+          fi
+        '
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # ---------------------------------------------------------------------------
+  # MinIO — S3-compatible object storage for attachments (future)
+  # API: 9000 | Console: 9001
+  # ---------------------------------------------------------------------------
+  minio:
+    image: minio/minio:latest
+    container_name: agriflow-dev-minio
+    restart: unless-stopped
+    env_file:
+      - .env.dev
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:?MINIO_ROOT_USER is required}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:?MINIO_ROOT_PASSWORD is required}
+      MINIO_BROWSER: ${MINIO_BROWSER:-on}
+      TZ: ${TZ:-Asia/Kolkata}
+    command: server /data --console-address ":9001"
+    ports:
+      - "${MINIO_API_PUBLISH_PORT:-9000}:9000"
+      - "${MINIO_CONSOLE_PUBLISH_PORT:-9001}:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - agriflow_dev
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  # ---------------------------------------------------------------------------
+  # Future services (not enabled — documentation placeholders)
+  # ---------------------------------------------------------------------------
+  #
+  # frappe:
+  #   # Custom image or frappe/bench development container
+  #   container_name: agriflow-dev-frappe
+  #   restart: unless-stopped
+  #   env_file:
+  #     - .env.dev
+  #   depends_on:
+  #     mariadb:
+  #       condition: service_healthy
+  #     redis:
+  #       condition: service_healthy
+  #     minio:
+  #       condition: service_healthy
+  #   environment:
+  #     DB_HOST: mariadb
+  #     DB_PORT: 3306
+  #     REDIS_HOST: redis
+  #     REDIS_PORT: 6379
+  #     MINIO_ENDPOINT: http://minio:9000
+  #   ports:
+  #     - "${FRAPPE_HTTP_PUBLISH_PORT:-8000}:8000"
+  #   volumes:
+  #     - frappe_sites:/home/frappe/frappe-bench/sites
+  #   networks:
+  #     - agriflow_dev
+  #
+  # frappe-worker:
+  #   # Background workers (default + long queues)
+  #   depends_on:
+  #     frappe:
+  #       condition: service_started
+  #   networks:
+  #     - agriflow_dev
+  #
+  # frappe-scheduler:
+  #   # bench schedule (cron-style jobs)
+  #   depends_on:
+  #     frappe:
+  #       condition: service_started
+  #   networks:
+  #     - agriflow_dev
+
+# -----------------------------------------------------------------------------
+# Named volumes — persistent data for local dev
+# -----------------------------------------------------------------------------
+volumes:
+  mariadb_data:
+    name: agriflow-dev-mariadb-data
+  redis_data:
+    name: agriflow-dev-redis-data
+  minio_data:
+    name: agriflow-dev-minio-data
+  # frappe_sites:
+  #   name: agriflow-dev-frappe-sites
+
+# -----------------------------------------------------------------------------
+# Internal network — service DNS: mariadb, redis, minio
+# -----------------------------------------------------------------------------
+networks:
+  agriflow_dev:
+    name: agriflow-dev-network
+    driver: bridge

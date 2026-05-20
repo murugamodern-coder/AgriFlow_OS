@@ -1,0 +1,34 @@
+{
+  "doctype": "DocType",
+  "name": "Pilot Operational Feedback",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "field_order": [
+    "submitted_by",
+    "device_id",
+    "app_version",
+    "category",
+    "severity",
+    "body",
+    "farmer_project",
+    "workflow_status",
+    "submitted_on"
+  ],
+  "fields": [
+    {"fieldname": "submitted_by", "fieldtype": "Link", "label": "Submitted By", "options": "User", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "device_id", "fieldtype": "Data", "label": "Device ID"},
+    {"fieldname": "app_version", "fieldtype": "Data", "label": "App Version", "in_list_view": 1},
+    {"fieldname": "category", "fieldtype": "Select", "label": "Category", "options": "sync\nux\ninventory\ntask\nnetwork\nother", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "severity", "fieldtype": "Select", "label": "Severity", "options": "low\nmedium\nhigh\ncritical", "default": "medium", "in_list_view": 1},
+    {"fieldname": "body", "fieldtype": "Text", "label": "Feedback", "reqd": 1},
+    {"fieldname": "farmer_project", "fieldtype": "Link", "label": "Farmer Project", "options": "Farmer Project"},
+    {"fieldname": "workflow_status", "fieldtype": "Select", "label": "Status", "options": "new\nreviewed\nresolved", "default": "new", "in_list_view": 1},
+    {"fieldname": "submitted_on", "fieldtype": "Datetime", "label": "Submitted On", "reqd": 1, "in_list_view": 1}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1},
+    {"role": "Field Staff", "read": 1, "write": 0, "create": 1, "delete": 0}
+  ]
+}

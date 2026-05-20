@@ -612,6 +612,127 @@ None.
 
 ---
 
+## 3A. Timeline Event
+
+### 3A. Purpose
+
+**Unified append-only activity stream** for Farmer Project operations. Powers mobile activity feeds, offline sync replay, audit visibility, and future notifications. Complements **Project Stage History** (workflow-specific) without duplicating full document snapshots.
+
+### 3A. Module
+
+`Project Lifecycle` (M5)
+
+### 3A. Naming strategy
+
+- **Autoname:** `hash`
+- **Title field:** `event_type`
+- **Sort:** `created_on` DESC
+
+### 3A. Core fields
+
+| Field | Label |
+|-------|-------|
+| `farmer_project` | Farmer Project |
+| `farmer` | Farmer |
+| `event_type` | Event Type |
+| `event_source` | Event Source |
+| `created_on` | Created On |
+| `actor` | Actor |
+| `actor_name` | Actor Name |
+| `payload_json` | Payload |
+| `reference_doctype` | Reference DocType |
+| `reference_name` | Reference Name |
+| `district` | District |
+| `block` | Block |
+| `client_id` | Client ID |
+| `is_deleted` | Is Deleted |
+
+### 3A. Field types
+
+| Field | Type | Notes |
+|-------|------|-------|
+| `farmer_project` | Link → Farmer Project | Required; indexed |
+| `farmer` | Link → Farmer | Required; denormalized for farmer feeds |
+| `event_type` | Select | `project_created`, `stage_transition`, `mimis_gate_updated`, `project_status_changed`, `manual_note` |
+| `event_source` | Select | `lifecycle`, `mimis`, `desk`, `mobile`, `system` |
+| `created_on` | Datetime | Required; chronological sort key |
+| `actor` | Link → User | |
+| `actor_name` | Data | Display snapshot |
+| `payload_json` | JSON | Lightweight refs only — no full entity blobs |
+| `reference_doctype` | Data | e.g. `Project Stage History` |
+| `reference_name` | Data | Linked row name |
+| `district` | Link → District | Scope filter |
+| `block` | Link → Block | Scope filter |
+| `client_id` | Data (36) | Idempotent emit / sync replay |
+| `is_deleted` | Check | Sync tombstone |
+
+### 3A. Required fields
+
+`farmer_project`, `farmer`, `event_type`, `event_source`, `created_on`
+
+### 3A. Link relationships
+
+| Field | Links to |
+|-------|----------|
+| `farmer_project` | Farmer Project |
+| `farmer` | Farmer |
+| `actor` | User |
+| `district` | District |
+| `block` | Block |
+
+### 3A. Child tables
+
+None.
+
+### 3A. Workflow behavior
+
+- Rows created **only** via `TimelineService.emit()` (and desk whitelisted `add_timeline_note_for_desk`).
+- **Immutable:** no in-place updates; `track_changes` off.
+- Lifecycle hooks emit: `project_created`, `stage_transition`; Farmer Project `on_update` emits `mimis_gate_updated`, `project_status_changed`.
+- Future `project.timeline` API reads via `TimelineService.query()` + stage history merge.
+
+### 3A. Validation rules
+
+- Payload size capped in service (no large duplicated objects).
+- Duplicate `(client_id, event_type, farmer_project)` rejected on emit (idempotent return).
+- DocType blocks save on existing rows outside service flag.
+
+### 3A. Permissions by role
+
+| Role | Create | Read | Write | Delete |
+|------|--------|------|-------|--------|
+| System Manager | via service | ✓ | — | — |
+| Operational roles | via service only | ✓ | — | — |
+| Administrator | break-glass | ✓ | break-glass | break-glass |
+
+### 3A. Offline sync considerations
+
+| Aspect | Policy |
+|--------|--------|
+| Pull | Delta by `created_on` + `farmer_project` / `farmer` |
+| Push | New events via `client_id` idempotency |
+| Conflict | **Server wins** — events never updated client-side |
+| Mobile cache | Drift `timeline_events` keyed by `project_id` |
+
+### 3A. Audit requirements
+
+- Each event is an audit artifact; stage transitions also reference `Project Stage History` row.
+- AgriFlow Audit Log (future) may mirror summary; timeline is operational feed.
+
+### 3A. Suggested indexes
+
+- `(farmer_project, created_on desc)`
+- `(farmer, created_on desc)`
+- `(event_type, created_on desc)`
+- `(client_id)` sparse unique via service check
+
+### 3A. Future extensibility notes
+
+- `task_created`, `attachment_added`, `notification_sent` event types in later phases.
+- Notifications and websocket delivery read from timeline — no mutation.
+
+---
+
 ## 4. Task
 
 ### 4. Purpose
@@ -1347,6 +1468,7 @@ One row per Excel line with match outcome and approval state. Links to Farmer Pr
 | 1 | District, Block, Cluster, Village, Officer, Officer Assignment History |
 | 2 | Farmer |
 | 3 | Farmer Project + Project Stage History (service) |
+| 3A | Timeline Event + TimelineService |
 | 4 | Task + task_template fixture |
 | 5 | Inventory Item, Stock Entry |
 | 6 | Expense Entry |
@@ -1361,6 +1483,7 @@ One row per Excel line with match outcome and approval state. Links to Farmer Pr
 | Farmer | M1 | P0 |
 | Farmer Project | M5 | P0 |
 | Project Stage History | M5 | P0 |
+| Timeline Event | M5 | P0 |
 | Task | M6 | P0 |
 | District, Block, Cluster, Village, Officer, Officer Assignment History | M8 / §10 | P0 |
 | Inventory Item, Stock Entry | M2 | P1 |

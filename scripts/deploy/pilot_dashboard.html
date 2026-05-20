@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Pilot Ops</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; max-width: 960px; }
+    pre { background: #f4f4f5; padding: 1rem; overflow: auto; font-size: 12px; }
+    h2 { margin-top: 1.5rem; }
+    .muted { color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>AgriFlow Pilot Ops Dashboard</h1>
+  <p class="muted">System Manager session required. Loads <code>pilot_ops.dashboard</code>.</p>
+  <button id="load">Refresh</button>
+  <h2>Summary</h2>
+  <pre id="out">Click Refresh…</pre>
+  <script>
+    document.getElementById('load').onclick = function () {
+      frappe.call({
+        method: 'agriflow.api.v1.pilot_ops.dashboard',
+        callback: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r.message, null, 2);
+        },
+        error: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r, null, 2);
+        }
+      });
+    };
+  </script>
+</body>
+</html>
