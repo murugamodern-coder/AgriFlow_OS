@@ -1,0 +1,159 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "hash",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "sync_session",
+  "client_mutation_id",
+  "entity",
+  "op_type",
+  "status",
+  "entity_name",
+  "client_id",
+  "request_json",
+  "response_json",
+  "processed_on"
+ ],
+ "fields": [
+  {
+   "fieldname": "sync_session",
+   "fieldtype": "Link",
+   "label": "Sync Session",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "Sync Session"
+  },
+  {
+   "fieldname": "client_mutation_id",
+   "fieldtype": "Data",
+   "label": "Client Mutation ID",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 1,
+   "unique": 1,
+   "length": 36
+  },
+  {
+   "fieldname": "entity",
+   "fieldtype": "Select",
+   "label": "Entity",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "task\ntimeline\nfarmer_project"
+  },
+  {
+   "fieldname": "op_type",
+   "fieldtype": "Select",
+   "label": "Op Type",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "create\nupdate\ncomplete\nnote"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "success\nconflict\nfailed\nskipped\ndependency_failed"
+  },
+  {
+   "fieldname": "entity_name",
+   "fieldtype": "Data",
+   "label": "Entity Name",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "length": 36
+  },
+  {
+   "fieldname": "request_json",
+   "fieldtype": "JSON",
+   "label": "Request JSON",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "response_json",
+   "fieldtype": "JSON",
+   "label": "Response JSON",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "processed_on",
+   "fieldtype": "Datetime",
+   "label": "Processed On",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  }
+ ],
+ "module": "Sync Engine",
+ "name": "Sync Mutation Log",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "title_field": "client_mutation_id"
+}

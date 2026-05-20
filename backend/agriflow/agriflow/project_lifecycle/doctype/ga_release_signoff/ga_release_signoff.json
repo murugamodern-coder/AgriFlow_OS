@@ -1,0 +1,31 @@
+{
+  "doctype": "DocType",
+  "name": "GA Release Signoff",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "format:REL-{YYYY}-{#####}",
+  "engine": "InnoDB",
+  "field_order": [
+    "release_version",
+    "status",
+    "min_app_version",
+    "rollout_wave",
+    "signed_by",
+    "signed_on",
+    "rollback_notes",
+    "checklist_json"
+  ],
+  "fields": [
+    {"fieldname": "release_version", "fieldtype": "Data", "label": "Release Version", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "draft\npending_approval\napproved\nreleased\nrolled_back", "default": "draft", "in_list_view": 1},
+    {"fieldname": "min_app_version", "fieldtype": "Data", "label": "Min App Version"},
+    {"fieldname": "rollout_wave", "fieldtype": "Data", "label": "Rollout Wave"},
+    {"fieldname": "signed_by", "fieldtype": "Link", "label": "Signed By", "options": "User"},
+    {"fieldname": "signed_on", "fieldtype": "Datetime", "label": "Signed On"},
+    {"fieldname": "rollback_notes", "fieldtype": "Text", "label": "Rollback Notes"},
+    {"fieldname": "checklist_json", "fieldtype": "JSON", "label": "Checklist"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

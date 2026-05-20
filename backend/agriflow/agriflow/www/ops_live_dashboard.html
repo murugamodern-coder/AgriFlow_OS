@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Live Ops</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; max-width: 1100px; }
+    pre { background: #f4f4f5; padding: 1rem; overflow: auto; font-size: 12px; }
+    .row { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .card { flex: 1; min-width: 200px; border: 1px solid #ddd; padding: 1rem; border-radius: 8px; }
+    h1 { margin-bottom: 0.25rem; }
+    .muted { color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>AgriFlow Live Ops</h1>
+  <p class="muted">System Manager session · <code>ops.live_dashboard</code></p>
+  <div class="row">
+    <button id="load">Refresh</button>
+    <button id="alerts">Run alert checks</button>
+  </div>
+  <div class="row" id="cards"></div>
+  <h2>Full payload</h2>
+  <pre id="out">Loading…</pre>
+  <script>
+    function renderCards(data) {
+      const el = document.getElementById('cards');
+      if (!data) { el.innerHTML = ''; return; }
+      const cards = [
+        ['Rollout wave', data.rollout_wave],
+        ['Sync failure rate', (data.sync_health && data.sync_health.failure_rate)],
+        ['Queue pending', (data.queue_backlog && data.queue_backlog.total_pending)],
+        ['Inventory OK', (data.inventory && data.inventory.ok)],
+        ['Active tokens', (data.push_metrics && data.push_metrics.active_tokens)],
+        ['Open incidents', (data.open_incidents && data.open_incidents.length)],
+      ];
+      el.innerHTML = cards.map(function (c) {
+        return '<div class="card"><strong>' + c[0] + '</strong><div>' + c[1] + '</div></div>';
+      }).join('');
+    }
+    function loadDashboard() {
+      frappe.call({
+        method: 'agriflow.api.v1.ops.live_dashboard',
+        callback: function (r) {
+          document.getElementById('out').textContent = JSON.stringify(r.message, null, 2);
+          renderCards(r.message && r.message.data);
+        }
+      });
+    }
+    document.getElementById('load').onclick = loadDashboard;
+    document.getElementById('alerts').onclick = function () {
+      frappe.call({
+        method: 'agriflow.api.v1.ops.run_alert_checks',
+        callback: function (r) {
+          alert(JSON.stringify(r.message && r.message.data, null, 2));
+          loadDashboard();
+        }
+      });
+    };
+    loadDashboard();
+  </script>
+</body>
+</html>

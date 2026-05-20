@@ -1,0 +1,18 @@
+[
+ {
+  "doctype": "Warehouse",
+  "warehouse_code": "WH-CENTRAL-01",
+  "warehouse_name": "Central Godown 1",
+  "warehouse_type": "central",
+  "legacy_godown_key": "godown_1",
+  "is_active": 1
+ },
+ {
+  "doctype": "Warehouse",
+  "warehouse_code": "WH-CENTRAL-02",
+  "warehouse_name": "Central Godown 2",
+  "warehouse_type": "central",
+  "legacy_godown_key": "godown_2",
+  "is_active": 1
+ }
+]

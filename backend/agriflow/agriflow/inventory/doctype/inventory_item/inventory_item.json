@@ -1,0 +1,156 @@
+{
+ "actions": [],
+ "allow_rename": 0,
+ "autoname": "field:item_code",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "item_code",
+  "item_name",
+  "item_group",
+  "uom",
+  "is_stock_item",
+  "has_batch_no",
+  "has_serial_no",
+  "reorder_level",
+  "standard_rate",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "item_code",
+   "fieldtype": "Data",
+   "label": "Item Code",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 1
+  },
+  {
+   "fieldname": "item_name",
+   "fieldtype": "Data",
+   "label": "Item Name",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "item_group",
+   "fieldtype": "Data",
+   "label": "Item Group",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "uom",
+   "fieldtype": "Data",
+   "label": "UOM",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "default": "Nos"
+  },
+  {
+   "fieldname": "is_stock_item",
+   "fieldtype": "Check",
+   "label": "Is Stock Item",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "default": "1"
+  },
+  {
+   "fieldname": "has_batch_no",
+   "fieldtype": "Check",
+   "label": "Has Batch No",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "has_serial_no",
+   "fieldtype": "Check",
+   "label": "Has Serial No",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "reorder_level",
+   "fieldtype": "Float",
+   "label": "Reorder Level",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "standard_rate",
+   "fieldtype": "Currency",
+   "label": "Standard Rate",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "default": "1"
+  }
+ ],
+ "module": "Inventory",
+ "name": "Inventory Item",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 0,
+ "title_field": "item_name"
+}

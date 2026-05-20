@@ -1,0 +1,10 @@
+[
+ {
+  "doctype": "District",
+  "name": "TVM",
+  "district_code": "TVM",
+  "district_name": "Tiruvannamalai",
+  "state": "Tamil Nadu",
+  "is_active": 1
+ }
+]

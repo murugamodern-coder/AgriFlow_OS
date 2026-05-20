@@ -1,0 +1,20 @@
+{
+  "doctype": "DocType",
+  "name": "Push Delivery Log",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "field_order": ["notification", "device_id", "user", "status", "provider_response", "recorded_on"],
+  "fields": [
+    {"fieldname": "notification", "fieldtype": "Data", "label": "Notification ID", "in_list_view": 1},
+    {"fieldname": "device_id", "fieldtype": "Data", "label": "Device ID", "in_list_view": 1},
+    {"fieldname": "user", "fieldtype": "Link", "label": "User", "options": "User"},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "queued\nsent\nfailed\nskipped_offline", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "provider_response", "fieldtype": "Text", "label": "Provider Response"},
+    {"fieldname": "recorded_on", "fieldtype": "Datetime", "label": "Recorded On", "reqd": 1, "in_list_view": 1}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1}
+  ]
+}

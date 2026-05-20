@@ -1,0 +1,55 @@
+{
+  "eligibility_check": [
+    "Office Staff",
+    "Field Staff",
+    "Office Manager",
+    "Owner"
+  ],
+  "documents_collected": [
+    "Office Staff",
+    "Field Staff",
+    "Office Manager",
+    "Owner"
+  ],
+  "mimis_registered": [
+    "Office Manager",
+    "Owner"
+  ],
+  "field_survey": [
+    "Field Staff",
+    "Office Manager",
+    "Owner"
+  ],
+  "quotation_generated": [
+    "Office Staff",
+    "Office Manager",
+    "Owner"
+  ],
+  "pre_inspection_approval": [
+    "Office Manager",
+    "Owner"
+  ],
+  "work_order_received": [
+    "Office Staff",
+    "Office Manager",
+    "Owner"
+  ],
+  "material_dispatched": [
+    "Store Keeper",
+    "Office Manager",
+    "Owner"
+  ],
+  "installation_done": [
+    "Installer Team",
+    "Office Manager",
+    "Owner"
+  ],
+  "post_inspection_approval": [
+    "Office Manager",
+    "Owner"
+  ],
+  "subsidy_released": [
+    "Office Manager",
+    "Owner"
+  ]
+}

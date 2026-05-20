@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow GA Operations Console</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 0.75rem; }
+    .card.red { border-color: #c62828; }
+    .card.amber { border-color: #f9a825; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 1rem; }
+    th, td { border-bottom: 1px solid #eee; padding: 6px 8px; text-align: left; }
+    pre { background: #f5f5f5; padding: 1rem; font-size: 11px; max-height: 320px; overflow: auto; }
+    button { margin: 0 6px 6px 0; }
+    .meta { color: #666; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>GA Operations Console</h1>
+  <p class="meta">Phase 22 — cached refresh 60s · <code>ga.ga_operations_dashboard</code></p>
+  <button id="refresh">Refresh</button>
+  <button id="escalate">Run escalations</button>
+  <button id="backup">Verify backup</button>
+  <button id="export">Export summary</button>
+  <button id="incidents">Incident export</button>
+  <button id="release">Request release 0.22.0</button>
+  <h2>Customer health</h2>
+  <div class="grid" id="health"></div>
+  <h2>Anomalies</h2>
+  <div class="grid" id="anomalies"></div>
+  <h2>Support workload</h2>
+  <div class="grid" id="support"></div>
+  <h2>Customers</h2>
+  <table id="customers"><thead><tr>
+    <th>Customer</th><th>Status</th><th>Health</th><th>Progress</th>
+  </tr></thead><tbody></tbody></table>
+  <h2>Payload</h2>
+  <pre id="out">Loading…</pre>
+  <script>
+    var cacheTs = 0;
+    var cacheData = null;
+    var TTL = 60000;
+
+    function render(data) {
+      var h = document.getElementById('health');
+      var readiness = data.customer_readiness || {};
+      h.innerHTML = [
+        ['Aggregate readiness', readiness.aggregate_score],
+        ['Customers tracked', (data.customer_health || []).length],
+        ['Live', (data.onboarding_metrics || {}).live],
+        ['Ready', (data.onboarding_metrics || {}).ready],
+      ].map(function (r) {
+        return '<div class="card"><strong>' + r[0] + '</strong><div>' + r[1] + '</div></div>';
+      }).join('');
+
+      var q = data.queue_anomaly || {};
+      var p = data.push_anomaly || {};
+      document.getElementById('anomalies').innerHTML = [
+        ['Queue anomaly', q.anomaly, q.anomaly ? 'red' : ''],
+        ['Push anomaly', p.anomaly, p.anomaly ? 'red' : ''],
+        ['Pending', q.pending],
+        ['Push rate', p.success_rate],
+      ].map(function (r) {
+        return '<div class="card ' + (r[2] || '') + '"><strong>' + r[0] + '</strong><div>' + r[1] + '</div></div>';
+      }).join('');
+
+      var s = data.support_workload || {};
+      document.getElementById('support').innerHTML = [
+        ['Open tickets', s.open_tickets],
+        ['Avg age (h)', s.avg_open_age_hours],
+        ['Escalated', s.escalated],
+      ].map(function (r) {
+        return '<div class="card"><strong>' + r[0] + '</strong><div>' + r[1] + '</div></div>';
+      }).join('');
+
+      var tb = document.querySelector('#customers tbody');
+      tb.innerHTML = (data.customer_health || []).map(function (c) {
+        return '<tr><td>' + c.customer_name + '</td><td>' + c.status +
+          '</td><td>' + c.health_score + ' (' + c.health_band + ')</td><td>' +
+          c.progress_pct + '%</td></tr>';
+      }).join('');
+      document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+    }
+
+    function load(force) {
+      var now = Date.now();
+      if (!force && cacheData && (now - cacheTs) < TTL) {
+        render(cacheData);
+        return;
+      }
+      frappe.call({
+        method: 'agriflow.api.v1.ga.ga_operations_dashboard',
+        callback: function (r) {
+          cacheData = (r.message && r.message.data) || r.message || {};
+          cacheTs = Date.now();
+          render(cacheData);
+        }
+      });
+    }
+
+    document.getElementById('refresh').onclick = function () { load(true); };
+    document.getElementById('escalate').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.ga.run_ga_escalations', callback: function () { load(true); } });
+    };
+    document.getElementById('backup').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.ga.run_backup_verification',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('export').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.ga.export_ga_operations_summary', args: { format: 'json' },
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('incidents').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.ga.incident_review_export', args: { format: 'json', days: 30 },
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('release').onclick = function () {
+      frappe.call({
+        method: 'agriflow.api.v1.ga.request_upgrade_approval_api',
+        args: { data: JSON.stringify({ release_version: '0.22.0', min_app_version: '0.22.0' }) },
+        callback: function () { load(true); }
+      });
+    };
+    load(true);
+  </script>
+</body>
+</html>

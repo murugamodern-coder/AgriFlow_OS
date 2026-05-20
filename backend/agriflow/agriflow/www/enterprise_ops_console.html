@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Enterprise Operations</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 0.6rem; font-size: 13px; }
+    .card.red { border-color: #c62828; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 0.75rem; }
+    th, td { border-bottom: 1px solid #eee; padding: 5px 7px; text-align: left; }
+    pre { background: #f5f5f5; padding: 0.75rem; font-size: 10px; max-height: 280px; overflow: auto; }
+    button { margin: 0 5px 5px 0; font-size: 12px; }
+    .meta { color: #666; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <h1>Enterprise Operations Console</h1>
+  <p class="meta">Phase 23 — cache 90s · <code>enterprise.enterprise_operations_dashboard</code></p>
+  <input id="search" type="search" placeholder="Filter tenant…" />
+  <select id="segment">
+    <option value="">All segments</option>
+    <option value="pilot">pilot</option>
+    <option value="ga">ga</option>
+    <option value="enterprise">enterprise</option>
+  </select>
+  <button id="refresh">Refresh</button>
+  <button id="automation">Run automation</button>
+  <button id="retention">Retention (dry)</button>
+  <button id="bulk">Bulk maintenance</button>
+  <button id="audit">Export audit</button>
+  <button id="scheduler">Scheduler health</button>
+  <h2>Governance</h2>
+  <div class="grid" id="gov"></div>
+  <h2>Tenants</h2>
+  <table id="tenants"><thead><tr>
+    <th>Key</th><th>Customer</th><th>Segment</th><th>Health</th><th>Status</th><th>SLA tier</th>
+  </tr></thead><tbody></tbody></table>
+  <h2>Payload</h2>
+  <pre id="out">Loading…</pre>
+  <script>
+    var cache = null, cacheAt = 0, TTL = 90000;
+    function renderGov(g) {
+      var seg = (g && g.segment_report) || {};
+      document.getElementById('gov').innerHTML = [
+        ['Tenants', seg.total_tenants],
+        ['Avg health', seg.avg_health],
+        ['Pilot', (seg.by_segment || {}).pilot],
+        ['GA', (seg.by_segment || {}).ga],
+        ['Enterprise', (seg.by_segment || {}).enterprise],
+        ['Scheduler errors 24h', (g.scheduler || {}).errors_last_24h],
+      ].map(function (r) {
+        return '<div class="card"><strong>' + r[0] + '</strong><div>' + (r[1] != null ? r[1] : '-') + '</div></div>';
+      }).join('');
+    }
+    function renderTenants(list) {
+      document.querySelector('#tenants tbody').innerHTML = (list || []).map(function (t) {
+        var cls = t.health_band === 'red' ? ' class="red"' : '';
+        return '<tr' + cls + '><td>' + t.tenant_key + '</td><td>' + t.customer_name +
+          '</td><td>' + t.segment + '</td><td>' + t.health_score + '</td><td>' +
+          t.status + '</td><td>' + t.sla_tier + '</td></tr>';
+      }).join('');
+    }
+    function load(force) {
+      if (!force && cache && (Date.now() - cacheAt) < TTL) {
+        renderGov(cache.governance);
+        filterTenants(cache.tenant_health);
+        document.getElementById('out').textContent = JSON.stringify(cache, null, 2);
+        return;
+      }
+      frappe.call({
+        method: 'agriflow.api.v1.enterprise.enterprise_operations_dashboard',
+        callback: function (r) {
+          cache = (r.message && r.message.data) || r.message || {};
+          cacheAt = Date.now();
+          renderGov(cache.governance);
+          filterTenants(cache.tenant_health);
+          document.getElementById('out').textContent = JSON.stringify(cache, null, 2);
+        }
+      });
+    }
+    function filterTenants(list) {
+      var q = document.getElementById('search').value.toLowerCase();
+      var seg = document.getElementById('segment').value;
+      list = (list || []).filter(function (t) {
+        if (seg && t.segment !== seg) return false;
+        if (q && (t.customer_name || '').toLowerCase().indexOf(q) < 0 &&
+            (t.tenant_key || '').toLowerCase().indexOf(q) < 0) return false;
+        return true;
+      });
+      renderTenants(list);
+    }
+    document.getElementById('refresh').onclick = function () { load(true); };
+    document.getElementById('search').oninput = function () { filterTenants(cache && cache.tenant_health); };
+    document.getElementById('segment').onchange = function () { filterTenants(cache && cache.tenant_health); };
+    document.getElementById('automation').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.enterprise.run_enterprise_automation',
+        callback: function () { load(true); }
+      });
+    };
+    document.getElementById('retention').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.enterprise.run_retention_policy', args: { dry_run: 1 },
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('bulk').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.enterprise.bulk_maintenance',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('audit').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.enterprise.export_enterprise_audit', args: { format: 'json' },
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('scheduler').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.enterprise.scheduler_health_dashboard',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    load(true);
+  </script>
+</body>
+</html>

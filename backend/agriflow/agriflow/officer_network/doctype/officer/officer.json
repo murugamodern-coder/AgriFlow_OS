@@ -1,0 +1,125 @@
+{
+ "actions": [],
+ "allow_import": 0,
+ "allow_rename": 0,
+ "autoname": "field:officer_code",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "officer_code",
+  "officer_name",
+  "department",
+  "mobile",
+  "email",
+  "is_active",
+  "current_cluster"
+ ],
+ "fields": [
+  {
+   "fieldname": "officer_code",
+   "fieldtype": "Data",
+   "label": "Officer Code",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "officer_name",
+   "fieldtype": "Data",
+   "label": "Officer Name",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "department",
+   "fieldtype": "Select",
+   "label": "Department",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 1,
+   "search_index": 0,
+   "unique": 0,
+   "options": "agriculture\nhorticulture"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Data",
+   "label": "Mobile",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 0,
+   "unique": 0,
+   "default": "1"
+  },
+  {
+   "fieldname": "current_cluster",
+   "fieldtype": "Link",
+   "label": "Current Cluster",
+   "reqd": 0,
+   "read_only": 1,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "Cluster"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-20 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Officer Network",
+ "name": "Officer",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1
+}

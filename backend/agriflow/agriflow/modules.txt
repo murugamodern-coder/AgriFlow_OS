@@ -1,0 +1,11 @@
+Farmer Registry
+Inventory
+Billing
+MIMIS Sync
+Project Lifecycle
+Task Engine
+Service
+Officer Network
+Profit
+Sync Engine
+Notification Engine

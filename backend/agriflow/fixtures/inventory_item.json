@@ -1,0 +1,25 @@
+[
+ {
+  "doctype": "Inventory Item",
+  "item_code": "ITEM-DRIP-001",
+  "item_name": "Drip Kit Standard",
+  "item_group": "drip",
+  "uom": "Nos",
+  "is_stock_item": 1,
+  "has_batch_no": 1,
+  "has_serial_no": 0,
+  "reorder_level": 10,
+  "is_active": 1
+ },
+ {
+  "doctype": "Inventory Item",
+  "item_code": "ITEM-FILTER-001",
+  "item_name": "Disc Filter Unit",
+  "item_group": "filter",
+  "uom": "Nos",
+  "is_stock_item": 1,
+  "has_serial_no": 1,
+  "reorder_level": 5,
+  "is_active": 1
+ }
+]

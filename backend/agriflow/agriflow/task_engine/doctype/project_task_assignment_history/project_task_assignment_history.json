@@ -1,0 +1,141 @@
+{
+ "actions": [],
+ "allow_import": 0,
+ "allow_rename": 0,
+ "autoname": "hash",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "project_task",
+  "farmer_project",
+  "officer",
+  "assigned_on",
+  "unassigned_on",
+  "assigned_by",
+  "assignment_reason",
+  "notes"
+ ],
+ "fields": [
+  {
+   "fieldname": "project_task",
+   "fieldtype": "Link",
+   "label": "Project Task",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 1,
+   "unique": 0,
+   "options": "Project Task"
+  },
+  {
+   "fieldname": "farmer_project",
+   "fieldtype": "Link",
+   "label": "Farmer Project",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "Farmer Project"
+  },
+  {
+   "fieldname": "officer",
+   "fieldtype": "Link",
+   "label": "Officer",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 0,
+   "unique": 0,
+   "options": "Officer"
+  },
+  {
+   "fieldname": "assigned_on",
+   "fieldtype": "Datetime",
+   "label": "Assigned On",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "unassigned_on",
+   "fieldtype": "Datetime",
+   "label": "Unassigned On",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "assigned_by",
+   "fieldtype": "Link",
+   "label": "Assigned By",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "User"
+  },
+  {
+   "fieldname": "assignment_reason",
+   "fieldtype": "Select",
+   "label": "Assignment Reason",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "options": "initial\ntransfer\nreassignment\ncorrection",
+   "default": "initial"
+  },
+  {
+   "fieldname": "notes",
+   "fieldtype": "Small Text",
+   "label": "Notes",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-20 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Task Engine",
+ "name": "Project Task Assignment History",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0,
+ "title_field": "project_task"
+}

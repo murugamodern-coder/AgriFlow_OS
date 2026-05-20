@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>AgriFlow Observability</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 1.5rem; font-size: 13px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.5rem; }
+    .card { border: 1px solid #ddd; border-radius: 6px; padding: 0.5rem; }
+    .card.warn { border-color: #f9a825; }
+    pre { background: #f5f5f5; padding: 0.75rem; font-size: 10px; max-height: 300px; overflow: auto; }
+    button { margin: 0 4px 4px 0; font-size: 11px; }
+  </style>
+</head>
+<body>
+  <h1>Observability Console</h1>
+  <p>Phase 24 — <code>observability.ops_metrics_dashboard</code> (120s cache)</p>
+  <button id="refresh">Refresh</button>
+  <button id="latency">Latency probe</button>
+  <button id="rollup">Refresh rollup</button>
+  <button id="indexes">Ensure indexes</button>
+  <button id="selfcheck">Self-check</button>
+  <button id="cost">Cost estimate</button>
+  <h2>Latency (ms)</h2>
+  <div class="grid" id="lat"></div>
+  <h2>Queue depth (daily rollup)</h2>
+  <div class="grid" id="queue"></div>
+  <pre id="out">Loading…</pre>
+  <script>
+    var cache = null, at = 0, TTL = 120000;
+    function renderLat(m) {
+      var l = (m && m.latency_ms) || {};
+      document.getElementById('lat').innerHTML = Object.keys(l).map(function (k) {
+        var w = l[k] > 1000 ? ' warn' : '';
+        return '<div class="card' + w + '"><strong>' + k + '</strong><div>' + l[k] + '</div></div>';
+      }).join('');
+    }
+    function renderQueue(m) {
+      var t = (m && m.queue_depth_trends) || [];
+      var last = t[t.length - 1];
+      document.getElementById('queue').innerHTML = last ? [
+        ['Last day', last.day],
+        ['Devices', last.devices],
+        ['Avg pending', last.avg_pending],
+        ['Samples', last.samples],
+      ].map(function (r) {
+        return '<div class="card"><strong>' + r[0] + '</strong><div>' + r[1] + '</div></div>';
+      }).join('') : '<div class="card">No rollup</div>';
+    }
+    function load(force) {
+      if (!force && cache && (Date.now() - at) < TTL) {
+        renderLat(cache); renderQueue(cache);
+        document.getElementById('out').textContent = JSON.stringify(cache, null, 2);
+        return;
+      }
+      frappe.call({
+        method: 'agriflow.api.v1.observability.ops_metrics_dashboard',
+        callback: function (r) {
+          cache = (r.message && r.message.data) || r.message || {};
+          at = Date.now();
+          renderLat(cache); renderQueue(cache);
+          document.getElementById('out').textContent = JSON.stringify(cache, null, 2);
+        }
+      });
+    }
+    document.getElementById('refresh').onclick = function () { load(true); };
+    document.getElementById('latency').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.observability.dashboard_latency',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('rollup').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.observability.refresh_telemetry_rollup',
+        callback: function () { load(true); }
+      });
+    };
+    document.getElementById('indexes').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.observability.ensure_db_indexes',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('selfcheck').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.observability.operational_self_check_api',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    document.getElementById('cost').onclick = function () {
+      frappe.call({ method: 'agriflow.api.v1.observability.infrastructure_cost_summary',
+        callback: function (r) { document.getElementById('out').textContent = JSON.stringify(r.message, null, 2); }
+      });
+    };
+    load(true);
+  </script>
+</body>
+</html>

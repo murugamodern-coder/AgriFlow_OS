@@ -1,0 +1,98 @@
+[
+ {
+  "doctype": "Project Stage",
+  "name": "lead_captured",
+  "stage_key": "lead_captured",
+  "sequence": 1,
+  "label_i18n_key": "project.stage.lead_captured",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "eligibility_check",
+  "stage_key": "eligibility_check",
+  "sequence": 2,
+  "label_i18n_key": "project.stage.eligibility_check",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "documents_collected",
+  "stage_key": "documents_collected",
+  "sequence": 3,
+  "label_i18n_key": "project.stage.documents_collected",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "mimis_registered",
+  "stage_key": "mimis_registered",
+  "sequence": 4,
+  "label_i18n_key": "project.stage.mimis_registered",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "field_survey",
+  "stage_key": "field_survey",
+  "sequence": 5,
+  "label_i18n_key": "project.stage.field_survey",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "quotation_generated",
+  "stage_key": "quotation_generated",
+  "sequence": 6,
+  "label_i18n_key": "project.stage.quotation_generated",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "pre_inspection_approval",
+  "stage_key": "pre_inspection_approval",
+  "sequence": 7,
+  "label_i18n_key": "project.stage.pre_inspection_approval",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "work_order_received",
+  "stage_key": "work_order_received",
+  "sequence": 8,
+  "label_i18n_key": "project.stage.work_order_received",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "material_dispatched",
+  "stage_key": "material_dispatched",
+  "sequence": 9,
+  "label_i18n_key": "project.stage.material_dispatched",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "installation_done",
+  "stage_key": "installation_done",
+  "sequence": 10,
+  "label_i18n_key": "project.stage.installation_done",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "post_inspection_approval",
+  "stage_key": "post_inspection_approval",
+  "sequence": 11,
+  "label_i18n_key": "project.stage.post_inspection_approval",
+  "is_active": 1
+ },
+ {
+  "doctype": "Project Stage",
+  "name": "subsidy_released",
+  "stage_key": "subsidy_released",
+  "sequence": 12,
+  "label_i18n_key": "project.stage.subsidy_released",
+  "is_active": 1
+ }
+]

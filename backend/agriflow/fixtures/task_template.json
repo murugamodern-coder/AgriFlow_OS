@@ -1,0 +1,29 @@
+[
+  {
+    "template_id": "documents_collected_doc_collection",
+    "to_stage": "documents_collected",
+    "task_type": "document_collection",
+    "subject": "Collect subsidy documents",
+    "priority": "normal",
+    "due_offset_days": 3,
+    "default_officer_from": "project.officer"
+  },
+  {
+    "template_id": "field_survey_visit",
+    "to_stage": "field_survey",
+    "task_type": "field_visit",
+    "subject": "Conduct field survey",
+    "priority": "high",
+    "due_offset_days": 5,
+    "default_officer_from": "project.officer"
+  },
+  {
+    "template_id": "mimis_registered_verification",
+    "to_stage": "mimis_registered",
+    "task_type": "verification",
+    "subject": "Verify MIMIS registration",
+    "priority": "normal",
+    "due_offset_days": 2,
+    "default_officer_from": "project.officer"
+  }
+]

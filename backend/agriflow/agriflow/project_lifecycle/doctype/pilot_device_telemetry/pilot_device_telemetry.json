@@ -1,0 +1,40 @@
+{
+  "doctype": "DocType",
+  "name": "Pilot Device Telemetry",
+  "module": "Project Lifecycle",
+  "custom": 1,
+  "autoname": "hash",
+  "engine": "InnoDB",
+  "field_order": [
+    "device_id",
+    "user",
+    "app_version",
+    "build_number",
+    "platform",
+    "queue_pending",
+    "queue_conflict",
+    "queue_failed",
+    "last_sync_at",
+    "last_correlation_id",
+    "reported_at",
+    "diagnostics_json"
+  ],
+  "fields": [
+    {"fieldname": "device_id", "fieldtype": "Data", "label": "Device ID", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "user", "fieldtype": "Link", "label": "User", "options": "User", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "app_version", "fieldtype": "Data", "label": "App Version", "in_list_view": 1},
+    {"fieldname": "build_number", "fieldtype": "Data", "label": "Build Number"},
+    {"fieldname": "platform", "fieldtype": "Data", "label": "Platform"},
+    {"fieldname": "queue_pending", "fieldtype": "Int", "label": "Queue Pending", "default": "0"},
+    {"fieldname": "queue_conflict", "fieldtype": "Int", "label": "Queue Conflicts", "default": "0"},
+    {"fieldname": "queue_failed", "fieldtype": "Int", "label": "Queue Failed", "default": "0"},
+    {"fieldname": "last_sync_at", "fieldtype": "Datetime", "label": "Last Sync At"},
+    {"fieldname": "last_correlation_id", "fieldtype": "Data", "label": "Last Correlation ID"},
+    {"fieldname": "reported_at", "fieldtype": "Datetime", "label": "Reported At", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "diagnostics_json", "fieldtype": "JSON", "label": "Diagnostics JSON"}
+  ],
+  "permissions": [
+    {"role": "System Manager", "read": 1, "write": 1, "create": 1, "delete": 1, "export": 1, "report": 1},
+    {"role": "Field Staff", "read": 0, "write": 0, "create": 1, "delete": 0}
+  ]
+}

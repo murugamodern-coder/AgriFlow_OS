@@ -1,0 +1,88 @@
+{
+ "actions": [],
+ "allow_import": 0,
+ "allow_rename": 0,
+ "autoname": "field:stage_key",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "stage_key",
+  "sequence",
+  "label_i18n_key",
+  "is_active"
+ ],
+ "fields": [
+  {
+   "fieldname": "stage_key",
+   "fieldtype": "Data",
+   "label": "Stage Key",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 1,
+   "unique": 0
+  },
+  {
+   "fieldname": "sequence",
+   "fieldtype": "Int",
+   "label": "Sequence",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "label_i18n_key",
+   "fieldtype": "Data",
+   "label": "Label i18n Key",
+   "reqd": 1,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0,
+   "default": "1"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-20 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Project Lifecycle",
+ "name": "Project Stage",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "report": 1,
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 1,
+ "title_field": "stage_key"
+}

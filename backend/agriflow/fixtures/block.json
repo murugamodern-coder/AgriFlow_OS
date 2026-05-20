@@ -1,0 +1,98 @@
+[
+ {
+  "doctype": "Block",
+  "name": "BLK01",
+  "block_code": "BLK01",
+  "block_name": "Block 01",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK02",
+  "block_code": "BLK02",
+  "block_name": "Block 02",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK03",
+  "block_code": "BLK03",
+  "block_name": "Block 03",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK04",
+  "block_code": "BLK04",
+  "block_name": "Block 04",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK05",
+  "block_code": "BLK05",
+  "block_name": "Block 05",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK06",
+  "block_code": "BLK06",
+  "block_name": "Block 06",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK07",
+  "block_code": "BLK07",
+  "block_name": "Block 07",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK08",
+  "block_code": "BLK08",
+  "block_name": "Block 08",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK09",
+  "block_code": "BLK09",
+  "block_name": "Block 09",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK10",
+  "block_code": "BLK10",
+  "block_name": "Block 10",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK11",
+  "block_code": "BLK11",
+  "block_name": "Block 11",
+  "district": "TVM",
+  "is_active": 1
+ },
+ {
+  "doctype": "Block",
+  "name": "BLK12",
+  "block_code": "BLK12",
+  "block_name": "Block 12",
+  "district": "TVM",
+  "is_active": 1
+ }
+]

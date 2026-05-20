@@ -1,0 +1,63 @@
+{
+ "actions": [],
+ "allow_import": 0,
+ "allow_rename": 0,
+ "autoname": "hash",
+ "creation": "2026-05-20 00:00:00.000000",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "survey_number",
+  "extent_acres",
+  "crop"
+ ],
+ "fields": [
+  {
+   "fieldname": "survey_number",
+   "fieldtype": "Data",
+   "label": "Survey Number",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "extent_acres",
+   "fieldtype": "Float",
+   "label": "Extent (acres)",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "crop",
+   "fieldtype": "Data",
+   "label": "Crop",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-05-20 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "Farmer Registry",
+ "name": "Farmer Land Parcel",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [],
+ "track_changes": 0,
+ "istable": 1,
+ "title_field": "survey_number"
+}
