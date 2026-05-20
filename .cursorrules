@@ -1,0 +1,36 @@
+You are working on AgriFlow OS.
+
+Stack:
+- Frappe v15
+- Flutter 3.24
+- Riverpod
+- Hive + Drift
+
+Rules:
+
+- Read PRD.md before generating code
+- Use feature-first architecture
+- Use Riverpod only
+- Use go_router only
+- Offline-first architecture mandatory
+- Never hardcode colors
+- Never hardcode Tamil strings
+- Use i18n
+- Use design tokens
+- Follow workflow-first architecture
+- Farmer Project is the main entity
+- Preserve officer assignment history
+- Never recreate MIMIS portal
+- Sync via Excel reconciliation only
+
+Flutter structure:
+lib/features/{feature}/
+
+Backend:
+Use Frappe DocTypes + fixtures.
+
+Always:
+- split files cleanly
+- use reusable widgets
+- write production-grade code
+- add comments only where needed
