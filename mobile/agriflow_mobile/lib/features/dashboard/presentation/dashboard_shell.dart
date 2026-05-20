@@ -5,6 +5,7 @@ import 'package:agriflow_mobile/core/config/env.dart';
 import 'package:agriflow_mobile/core/providers/core_providers.dart';
 
 import 'package:agriflow_mobile/core/sync/sync_orchestrator.dart';
+import 'package:agriflow_mobile/features/notifications/presentation/notification_inbox_screen.dart';
 import 'package:agriflow_mobile/features/pilot_ops/presentation/onboarding_screen.dart';
 import 'package:agriflow_mobile/features/readiness/data/readiness_remote.dart';
 
@@ -308,7 +309,11 @@ class _DashboardShellState extends ConsumerState<DashboardShell> {
 
           NavigationDestination(
 
-            icon: const Icon(Icons.notifications_outlined),
+            icon: Badge(
+              isLabelVisible: unreadNotif > 0,
+              label: Text('$unreadNotif'),
+              child: const Icon(Icons.notifications_outlined),
+            ),
 
             label: l10n.navNotifications,
 

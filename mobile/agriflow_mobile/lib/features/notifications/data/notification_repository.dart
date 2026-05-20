@@ -29,4 +29,6 @@ class NotificationRepository {
   Future<int> unreadCountOnline() => _remote.fetchUnreadCount();
 
   Future<void> markReadOnline(String name) => _remote.markRead(name);
+
+  Future<void> markAllReadOnline() => _remote.markAllRead();
 }

@@ -41,4 +41,12 @@ class NotificationRemote {
       parseData: (json) => Map<String, dynamic>.from(json as Map),
     );
   }
+
+  Future<void> markAllRead() async {
+    await api.postMethod<Map<String, dynamic>>(
+      methodUrl: config.methodUrl('agriflow.api.v1.notification.mark_all_read'),
+      data: {},
+      parseData: (json) => Map<String, dynamic>.from(json as Map),
+    );
+  }
 }

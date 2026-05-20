@@ -523,41 +523,45 @@ def _advance_to_sequence(svc: ProjectLifecycleService, project_name: str, target
 
 def _seed_tasks(task_svc: TaskLifecycleService, projects: dict[str, str]) -> list[str]:
 	created = []
-	project_list = list(projects.values())
+	hero_project = projects.get("FR-DEMO-KUMAR")
 	specs = [
-		("today", 0, "high"),
-		("today", 0, "normal"),
-		("today", 0, "normal"),
-		("today", 0, "low"),
-		("today", 0, "normal"),
-		("overdue", -2, "high"),
-		("overdue", -3, "normal"),
-		("overdue", -5, "high"),
-		("overdue", -1, "normal"),
-		("upcoming", 3, "normal"),
-		("upcoming", 5, "low"),
-		("upcoming", 7, "normal"),
-		("upcoming", 10, "normal"),
-		("upcoming", 14, "low"),
-		("upcoming", 21, "normal"),
+		("overdue", -2, "high", "field_visit", "Kumar M. — field visit", hero_project, "FR-DEMO-KUMAR"),
+		("overdue", -1, "high", "verification", "Ravi — pre-inspection", projects.get("FR-DEMO-MURUGAN"), "FR-DEMO-MURUGAN"),
+		("today", 0, "high", "document_collection", "Document collect — Mani", projects.get("FR-DEMO-VELU"), "FR-DEMO-VELU"),
+		("today", 0, "normal", "field_visit", "Survey — Selvi field", projects.get("FR-DEMO-SENTHIL"), "FR-DEMO-SENTHIL"),
+		("today", 0, "normal", "follow_up", "Follow-up call — Palani", projects.get("FR-DEMO-PALANI"), "FR-DEMO-PALANI"),
+		("today", 0, "normal", "field_visit", "Kumar visit — installation check", hero_project, "FR-DEMO-KUMAR"),
+		("today", 0, "low", "document_collection", "Collect Aadhaar copy", projects.get("FR-DEMO-GOVIND"), "FR-DEMO-GOVIND"),
+		("upcoming", 2, "normal", "field_visit", "Site survey — Vandavasi", projects.get("FR-DEMO-LAKSHMI"), "FR-DEMO-LAKSHMI"),
+		("upcoming", 3, "normal", "installation", "Installation prep — Rajan", projects.get("FR-DEMO-RAJAN"), "FR-DEMO-RAJAN"),
+		("upcoming", 5, "low", "follow_up", "WhatsApp follow-up", projects.get("FR-DEMO-RAJAN"), "FR-DEMO-RAJAN"),
+		("upcoming", 7, "normal", "verification", "Post-install verification", hero_project, "FR-DEMO-KUMAR"),
+		("upcoming", 10, "low", "document_collection", "Upload land records", projects.get("FR-DEMO-PALANI"), "FR-DEMO-PALANI"),
+		("upcoming", 14, "normal", "field_visit", "Block review visit", projects.get("FR-DEMO-MURUGAN"), "FR-DEMO-MURUGAN"),
+		("upcoming", 21, "normal", "follow_up", "Subsidy status check", projects.get("FR-DEMO-RAJAN"), "FR-DEMO-RAJAN"),
+		("upcoming", 4, "normal", "approval", "AAO sign-off pending", projects.get("FR-DEMO-SENTHIL"), "FR-DEMO-SENTHIL"),
 	]
-	for idx, (bucket, day_offset, priority) in enumerate(specs):
-		project = project_list[idx % len(project_list)]
+	for idx, (bucket, day_offset, priority, task_type, subject, project, farmer) in enumerate(specs):
+		if not project:
+			continue
 		client_id = f"demo-task-{bucket}-{idx}"
 		if frappe.db.exists("Project Task", {"client_id": client_id, "is_deleted": 0}):
 			created.append(frappe.db.get_value("Project Task", {"client_id": client_id}, "name"))
 			continue
 		task = task_svc.create_task(
-			subject=f"Demo {bucket} — visit #{idx + 1}",
+			subject=subject,
 			farmer_project=project,
-			task_type="field_visit",
+			task_type=task_type,
 			due_date=add_days(today(), day_offset),
 			priority=priority,
-			description=f"Seeded {bucket} task for demo",
+			description=f"Demo {bucket} task",
 			assigned_officer=DEMO_USER,
+			assigned_to=DEMO_USER,
 			client_id=client_id,
 			auto_assign=True,
 		)
+		if farmer:
+			frappe.db.set_value("Project Task", task.name, "farmer", farmer, update_modified=False)
 		created.append(task.name)
 	return created
 
@@ -569,20 +573,80 @@ def _seed_notifications(projects: dict[str, str]) -> int:
 	block = frappe.db.get_value("Farmer Project", hero, "block")
 	farmer = frappe.db.get_value("Farmer Project", hero, "farmer")
 	specs = [
-		("task_overdue", "notificationTaskOverdue", "Urgent: subsidy visit overdue", "high", {"tone": "urgent"}),
-		("task_overdue", "notificationTaskOverdue", "Warning: document pending", "high", {"tone": "warning"}),
-		("project_stage_changed", "notificationStageTransition", "Installation stage active", "normal", {"tone": "info"}),
-		("manual_note", "notificationManual", "AAO Suresh added a field note", "normal", {"tone": "info"}),
-		("system_alert", "notificationManual", "Cluster-7 weekly review tomorrow", "normal", {"tone": "info"}),
-		("task_assigned", "notificationTaskDue", "New task: pre-inspection photos", "normal", {"tone": "info"}),
-		("task_assigned", "notificationTaskDue", "Task due today — Kumar M.", "high", {"tone": "urgent"}),
-		("project_stage_changed", "notificationProjectStatus", "Material dispatched for FP", "normal", {"tone": "warning"}),
-		("manual_note", "notificationManual", "Murugesan referral follow-up", "low", {"tone": "info"}),
-		("system_alert", "notificationSlaBreach", "SLA breach: quotation pending", "high", {"tone": "urgent"}),
+		(
+			"system_alert",
+			"notificationFollowupMissed",
+			"Kumar farmer — 14 days no follow-up",
+			"high",
+			{"tone": "urgent", "deep_link": f"/projects/{hero}/timeline"},
+		),
+		(
+			"project_stage_changed",
+			"notificationStageStuck",
+			"Project #1284 stuck at Installation for 3 days",
+			"high",
+			{"tone": "warning", "deep_link": f"/projects/{hero}/timeline"},
+		),
+		(
+			"manual_note",
+			"notificationOfficerTransfer",
+			"AAO Suresh transferred — assign new officer",
+			"normal",
+			{"tone": "warning", "deep_link": "/farmers"},
+		),
+		(
+			"system_alert",
+			"notificationLowStock",
+			"Low stock: 16mm drip lateral (12 units left)",
+			"normal",
+			{"tone": "orange"},
+		),
+		(
+			"project_stage_changed",
+			"notificationStageTransition",
+			"Kumar M. moved to Installation stage",
+			"normal",
+			{"tone": "info", "deep_link": f"/projects/{hero}/timeline"},
+		),
+		(
+			"task_completed",
+			"notificationTaskCompleted",
+			"Murugan team marked installation visit complete",
+			"normal",
+			{"tone": "success", "deep_link": f"/projects/{hero}/timeline"},
+		),
+		(
+			"task_overdue",
+			"notificationTaskOverdue",
+			"Overdue: Ravi inspection — 1 day",
+			"high",
+			{"tone": "urgent", "deep_link": "/tasks"},
+		),
+		(
+			"task_assigned",
+			"notificationTaskDue",
+			"Today: Document collect — Mani",
+			"normal",
+			{"tone": "info", "deep_link": "/tasks"},
+		),
+		(
+			"manual_note",
+			"notificationManual",
+			"Murugesan referral — schedule visit",
+			"low",
+			{"tone": "info", "deep_link": f"/projects/{hero}/timeline"},
+		),
+		(
+			"system_alert",
+			"notificationSlaBreach",
+			"SLA breach: quotation pending for Palani",
+			"high",
+			{"tone": "urgent", "deep_link": "/tasks"},
+		),
 	]
 	count = 0
 	for idx, (ntype, i18n_key, preview, priority, payload) in enumerate(specs):
-		dkey = f"demo-notif-{idx}"
+		dkey = f"demo-notif-v2-{idx}"
 		if frappe.db.exists("Notification", {"delivery_key": dkey}):
 			count += 1
 			continue
@@ -600,7 +664,7 @@ def _seed_notifications(projects: dict[str, str]) -> int:
 				"block": block,
 				"district": DISTRICT,
 				"priority": priority,
-				"created_on": now_datetime(),
+				"created_on": add_days(now_datetime(), -idx),
 				"is_deleted": 0,
 			}
 		).insert(ignore_permissions=True)

@@ -26,7 +26,10 @@ def to_notification_item(row: dict) -> dict[str, Any]:
 		"payload": payload,
 		"priority": row.get("priority") or "normal",
 		"read": bool(read_on),
+		"read_on": read_on.isoformat() if read_on and hasattr(read_on, "isoformat") else read_on,
 		"created_on": created,
 		"farmer_project": row.get("farmer_project"),
+		"farmer": row.get("farmer"),
+		"block": row.get("block"),
 		"timeline_event": row.get("timeline_event") or None,
 	}
