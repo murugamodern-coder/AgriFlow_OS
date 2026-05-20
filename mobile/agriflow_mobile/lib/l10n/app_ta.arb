@@ -139,5 +139,48 @@
   "@timelineHeaderReferral": {
     "placeholders": { "name": { "type": "String" } }
   },
-  "timelineAcres": "ஏக்கர்"
+  "timelineAcres": "ஏக்கர்",
+  "taskFeedTitle": "இன்றைய பணிகள்",
+  "taskFeedSummary": "{pending} நிலுவை · {overdue} தாமதம்",
+  "@taskFeedSummary": {
+    "placeholders": {
+      "pending": { "type": "int" },
+      "overdue": { "type": "int" }
+    }
+  },
+  "taskSectionOverdue": "தாமதம்",
+  "taskSectionToday": "இன்று",
+  "taskSectionUpcoming": "வரவிருக்கும்",
+  "taskFeedEmptyCelebration": "🎉 இன்று நிலுவை பணிகள் இல்லை!",
+  "taskFilterAll": "அனைத்தும்",
+  "taskFilterMine": "என் பணிகள்",
+  "taskFilterVisit": "வருகை",
+  "taskFilterDocument": "ஆவணம்",
+  "taskDueToday": "இன்று காலக்கெடு",
+  "taskDueDaysAgo": "{days} நாள் முன்பு",
+  "@taskDueDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "taskDueInDays": "{days} நாளில்",
+  "@taskDueInDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "taskGpsCheckIn": "கள GPS பதிவு",
+  "taskGpsCheckedIn": "களத்தில் பதிவு செய்யப்பட்டது",
+  "taskVoiceNoteAttach": "குரல் குறிப்பு இணை",
+  "taskVoiceNoteQueued": "குரல் குறிப்பு ஒத்திசைவுக்கு வரிசையில்",
+  "notificationMarkAllRead": "அனைத்தையும் படித்தது",
+  "notificationEmptyFriendly": "புதிய அறிவிப்புகள் இல்லை — நீங்கள் புதுப்பித்த நிலையில்.",
+  "notificationFilterAll": "அனைத்தும்",
+  "notificationFilterUrgent": "அவசரம்",
+  "notificationFilterTasks": "பணிகள்",
+  "notificationGroupToday": "இன்று",
+  "notificationGroupYesterday": "நேற்று",
+  "notificationGroupThisWeek": "இந்த வாரம்",
+  "notificationGroupOlder": "பழையவை",
+  "notificationFollowupMissed": "பின்தொடர்தல் தவறு",
+  "notificationStageStuck": "நிலை சிக்கல்",
+  "notificationOfficerTransfer": "அலுவலர் மாற்றம்",
+  "notificationLowStock": "குறைந்த சரக்கு",
+  "notificationTaskCompleted": "பணி முடிந்தது"
 }

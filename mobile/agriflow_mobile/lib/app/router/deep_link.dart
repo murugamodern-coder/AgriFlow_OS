@@ -9,8 +9,9 @@ class DeepLinkParser {
     }
     final timelineMatch = RegExp(r'^/projects/([^/]+)/timeline$').firstMatch(path);
     if (timelineMatch != null) {
-      return '/timeline?project=${timelineMatch.group(1)}';
+      return '/projects/${timelineMatch.group(1)}/timeline';
     }
+    if (path == '/farmers' || path == '/tasks') return path;
     return null;
   }
 }

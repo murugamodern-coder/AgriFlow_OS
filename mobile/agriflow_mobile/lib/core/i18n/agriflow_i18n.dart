@@ -50,6 +50,16 @@ abstract final class AgriFlowI18n {
         return l10n.notificationSlaBreach;
       case 'notification.manual':
         return l10n.notificationManual;
+      case 'notificationFollowupMissed':
+        return l10n.notificationFollowupMissed;
+      case 'notificationStageStuck':
+        return l10n.notificationStageStuck;
+      case 'notificationOfficerTransfer':
+        return l10n.notificationOfficerTransfer;
+      case 'notificationLowStock':
+        return l10n.notificationLowStock;
+      case 'notificationTaskCompleted':
+        return l10n.notificationTaskCompleted;
       default:
         if (key.startsWith('notification.')) {
           return key.substring('notification.'.length).replaceAll('_', ' ');

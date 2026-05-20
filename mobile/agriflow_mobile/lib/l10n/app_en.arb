@@ -189,5 +189,48 @@
   "@timelineHeaderReferral": {
     "placeholders": { "name": { "type": "String" } }
   },
-  "timelineAcres": "acres"
+  "timelineAcres": "acres",
+  "taskFeedTitle": "Today's work",
+  "taskFeedSummary": "{pending} pending · {overdue} overdue",
+  "@taskFeedSummary": {
+    "placeholders": {
+      "pending": { "type": "int" },
+      "overdue": { "type": "int" }
+    }
+  },
+  "taskSectionOverdue": "Overdue",
+  "taskSectionToday": "Today",
+  "taskSectionUpcoming": "Upcoming",
+  "taskFeedEmptyCelebration": "🎉 No pending tasks today!",
+  "taskFilterAll": "All",
+  "taskFilterMine": "My tasks",
+  "taskFilterVisit": "Visit",
+  "taskFilterDocument": "Documents",
+  "taskDueToday": "Due today",
+  "taskDueDaysAgo": "{days} days ago",
+  "@taskDueDaysAgo": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "taskDueInDays": "In {days} days",
+  "@taskDueInDays": {
+    "placeholders": { "days": { "type": "int" } }
+  },
+  "taskGpsCheckIn": "GPS check-in at field",
+  "taskGpsCheckedIn": "Checked in at field",
+  "taskVoiceNoteAttach": "Attach voice note",
+  "taskVoiceNoteQueued": "Voice note queued for sync",
+  "notificationMarkAllRead": "Mark all read",
+  "notificationEmptyFriendly": "You're all caught up — no new alerts.",
+  "notificationFilterAll": "All",
+  "notificationFilterUrgent": "Urgent",
+  "notificationFilterTasks": "Tasks",
+  "notificationGroupToday": "Today",
+  "notificationGroupYesterday": "Yesterday",
+  "notificationGroupThisWeek": "This week",
+  "notificationGroupOlder": "Older",
+  "notificationFollowupMissed": "Missed follow-up",
+  "notificationStageStuck": "Stage stuck",
+  "notificationOfficerTransfer": "Officer transfer",
+  "notificationLowStock": "Low stock alert",
+  "notificationTaskCompleted": "Task completed"
 }

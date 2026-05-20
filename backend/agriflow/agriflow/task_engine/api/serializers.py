@@ -42,13 +42,29 @@ def is_overdue(row) -> bool:
 	return getdate(due) < getdate(today())
 
 
+def _farmer_display(data) -> tuple[str | None, str | None]:
+	farmer_name = None
+	village_name = None
+	farmer = data.get("farmer") if isinstance(data, dict) else getattr(data, "farmer", None)
+	if not farmer:
+		return None, None
+	farmer_name = frappe.db.get_value("Farmer", farmer, "farmer_name")
+	village = frappe.db.get_value("Farmer", farmer, "village")
+	if village:
+		village_name = frappe.db.get_value("Village", village, "village_name")
+	return farmer_name, village_name
+
+
 def to_task_summary(row) -> dict[str, Any]:
 	data = row if isinstance(row, dict) else row.as_dict()
+	farmer_name, village_name = _farmer_display(data)
 	return {
 		"name": data.name,
 		"subject": data.subject,
 		"farmer_project": data.farmer_project,
 		"farmer": data.farmer,
+		"farmer_name": farmer_name,
+		"village_name": village_name,
 		"task_type": data.task_type,
 		"status": data.status,
 		"priority": _normalize_priority_out(data.priority),
