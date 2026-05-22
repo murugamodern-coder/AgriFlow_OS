@@ -24,7 +24,7 @@ class NotificationFeedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final tone = _toneStyle(theme, item.tone);
+    final tone = _toneStyle(context, item.tone);
     final title = item.bodyPreview?.isNotEmpty == true
         ? item.bodyPreview!
         : AgriFlowI18n.notificationTitle(context, item.titleI18nKey);

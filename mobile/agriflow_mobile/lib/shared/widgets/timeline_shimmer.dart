@@ -35,7 +35,12 @@ class TimelineShimmer extends StatelessWidget {
     );
   }
 
-  Widget _box({double? width, required double height, double radius = 8}) {
+  Widget _box(
+    BuildContext context, {
+    double? width,
+    required double height,
+    double radius = 8,
+  }) {
     return Container(
       width: width,
       height: height,

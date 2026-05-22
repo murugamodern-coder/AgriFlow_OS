@@ -346,5 +346,17 @@
   "updateRequiredMessage": "Update required (minimum {version})",
   "@updateRequiredMessage": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+  "stageSecondaryDocsComplete": "4/4 documents uploaded",
+  "stageSecondaryMimisId": "ID: {id}",
+  "@stageSecondaryMimisId": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "stageSecondaryQuotation": "₹{amount}",
+  "@stageSecondaryQuotation": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "stageSecondaryAaoApproved": "AAO approved",
+  "stageSecondaryStockReserved": "Stock reserved",
+  "stageSecondaryInstallationTeam": "Murugan installation team"
 }

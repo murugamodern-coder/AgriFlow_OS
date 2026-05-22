@@ -105,6 +105,7 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
               const SizedBox(height: 16),
               if (grouped.overdue.isNotEmpty) ...[
                 _sectionTitle(
+                  l10n,
                   l10n.taskSectionOverdue,
                   grouped.overdue.length,
                   AgriFlowStatusSemantics.error(context),
@@ -126,6 +127,7 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
               ],
               if (grouped.today.isNotEmpty) ...[
                 _sectionTitle(
+                  l10n,
                   l10n.taskSectionToday,
                   grouped.today.length,
                   Theme.of(context).colorScheme.tertiary,
@@ -147,6 +149,7 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
               ],
               if (grouped.upcoming.isNotEmpty) ...[
                 _sectionTitle(
+                  l10n,
                   l10n.taskSectionUpcoming,
                   grouped.upcoming.length,
                   Theme.of(context).colorScheme.primary,
@@ -173,7 +176,12 @@ class _TaskInboxScreenState extends ConsumerState<TaskInboxScreen> {
     );
   }
 
-  Widget _sectionTitle(String label, int count, Color color) {
+  Widget _sectionTitle(
+    AppLocalizations l10n,
+    String label,
+    int count,
+    Color color,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8, top: 4),
       child: Row(

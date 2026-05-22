@@ -30,7 +30,7 @@ Audit date: 2026-05-20 (Day 5 theme + i18n pass)
 | Login | `/login` | All labels, buttons | 100% | `login*` keys |
 | Home dashboard | `/home` | Welcome, stats, nav | 100% | `dashboard*`, `nav*` |
 | Farmers list | `/farmers` | List, empty, errors | 100% | `emptyFarmers`, farmer names from API |
-| Project timeline (HERO) | `/projects/:id/timeline` | 12 stages, header, actions | 100% | `stage*`, `timeline*` |
+| Project timeline (HERO) | `/projects/:id/timeline` | 12 stages, header, actions, stage secondary labels | 100% | `stage*`, `timeline*`, `stageSecondary*` |
 | Task feed (HERO #2) | `/tasks` | Sections, filters, due labels | 100% | `task*` keys |
 | Notifications | `/notifications` | Groups, filters, tones | 100% | `notification*`; body from API preview |
 | Sync status | `/sync` | Status, queue, history, dev | 100% | `sync*` keys |

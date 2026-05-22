@@ -296,5 +296,17 @@
   "updateRequiredMessage": "புதுப்பிப்பு தேவை (குறைந்தபட்சம் {version})",
   "@updateRequiredMessage": {
     "placeholders": { "version": { "type": "String" } }
-  }
+  },
+  "stageSecondaryDocsComplete": "4/4 ஆவணங்கள் பதிவேற்றம்",
+  "stageSecondaryMimisId": "ID: {id}",
+  "@stageSecondaryMimisId": {
+    "placeholders": { "id": { "type": "String" } }
+  },
+  "stageSecondaryQuotation": "₹{amount}",
+  "@stageSecondaryQuotation": {
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "stageSecondaryAaoApproved": "AAO ஒப்புதல்",
+  "stageSecondaryStockReserved": "சரக்கு ஒதுக்கப்பட்டது",
+  "stageSecondaryInstallationTeam": "முருகன் நிறுவல் குழு"
 }

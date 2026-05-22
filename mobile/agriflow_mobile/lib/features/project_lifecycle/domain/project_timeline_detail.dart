@@ -38,6 +38,8 @@ class StageRowModel extends Equatable {
     required this.visualState,
     this.dateLabel,
     this.secondaryLabel,
+    this.secondaryI18nKey,
+    this.secondaryI18nArg,
     this.actorLabel,
     this.notes,
     this.isExpanded = false,
@@ -47,7 +49,19 @@ class StageRowModel extends Equatable {
   final int sequence;
   final StageVisualState visualState;
   final String? dateLabel;
+
+  /// Plain text fallback (used when [secondaryI18nKey] is null, e.g. notes).
   final String? secondaryLabel;
+
+  /// Localization key the widget should resolve to render the secondary label.
+  /// Allowed values: docsComplete, mimisId, officer, quotation, aaoApproved,
+  /// stockReserved, workOrderNumber, installationTeam.
+  final String? secondaryI18nKey;
+
+  /// Optional placeholder value for ARB messages with a single argument
+  /// (e.g. MIMIS ID, quoted amount, officer name).
+  final String? secondaryI18nArg;
+
   final String? actorLabel;
   final String? notes;
   final bool isExpanded;

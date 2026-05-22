@@ -69,14 +69,25 @@ class TimelineStageRow extends StatelessWidget {
                       stage.dateLabel!,
                       style: theme.textTheme.bodySmall,
                     ),
-                  if (stage.secondaryLabel != null &&
-                      stage.secondaryLabel!.isNotEmpty)
-                    Text(
-                      stage.secondaryLabel!,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.onSurfaceVariant,
-                      ),
-                    ),
+                  Builder(
+                    builder: (innerCtx) {
+                      final localized = AgriFlowI18n.stageSecondary(
+                        innerCtx,
+                        stage.secondaryI18nKey,
+                        arg: stage.secondaryI18nArg,
+                      );
+                      final text = localized ?? stage.secondaryLabel;
+                      if (text == null || text.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return Text(
+                        text,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: theme.colorScheme.onSurfaceVariant,
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

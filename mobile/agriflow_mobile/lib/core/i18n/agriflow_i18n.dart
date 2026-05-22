@@ -35,6 +35,34 @@ abstract final class AgriFlowI18n {
     }
   }
 
+  /// Localized secondary label rendered beneath a timeline stage row.
+  /// Returns null when the key is unrecognized so the caller can fall back
+  /// to the plain `secondaryLabel` text (notes, names, work-order numbers).
+  static String? stageSecondary(
+    BuildContext context,
+    String? key, {
+    String? arg,
+  }) {
+    if (key == null) return null;
+    final l10n = AppLocalizations.of(context)!;
+    switch (key) {
+      case 'docsComplete':
+        return l10n.stageSecondaryDocsComplete;
+      case 'mimisId':
+        return l10n.stageSecondaryMimisId(arg ?? '');
+      case 'quotation':
+        return l10n.stageSecondaryQuotation(arg ?? '');
+      case 'aaoApproved':
+        return l10n.stageSecondaryAaoApproved;
+      case 'stockReserved':
+        return l10n.stageSecondaryStockReserved;
+      case 'installationTeam':
+        return l10n.stageSecondaryInstallationTeam;
+      default:
+        return null;
+    }
+  }
+
   static String notificationTitle(BuildContext context, String key) {
     final l10n = AppLocalizations.of(context)!;
     switch (key) {

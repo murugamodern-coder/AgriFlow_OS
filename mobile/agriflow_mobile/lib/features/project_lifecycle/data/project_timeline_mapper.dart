@@ -40,21 +40,24 @@ class ProjectTimelineMapper {
       final key = ProjectStages.ordered[i];
       final hist = historyByStage[key];
       final visual = _visualState(i, currentIndex, status);
+      final secondary = _secondaryForStage(
+        key,
+        project: project,
+        farmer: farmer,
+        block: block,
+        village: village,
+        officer: officer,
+        hist: hist,
+      );
       stages.add(
         StageRowModel(
           stageKey: key,
           sequence: i + 1,
           visualState: visual,
           dateLabel: _formatDate(hist?['transitioned_on']),
-          secondaryLabel: _secondaryForStage(
-            key,
-            project: project,
-            farmer: farmer,
-            block: block,
-            village: village,
-            officer: officer,
-            hist: hist,
-          ),
+          secondaryLabel: secondary.text,
+          secondaryI18nKey: secondary.i18nKey,
+          secondaryI18nArg: secondary.i18nArg,
           actorLabel: hist?['transitioned_by'] as String?,
           notes: hist?['notes'] as String?,
         ),
@@ -112,7 +115,7 @@ class ProjectTimelineMapper {
     }
   }
 
-  static String? _secondaryForStage(
+  static _SecondaryResolution _secondaryForStage(
     String key, {
     required Map<String, dynamic> project,
     required Map<String, dynamic> farmer,
@@ -125,31 +128,37 @@ class ProjectTimelineMapper {
       case 'lead_captured':
         final notes = farmer['notes'] as String? ?? '';
         if (notes.contains('referred_by:')) {
-          return notes.split('referred_by:').last.trim();
+          return _SecondaryResolution.text(
+            notes.split('referred_by:').last.trim(),
+          );
         }
-        return hist?['notes'] as String?;
+        return _SecondaryResolution.text(hist?['notes'] as String?);
       case 'documents_collected':
-        return '4/4 uploaded';
+        return const _SecondaryResolution.i18n('docsComplete');
       case 'mimis_registered':
         final mimis = project['mimis_registration_number'];
-        return mimis != null ? 'ID: $mimis' : null;
+        if (mimis == null) return const _SecondaryResolution.empty();
+        return _SecondaryResolution.i18n('mimisId', mimis.toString());
       case 'field_survey':
-        return officer?['officer_name'] as String? ??
+        final name = officer?['officer_name'] as String? ??
             project['officer_name'] as String?;
+        return _SecondaryResolution.text(name);
       case 'quotation_generated':
         final q = project['quoted_amount'];
-        if (q != null) return '₹${_formatInr(q)}';
-        return null;
+        if (q == null) return const _SecondaryResolution.empty();
+        return _SecondaryResolution.i18n('quotation', _formatInr(q));
       case 'pre_inspection_approval':
-        return 'AAO approved';
+        return const _SecondaryResolution.i18n('aaoApproved');
       case 'work_order_received':
-        return 'stock reserved';
+        return const _SecondaryResolution.i18n('stockReserved');
       case 'material_dispatched':
-        return project['work_order_number'] as String?;
+        return _SecondaryResolution.text(
+          project['work_order_number'] as String?,
+        );
       case 'installation_done':
-        return 'Murugan team';
+        return const _SecondaryResolution.i18n('installationTeam');
       default:
-        return hist?['notes'] as String?;
+        return _SecondaryResolution.text(hist?['notes'] as String?);
     }
   }
 
@@ -158,4 +167,21 @@ class ProjectTimelineMapper {
     if (n >= 100000) return '${(n / 100000).toStringAsFixed(1)}L';
     return NumberFormat('#,##,###').format(n.round());
   }
+}
+
+/// Resolution carries either a plain text fallback (notes, names) or an
+/// i18n key + optional argument the widget should resolve via [AgriFlowI18n].
+class _SecondaryResolution {
+  const _SecondaryResolution.text(this.text)
+      : i18nKey = null,
+        i18nArg = null;
+  const _SecondaryResolution.i18n(this.i18nKey, [this.i18nArg]) : text = null;
+  const _SecondaryResolution.empty()
+      : text = null,
+        i18nKey = null,
+        i18nArg = null;
+
+  final String? text;
+  final String? i18nKey;
+  final String? i18nArg;
 }
