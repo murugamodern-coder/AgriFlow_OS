@@ -1,0 +1,48 @@
+# Day 5 Claim Verification
+
+**Mode:** Strict auditor (no fixes in this document).
+**Date:** 2026-05-22 (pre-rehearsal audit).
+**Base commits inspected:** `a735f39` (polish: theme + i18n consistency), `64f7872` (release: pilot demo ready).
+**Local working-tree state:** in-progress refactor (10 files modified) that extends Day 5 with ARB-driven timeline `stageSecondary*` labels and shimmer/notification helpers. The refactor is **source-coherent** but the generated `AppLocalizations` file is not regenerated yet (no `.dart_tool/`); it must be regenerated for the rehearsal build.
+
+Methodology: ripgrep over `mobile/agriflow_mobile/lib`, manual read of demo-path screens (login, home, farmers, project timeline, tasks, notifications, sync), cross-check with `app_en.arb` / `app_ta.arb`.
+
+---
+
+## Verification table
+
+| # | Claim | Status | Evidence (file:line) | Gap |
+|---|-------|--------|----------------------|-----|
+| 1 | **No hardcoded colors on demo paths** | ✅ | `rg "Colors\.\|Color\(0x" mobile/agriflow_mobile/lib/features` returns **0** matches. `lib/shared/widgets/offline_banner.dart:24` and `lib/shared/widgets/sync_status_chip.dart:15-16` reference `AgriFlowColors.warning/info/success` (centralized token constants), not raw `Colors.*`. Status palette routed via `AgriFlowStatusSemantics` (`lib/core/design_tokens/status_semantics.dart:5-26`). | None on demo paths. |
+| 2 | **No hardcoded English strings on demo paths** | ⚠️ Mostly | `rg "Text\(['\"]" lib/` returns only **2** matches — both number-only labels (`Text('$count')`, `Text('$unreadNotif')`) in `task_stats_card.dart:65` and `dashboard_shell.dart:301`. Stage labels, task filters, notifications, sync screen, conflict sheet, error fallbacks all go through `l10n.*` accessors. | One **demo-visible English leak** remains: `task_feed_card.dart` shows `task.subject` and `task.displayFarmer` directly — these come from server seed data. If the Tiruvannamalai seed authors them in Tamil, you're 100%; if Latin, they'll show as Latin. Login screen still surfaces `auth.error.toString()` (`login_screen.dart:74`) for failed logins — minor risk if a typo'd login is shown on stage. |
+| 3 | **Tamil i18n ~98% on demo paths** | ⚠️ Aspirational | `app_ta.arb` (313 lines) covers all demo-path keys: `stage*` (12 stages), `timeline*`, `task*`, `notification*`, `sync*`, `login*`, `dashboard*`, `nav*`, `conflict*`, `errorGeneric`, `roleOwner/OfficeManager/FieldStaff/User`. New ARB-driven secondary labels added in working tree (`stageSecondaryDocsComplete`, `stageSecondaryMimisId`, `stageSecondaryQuotation`, `stageSecondaryAaoApproved`, `stageSecondaryStockReserved`, `stageSecondaryInstallationTeam`) at `app_ta.arb:300-311` + `app_en.arb:350-361`. | **Generated bindings not refreshed** — `mobile/agriflow_mobile/.dart_tool/` does not exist, so `AppLocalizations.stageSecondary*` symbols referenced from `agriflow_i18n.dart:50-60` and `timeline_stage_row.dart:74-78` only resolve **after** `flutter gen-l10n`. **Demo build must run `flutter pub get && flutter gen-l10n` before APK** (already documented in `DEMO_REHEARSAL.md` step 1 and `PILOT_DEMO_READY.md` quick-start). |
+| 4 | **Shared `AgriFlowStatusIcon` component** | ✅ | New file `lib/shared/widgets/agriflow_status_icon.dart` (68 lines) with 7-state enum (`done/pending/active/overdue/locked/warning/info`). Consumed by `timeline_stage_row.dart:39` (`AgriFlowStatusIcon(kind: _kindFor(stage.visualState))`) and `notification_feed_card.dart:41` (`AgriFlowStatusIcon(kind: tone.kind, size: 22)`). | Not used by `sync_app_bar_status.dart` (uses raw `Icons.cloud_done_outlined/wifi_off/sync/check_circle_outline`) — by design, since the chip animates `Icons.sync` rotation. Acceptable: app bar chip has different size/animation requirements. |
+| 5 | **Dark mode in `app.dart` + ColorScheme** | ✅ | `app.dart:16-17` `theme: buildAgriFlowTheme(brightness: Brightness.light)` / `darkTheme: buildAgriFlowTheme(brightness: Brightness.dark)`. `agriflow_theme.dart:4-33` builds a full Material 3 `ColorScheme` with light-vs-dark fallbacks for `primaryContainer`, `surface`, `onSurface`, `onSurfaceVariant`, `outline`, `surfaceContainerHighest`. | Locale is forced `Locale('ta')` in `app.dart:18`, so dark mode follows system without language toggling — fine for demo. No `themeMode` switch widget; system brightness controls. |
+| 6 | **`app_dimensions.dart` wraps `AgriFlowSpacing`** | ✅ | `lib/core/design_tokens/app_dimensions.dart:10-14` — `pagePadding = AgriFlowSpacing.space16`, `pagePaddingLarge = AgriFlowSpacing.space24`, `listGap = AgriFlowSpacing.space8`, `sectionGap = AgriFlowSpacing.space16`, `bottomSafeExtra = AgriFlowSpacing.space24`. Also exposes `radius8/12/16/20`, `statusIconSm=20`, `statusIconMd=26`, `minTouchTarget=44`. | `minTouchTarget=44` (Material default) — **PRD §13/§15 specifies "All buttons 48px min".** Demo cards/FilledButtons inherit Material defaults (≥48 with `FilledButton`/`OutlinedButton`); IconButtons on `task_feed_card.dart:84-93` are 20px icons inside default 48-px buttons, so net touch target ≥48. No measurable failure, but token disagreement noted. |
+| 7 | **Conflict sheet → ARB** | ✅ | `lib/shared/widgets/conflict_sheet.dart:48-76` — every visible string is `l10n.conflict*` (`conflictTitle`, `conflictExplanation`, `conflictStepsTitle`, `conflictStepNumbered`, `conflictStepRefresh`, `conflictStepReview`, `conflictStepRetry`, `conflictMutationId`, `conflictVersionLine`, `conflictRefresh`). `conflictCodeDefault` referenced in `sync_status_screen.dart:199`. | None. |
+| 8 | **Sync queue → ARB** | ✅ | `sync_status_screen.dart:102-211` — `syncStatusTitle`, `syncForceNow`, `syncPhaseLabel`, `syncPendingListTitle`, `syncPendingListEmpty`, `syncQueueItemTitle`, `syncHistoryTitle`, `syncHistoryEmpty`, `syncHistoryOk/Fail`, `syncDeveloperTitle`, `syncSimulateOffline*`, `syncDemoFlowButton`, `syncLastSuccessLabel`, `syncPendingChanges`, `syncJustNow/MinutesAgo/HoursAgo`, `syncNever`. Bar widget `sync_app_bar_status.dart:62-89` uses `syncBar{JustSynced,Syncing,Offline,Online,TapHintOnline,TapHintOffline}`. | Two raw display strings remain: `_iconForEntity` returns icons keyed on entity strings (`'task'`, `'timeline'`) — *only* feeds the icon, not user-visible text. `_formatRunTime` uses `DateFormat('MMM d · HH:mm')` (English month abbreviations) — see Path 5 details below. |
+| 9 | **Task lines → ARB** | ✅ | `task_inbox_screen.dart` — `taskFilterAll/Mine/Visit/Document`, `taskSectionOverdue/Today/Upcoming`, `taskFeedEmptyCelebration`, `errorGeneric`, `sectionWithCount(label, count)`, `syncPending(1)`. `task_feed_card.dart:131-152` — `taskDueDaysAgo`, `taskDueToday`, `taskDueInDays`, `timelineActionCall/Whatsapp`. `task_detail_sheet.dart:60-103` — `taskFarmerVillageLine`, `taskGpsCheckedIn/CheckIn`, `taskVoiceNoteQueued/Attach`, `taskComplete`. `task_stats_card.dart:28-46` — `taskFeedTitle`, `taskFeedSummary`. | None. |
+| 10 | **Update dialog → ARB** | ✅ | `dashboard_shell.dart:97-114` — title `dialogL10n.appTitle`, content `dialogL10n.updateRequiredMessage(release.minVersion)`, action `AppLocalizations.of(ctx)!.retry`. ARB key `updateRequiredMessage` defined in both `app_en.arb:346-348` and `app_ta.arb:296-298`. | Dialog only fires when `!Env.demoMode` (`dashboard_shell.dart:77`), so it's gated off in the demo APK. Cannot regress demo. |
+| 11 | **Timeline stage icons use shared status component** | ✅ | `timeline_stage_row.dart:39` `AgriFlowStatusIcon(kind: _kindFor(stage.visualState))` with `_kindFor` (lines 144-155) mapping `done → done`, `current → active`, `pending → pending`, `locked → locked`. Same component drives notification leading avatar (`notification_feed_card.dart:41`). | None. Status icon parity confirmed across timeline + notifications. |
+
+---
+
+## Auxiliary findings (Day 5 scope-adjacent)
+
+- **`auth.error.toString()`** is still rendered raw at `login_screen.dart:74`. Dio/Frappe errors will appear in English; OK if login succeeds (demo path), risk only if the presenter mistypes the password on-stage. Was flagged in `AUDIT_PASS_2_REPORT.md §⚠️` and **not** fixed in Day 5 commits.
+- **Hardcoded demo phone** (`tel:98765000001`, `https://wa.me/9198765000001`) in `task_feed_card.dart:181-186` — the icon buttons next to a task call this number regardless of the real farmer. Intentional demo crutch; not a string-leak per se, but flagged for transparency.
+- **Day 5 commit `a735f39` already addressed** the P0/P1 list from Audit Pass 2:
+  - Conflict sheet ARB (commit hunk `shared/widgets/conflict_sheet.dart +12 -3`).
+  - Sync queue/labels (commit hunk `sync_status_screen.dart +6 -2`).
+  - Task lines + complete button (commit hunks `task_inbox_screen.dart +12 -5`, `task_detail_screen.dart +7`).
+  - Status-icon unification (new `agriflow_status_icon.dart` + 41-line edit to `notification_feed_card.dart`).
+  - Dark theme + ColorScheme rebuild (`agriflow_theme.dart +49 -22`).
+- **Working-tree refactor (not yet committed)** extends i18n by replacing remaining hardcoded English secondary labels (`"4/4 uploaded"`, `"AAO approved"`, `"stock reserved"`, `"Murugan team"`) in the timeline mapper with ARB-driven keys. This is the **final ~2%** that brings the report's "~98%" claim closer to 100% on the timeline screen.
+
+## Net Day 5 score (auditor view)
+
+- **Verified (✅):** 8/11 claims.
+- **Verified with documented caveat (⚠️):** 3/11 (hardcoded English ≈ 0 outside server seed/login error; Tamil 98% conditional on `flutter gen-l10n` regen; `minTouchTarget` 44 vs PRD-stated 48).
+- **Failed (❌):** 0/11.
+
+Day 5 commit pair (`a735f39`, `64f7872`) substantively delivers the polish sprint claims when paired with a `flutter pub get && flutter gen-l10n` regen on the demo box.
