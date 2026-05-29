@@ -1,7 +1,7 @@
 import 'package:agriflow_mobile/core/sync/sync_visual_controller.dart';
 import 'package:agriflow_mobile/features/sync/sync_connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Shows Tamil toasts when sync state transitions (saved offline / synced).

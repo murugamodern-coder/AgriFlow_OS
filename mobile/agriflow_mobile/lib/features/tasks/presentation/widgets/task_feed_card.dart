@@ -5,7 +5,7 @@ import 'package:agriflow_mobile/features/tasks/domain/task_summary.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskFeedCard extends StatelessWidget {

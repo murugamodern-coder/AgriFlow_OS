@@ -4,7 +4,7 @@ import 'package:agriflow_mobile/features/tasks/domain/task_summary.dart';
 import 'package:agriflow_mobile/shared/widgets/conflict_sheet.dart';
 import 'package:agriflow_mobile/shared/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 

@@ -4,7 +4,7 @@ import 'package:agriflow_mobile/shared/widgets/agriflow_status_icon.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/domain/project_timeline_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 
 class TimelineStageRow extends StatelessWidget {
   const TimelineStageRow({

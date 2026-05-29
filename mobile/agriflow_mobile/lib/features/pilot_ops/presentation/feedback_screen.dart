@@ -1,8 +1,8 @@
 import 'package:agriflow_mobile/core/config/env.dart';
-import 'package:agriflow_mobile/core/observability/pilot_telemetry_service.dart';
+import 'package:agriflow_mobile/core/providers/core_providers.dart';
 import 'package:agriflow_mobile/features/pilot_ops/data/pilot_ops_remote.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class FeedbackScreen extends ConsumerStatefulWidget {

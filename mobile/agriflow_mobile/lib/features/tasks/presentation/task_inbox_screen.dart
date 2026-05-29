@@ -11,7 +11,7 @@ import 'package:agriflow_mobile/features/tasks/presentation/widgets/task_stats_c
 import 'package:agriflow_mobile/shared/widgets/empty_state.dart';
 import 'package:agriflow_mobile/shared/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final taskInboxProvider = StreamProvider<List<TaskSummary>>((ref) {

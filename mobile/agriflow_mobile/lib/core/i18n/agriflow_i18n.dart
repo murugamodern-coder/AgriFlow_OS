@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 
 /// Resolves server i18n keys and stage keys for Tamil-first demo UI.
 abstract final class AgriFlowI18n {

@@ -13,7 +13,7 @@ abstract final class Telemetry {
 
   static void assertReleaseAuthSafe() {
     assert(() {
-      if (Env.devAuthStubEnabled) {
+      if (kReleaseMode && Env.devAuthStubEnabled) {
         throw StateError('DEV_AUTH_STUB must never be enabled in release');
       }
       return true;

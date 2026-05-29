@@ -125,7 +125,7 @@ Future<void> bootstrap() async {
           (ref) => AuthSessionNotifier(ref.watch(authRepositoryProvider)),
         ),
         syncOrchestratorProvider.overrideWithValue(syncOrchestrator),
-        syncVisualControllerProvider.overrideWithValue(syncVisualController),
+        syncVisualControllerProvider.overrideWith((ref) => syncVisualController),
       ],
       child: const AgriFlowApp(),
     ),

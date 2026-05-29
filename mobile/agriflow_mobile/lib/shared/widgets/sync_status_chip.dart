@@ -1,7 +1,7 @@
 import 'package:agriflow_mobile/core/design_tokens/color_tokens.dart';
 import 'package:agriflow_mobile/core/sync/sync_status.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 
 class SyncStatusChip extends StatelessWidget {
   const SyncStatusChip({super.key, required this.status});

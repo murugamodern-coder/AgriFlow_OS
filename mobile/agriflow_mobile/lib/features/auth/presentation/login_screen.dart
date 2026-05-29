@@ -1,7 +1,7 @@
 import 'package:agriflow_mobile/core/config/env.dart';
 import 'package:agriflow_mobile/features/auth/data/auth_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {

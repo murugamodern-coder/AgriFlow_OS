@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:agriflow_mobile/core/config/env.dart';
 import 'package:agriflow_mobile/core/database/app_database.dart';
@@ -60,7 +61,7 @@ class PilotTelemetryService {
           queueConflict: conflicts,
           queueFailed: failed,
           lastCorrelationId: correlationId,
-          lastSyncAt: lastRun?.finishedAt?.toIso8601String(),
+          lastSyncAt: lastRun?.finishedAt,
           diagnostics: {
             'platform': Platform.operatingSystem,
             'app_version': Env.appVersion,
@@ -87,7 +88,7 @@ class PilotTelemetryService {
         queueFailed: await _db.failedCount(),
         diagnostics: {
           'kind': kind,
-          if (lastSync != null) 'last_sync': lastSync.toJson(),
+          if (lastSync != null) 'last_sync': jsonDecode(lastSync.toJsonString()),
           if (error != null) 'error': error.toString(),
         },
       );

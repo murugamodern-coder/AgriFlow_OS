@@ -1,6 +1,6 @@
 import 'package:agriflow_mobile/core/design_tokens/app_dimensions.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:agriflow_mobile/l10n/app_localizations.dart';
 
 /// Sync conflict UI foundation — server wins; user refreshes.
 class ConflictSheet extends StatelessWidget {
