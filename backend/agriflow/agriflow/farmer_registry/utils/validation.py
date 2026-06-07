@@ -61,7 +61,11 @@ def validate_geography_chain(
 		frappe.throw(_("Block not found"))
 	block_district = frappe.db.get_value("Block", block, "district")
 	if block_district != district:
-		frappe.throw(_("Block must belong to the selected District"))
+		frappe.throw(
+			_("Block '{0}' does not belong to District '{1}'. It belongs to District '{2}'.").format(
+				block, district, block_district
+			)
+		)
 	if not frappe.db.get_value("Block", block, "is_active"):
 		frappe.throw(_("Block is inactive"))
 
@@ -69,7 +73,11 @@ def validate_geography_chain(
 		frappe.throw(_("Village not found"))
 	village_block = frappe.db.get_value("Village", village, "block")
 	if village_block != block:
-		frappe.throw(_("Village must belong to the selected Block"))
+		frappe.throw(
+			_("Village '{0}' does not belong to Block '{1}'. It belongs to Block '{2}'.").format(
+				village, block, village_block
+			)
+		)
 	if not frappe.db.get_value("Village", village, "is_active"):
 		frappe.throw(_("Village is inactive"))
 

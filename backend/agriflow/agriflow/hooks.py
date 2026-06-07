@@ -241,7 +241,11 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
-after_migrate = ["agriflow.project_lifecycle.install.seed_project_stages.after_migrate"]
+after_migrate = [
+	"agriflow.project_lifecycle.install.seed_project_stages.after_migrate",
+	"agriflow.farmer_registry.install.apply_farmer_link_filters.apply_farmer_link_filters",
+	"agriflow.farmer_registry.install.farmer_cascading_client_script.after_migrate",
+]
 
 commands = [
 	"agriflow.commands.import_geography",

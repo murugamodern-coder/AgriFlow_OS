@@ -258,10 +258,15 @@ class _FarmerCreateScreenState extends ConsumerState<FarmerCreateScreen> {
                       value: _selectedDistrict,
                       items: _districts,
                       loading: _loadingDistricts,
-                      onChanged: (value) async {
-                        setState(() => _selectedDistrict = value);
-                        if (value != null) await _loadBlocks(value.name);
-                      },
+                    onChanged: (value) async {
+                      setState(() {
+                        _selectedDistrict = value;
+                        _selectedBlock = null;
+                        _selectedVillage = null;
+                        _blocks = const [];
+                      });
+                      if (value != null) await _loadBlocks(value.name);
+                    },
                     ),
                   if (_blocks.isNotEmpty || _loadingBlocks)
                     _geoDropdown(

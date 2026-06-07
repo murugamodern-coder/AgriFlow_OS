@@ -152,7 +152,8 @@
    "in_standard_filter": 1,
    "search_index": 0,
    "unique": 0,
-   "options": "District"
+   "options": "District",
+   "link_filters": "[[\"District\",\"state\",\"=\",\"eval:doc.state\"]]"
   },
   {
    "fieldname": "block",
@@ -164,7 +165,8 @@
    "in_standard_filter": 1,
    "search_index": 0,
    "unique": 0,
-   "options": "Block"
+   "options": "Block",
+   "link_filters": "[[\"Block\",\"district\",\"=\",\"eval:doc.district\"]]"
   },
   {
    "fieldname": "village",
@@ -176,7 +178,8 @@
    "in_standard_filter": 1,
    "search_index": 0,
    "unique": 0,
-   "options": "Village"
+   "options": "Village",
+   "link_filters": "[[\"Village\",\"block\",\"=\",\"eval:doc.block\"]]"
   },
   {
    "fieldname": "cluster",
