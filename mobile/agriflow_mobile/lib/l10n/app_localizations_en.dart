@@ -698,4 +698,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get stageSecondaryInstallationTeam => 'Murugan installation team';
+
+  @override
+  String get farmerCreateTitle => 'New farmer';
+
+  @override
+  String get farmerNameLabel => 'Farmer name';
+
+  @override
+  String get farmerNameRequired => 'Enter farmer name';
+
+  @override
+  String get farmerMobileLabel => 'Mobile';
+
+  @override
+  String get farmerMobileRequired => 'Enter a valid 10-digit mobile number';
+
+  @override
+  String get farmerGeographyRequired =>
+      'Select state, district, block, and village';
+
+  @override
+  String get farmerCreateSuccess => 'Farmer saved';
+
+  @override
+  String get farmerSaveLabel => 'Save';
+
+  @override
+  String get geoStateLabel => 'State';
+
+  @override
+  String get geoDistrictLabel => 'District';
+
+  @override
+  String get geoBlockLabel => 'Block';
+
+  @override
+  String get geoVillageLabel => 'Village';
+
+  @override
+  String get geoVillageSearchHint => 'Type at least 2 letters to search';
+
+  @override
+  String get geoVillageRequired => 'Select a village';
+
+  @override
+  String get geoClusterLabel => 'Cluster';
+
+  @override
+  String get geoOfficerLabel => 'Officer';
+
+  @override
+  String get geoOptionalSection => 'Optional';
+
+  @override
+  String get geoOptionalHelper => 'Optional — not required';
 }

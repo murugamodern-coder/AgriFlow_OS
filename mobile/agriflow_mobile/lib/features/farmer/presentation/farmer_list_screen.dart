@@ -2,7 +2,6 @@ import 'package:agriflow_mobile/app/router/routes.dart';
 import 'package:agriflow_mobile/core/demo/demo_selection.dart';
 import 'package:agriflow_mobile/core/providers/core_providers.dart';
 import 'package:agriflow_mobile/core/sync/projection_writer.dart';
-import 'package:agriflow_mobile/features/farmer/data/farmer_remote.dart';
 import 'package:agriflow_mobile/features/farmer/domain/farmer_summary.dart';
 import 'package:agriflow_mobile/shared/widgets/empty_state.dart';
 import 'package:agriflow_mobile/shared/widgets/error_view.dart';
@@ -60,36 +59,42 @@ class FarmerListScreen extends ConsumerWidget {
         onRetry: () => ref.invalidate(farmerListProvider),
       ),
       data: (items) {
-        if (items.isEmpty) {
-          return EmptyState(message: l10n.emptyFarmers);
-        }
-        return RefreshIndicator(
-          onRefresh: () async {
-            ref.invalidate(farmerListProvider);
-            await ref.read(syncOrchestratorProvider).syncNow();
-          },
-          child: ListView.separated(
-            padding: const EdgeInsets.all(16),
-            itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 8),
-            itemBuilder: (context, index) {
-              final farmer = items[index];
-              return Card(
-                child: ListTile(
-                  title: Text(farmer.farmerName),
-                  subtitle: Text(
-                    [
-                      farmer.name,
-                      if (farmer.village != null) farmer.village!,
-                      if (farmer.mobile != null) farmer.mobile!,
-                    ].join(' · '),
-                  ),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => _openProjectForFarmer(context, ref, farmer.name),
-                ),
-              );
-            },
+        return Scaffold(
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => context.push(AppRoutes.farmerCreate),
+            child: const Icon(Icons.person_add),
           ),
+          body: items.isEmpty
+              ? EmptyState(message: l10n.emptyFarmers)
+              : RefreshIndicator(
+                  onRefresh: () async {
+                    ref.invalidate(farmerListProvider);
+                    await ref.read(syncOrchestratorProvider).syncNow();
+                  },
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(16),
+                    itemCount: items.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 8),
+                    itemBuilder: (context, index) {
+                      final farmer = items[index];
+                      return Card(
+                        child: ListTile(
+                          title: Text(farmer.farmerName),
+                          subtitle: Text(
+                            [
+                              farmer.name,
+                              if (farmer.village != null) farmer.village!,
+                              if (farmer.mobile != null) farmer.mobile!,
+                            ].join(' · '),
+                          ),
+                          trailing: const Icon(Icons.chevron_right),
+                          onTap: () =>
+                              _openProjectForFarmer(context, ref, farmer.name),
+                        ),
+                      );
+                    },
+                  ),
+                ),
         );
       },
     );

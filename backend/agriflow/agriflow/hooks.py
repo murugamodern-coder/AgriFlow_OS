@@ -243,6 +243,10 @@ app_license = "mit"
 
 after_migrate = ["agriflow.project_lifecycle.install.seed_project_stages.after_migrate"]
 
+commands = [
+	"agriflow.commands.import_geography",
+]
+
 # Fixtures
 # --------
 fixtures = [
@@ -251,6 +255,15 @@ fixtures = [
     {"dt": "District"},
     {"dt": "Block"},
     {"dt": "Project Stage"},
+    {"dt": "Workspace", "filters": [["name", "in", [
+        "Inventory",
+        "Farmer Registry",
+        "Officer Network",
+        "Project Lifecycle",
+        "Sync Engine",
+        "Task Engine",
+        "Notification Engine",
+    ]]]},
 ]
 
 # Document Events

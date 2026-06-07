@@ -19,6 +19,15 @@ class FarmerRemote {
     return envelope.data!;
   }
 
+  Future<Map<String, dynamic>> create(Map<String, dynamic> payload) async {
+    final envelope = await _api.postMethod<Map<String, dynamic>>(
+      methodUrl: _config.methodUrl('agriflow.api.v1.farmer.create'),
+      data: payload,
+      parseData: (json) => Map<String, dynamic>.from(json as Map),
+    );
+    return envelope.data!;
+  }
+
   Future<List<FarmerSummary>> list({int limit = 50}) async {
     final envelope = await _api.postMethod<Map<String, dynamic>>(
       methodUrl: _config.methodUrl('agriflow.api.v1.farmer.list'),

@@ -32,7 +32,9 @@ class Farmer(Document):
 			validate_mobile_digits(self.alternate_mobile, "Alternate Mobile")
 
 		validate_aadhaar_last4(self.aadhaar_last4)
-		validate_geography_chain(self.district, self.block, self.village, self.cluster)
+		validate_geography_chain(
+			self.district, self.block, self.village, self.cluster, self.state
+		)
 		validate_mobile_unique_per_district(self.mobile_normalized, self.district, self.name)
 
 		if self.is_deleted:

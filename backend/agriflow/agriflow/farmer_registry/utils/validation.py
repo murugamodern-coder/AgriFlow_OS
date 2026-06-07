@@ -35,9 +35,22 @@ def validate_aadhaar_last4(value: str | None) -> None:
 		frappe.throw(_("Aadhaar (last 4) must be up to 4 digits only"))
 
 
-def validate_geography_chain(district: str, block: str, village: str, cluster: str | None = None) -> None:
+def validate_geography_chain(
+	district: str,
+	block: str,
+	village: str,
+	cluster: str | None = None,
+	state: str | None = None,
+) -> None:
 	if not (district and block and village):
 		return
+
+	if state and frappe.db.exists("Geo State", state):
+		if not frappe.db.get_value("Geo State", state, "is_active"):
+			frappe.throw(_("State is inactive"))
+		district_state = frappe.db.get_value("District", district, "state")
+		if district_state and district_state != state:
+			frappe.throw(_("District must belong to the selected State"))
 
 	if not frappe.db.exists("District", district):
 		frappe.throw(_("District not found"))

@@ -1273,6 +1273,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Murugan installation team'**
   String get stageSecondaryInstallationTeam;
+
+  /// No description provided for @farmerCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New farmer'**
+  String get farmerCreateTitle;
+
+  /// No description provided for @farmerNameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer name'**
+  String get farmerNameLabel;
+
+  /// No description provided for @farmerNameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter farmer name'**
+  String get farmerNameRequired;
+
+  /// No description provided for @farmerMobileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile'**
+  String get farmerMobileLabel;
+
+  /// No description provided for @farmerMobileRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid 10-digit mobile number'**
+  String get farmerMobileRequired;
+
+  /// No description provided for @farmerGeographyRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select state, district, block, and village'**
+  String get farmerGeographyRequired;
+
+  /// No description provided for @farmerCreateSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer saved'**
+  String get farmerCreateSuccess;
+
+  /// No description provided for @farmerSaveLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get farmerSaveLabel;
+
+  /// No description provided for @geoStateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get geoStateLabel;
+
+  /// No description provided for @geoDistrictLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'District'**
+  String get geoDistrictLabel;
+
+  /// No description provided for @geoBlockLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Block'**
+  String get geoBlockLabel;
+
+  /// No description provided for @geoVillageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Village'**
+  String get geoVillageLabel;
+
+  /// No description provided for @geoVillageSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Type at least 2 letters to search'**
+  String get geoVillageSearchHint;
+
+  /// No description provided for @geoVillageRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a village'**
+  String get geoVillageRequired;
+
+  /// No description provided for @geoClusterLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cluster'**
+  String get geoClusterLabel;
+
+  /// No description provided for @geoOfficerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Officer'**
+  String get geoOfficerLabel;
+
+  /// No description provided for @geoOptionalSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get geoOptionalSection;
+
+  /// No description provided for @geoOptionalHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional — not required'**
+  String get geoOptionalHelper;
 }
 
 class _AppLocalizationsDelegate

@@ -695,4 +695,60 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get stageSecondaryInstallationTeam => 'முருகன் நிறுவல் குழு';
+
+  @override
+  String get farmerCreateTitle => 'புதிய விவசாயி';
+
+  @override
+  String get farmerNameLabel => 'விவசாயி பெயர்';
+
+  @override
+  String get farmerNameRequired => 'விவசாயி பெயரை உள்ளிடவும்';
+
+  @override
+  String get farmerMobileLabel => 'மொபைல்';
+
+  @override
+  String get farmerMobileRequired => 'சரியான 10 இலக்க மொபைல் எண்ணை உள்ளிடவும்';
+
+  @override
+  String get farmerGeographyRequired =>
+      'மாநிலம், மாவட்டம், வட்டம், கிராமம் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get farmerCreateSuccess => 'விவசாயி சேமிக்கப்பட்டது';
+
+  @override
+  String get farmerSaveLabel => 'சேமி';
+
+  @override
+  String get geoStateLabel => 'மாநிலம்';
+
+  @override
+  String get geoDistrictLabel => 'மாவட்டம்';
+
+  @override
+  String get geoBlockLabel => 'வட்டம்';
+
+  @override
+  String get geoVillageLabel => 'கிராமம்';
+
+  @override
+  String get geoVillageSearchHint =>
+      'தேட குறைந்தது 2 எழுத்துகள் தட்டச்சு செய்யவும்';
+
+  @override
+  String get geoVillageRequired => 'கிராமத்தைத் தேர்ந்தெடுக்கவும்';
+
+  @override
+  String get geoClusterLabel => 'கூட்டம்';
+
+  @override
+  String get geoOfficerLabel => 'அதிகாரி';
+
+  @override
+  String get geoOptionalSection => 'கூடுதல் (Optional)';
+
+  @override
+  String get geoOptionalHelper => 'விருப்பப்பட்டது - தேவையில்லை';
 }

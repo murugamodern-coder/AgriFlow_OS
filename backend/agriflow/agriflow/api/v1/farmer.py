@@ -119,3 +119,43 @@ def get(data=None):
 		return fail("NOT_FOUND", str(exc), http_status=404)
 	except frappe.ValidationError as exc:
 		return fail("VAL_INVALID", str(exc), http_status=400)
+
+
+@frappe.whitelist()
+def create(data=None):
+	"""agriflow.api.v1.farmer.create — register farmer from mobile."""
+	try:
+		ensure_authenticated()
+		payload = parse_data(data)
+		required = ("farmer_name", "mobile", "state", "district", "block", "village")
+		missing = [field for field in required if not (payload.get(field) or "").strip()]
+		if missing:
+			return fail("VAL_INVALID", _("Missing fields: {0}").format(", ".join(missing)), http_status=400)
+		if payload.get("block"):
+			assert_block_scope(payload["block"])
+		doc = frappe.get_doc(
+			{
+				"doctype": "Farmer",
+				"farmer_name": payload["farmer_name"].strip(),
+				"mobile": payload["mobile"].strip(),
+				"state": payload["state"].strip(),
+				"district": payload["district"].strip(),
+				"block": payload["block"].strip(),
+				"village": payload["village"].strip(),
+				"cluster": (payload.get("cluster") or "").strip() or None,
+				"officer": (payload.get("officer") or "").strip() or None,
+				"father_name": (payload.get("father_name") or "").strip() or None,
+				"address_line": (payload.get("address_line") or "").strip() or None,
+				"pincode": (payload.get("pincode") or "").strip() or None,
+				"created_via": "mobile",
+				"sync_status": "synced",
+			}
+		)
+		doc.insert()
+		return success({"name": doc.name, "farmer_name": doc.farmer_name})
+	except frappe.PermissionError as exc:
+		return fail("PERM_DENIED", str(exc), http_status=403)
+	except frappe.AuthenticationError as exc:
+		return fail("AUTH_REQUIRED", str(exc), http_status=401)
+	except frappe.ValidationError as exc:
+		return fail("VAL_INVALID", str(exc), http_status=400)

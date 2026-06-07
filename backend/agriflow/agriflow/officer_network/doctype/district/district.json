@@ -9,6 +9,7 @@
  "field_order": [
   "district_code",
   "district_name",
+  "lgd_code",
   "state",
   "is_active"
  ],
@@ -36,15 +37,27 @@
    "unique": 0
   },
   {
-   "fieldname": "state",
+   "fieldname": "lgd_code",
    "fieldtype": "Data",
+   "label": "LGD Code",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 0,
+   "in_standard_filter": 0,
+   "search_index": 1,
+   "unique": 0
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
    "label": "State",
    "reqd": 1,
    "read_only": 0,
    "in_list_view": 0,
-   "in_standard_filter": 0,
+   "in_standard_filter": 1,
    "search_index": 0,
    "unique": 0,
+   "options": "Geo State",
    "default": "Tamil Nadu"
   },
   {
@@ -81,8 +94,10 @@
    "share": 1
   }
  ],
+ "search_fields": "district_name,district_code",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "district_name",
  "track_changes": 1
 }
