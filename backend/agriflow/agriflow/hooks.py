@@ -245,6 +245,7 @@ after_migrate = ["agriflow.project_lifecycle.install.seed_project_stages.after_m
 
 commands = [
 	"agriflow.commands.import_geography",
+	"agriflow.scripts.migrate_legacy_geography",
 ]
 
 # Fixtures
