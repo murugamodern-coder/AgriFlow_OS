@@ -8,7 +8,7 @@ app_license = "mit"
 # Apps
 # ------------------
 
-# required_apps = []
+required_apps = ["erpnext"]
 
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
@@ -252,6 +252,7 @@ after_migrate = [
 commands = [
 	"agriflow.commands.import_geography",
 	"agriflow.scripts.migrate_legacy_geography",
+	"agriflow.scripts.seed_billing_items",
 ]
 
 # Fixtures
@@ -259,6 +260,7 @@ commands = [
 fixtures = [
     {"dt": "Role", "filters": [["role_name", "like", "Agriflow%"]]},
     {"dt": "Workflow", "filters": [["name", "=", "Farmer Project Lifecycle"]]},
+    {"dt": "Custom Field", "filters": [["dt", "=", "Sales Invoice"], ["fieldname", "like", "agriflow_%"]]},
     {"dt": "Warehouse"},
     {"dt": "Inventory Item"},
     {"dt": "District"},

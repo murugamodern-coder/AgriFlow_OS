@@ -1,0 +1,114 @@
+[
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_sale_mode",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_sale_mode",
+    "fieldtype": "Select",
+    "label": "Sale Mode",
+    "options": "Cash & Carry\nProject Sale\nService Invoice",
+    "insert_after": "naming_series",
+    "reqd": 1,
+    "in_list_view": 1
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_farmer_project",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_farmer_project",
+    "fieldtype": "Link",
+    "label": "Farmer Project",
+    "options": "Farmer Project",
+    "insert_after": "agriflow_sale_mode",
+    "depends_on": "eval:doc.agriflow_sale_mode=='Project Sale'"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_farmer",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_farmer",
+    "fieldtype": "Link",
+    "label": "Farmer",
+    "options": "Farmer",
+    "insert_after": "agriflow_farmer_project",
+    "fetch_from": "agriflow_farmer_project.farmer"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_walkin_customer_name",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_walkin_customer_name",
+    "fieldtype": "Data",
+    "label": "Walk-in Customer Name",
+    "insert_after": "agriflow_farmer",
+    "depends_on": "eval:doc.agriflow_sale_mode=='Cash & Carry'"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_walkin_mobile",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_walkin_mobile",
+    "fieldtype": "Data",
+    "label": "Walk-in Customer Mobile",
+    "insert_after": "agriflow_walkin_customer_name",
+    "depends_on": "eval:doc.agriflow_sale_mode=='Cash & Carry'",
+    "length": 10
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_subsidy_amount",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_subsidy_amount",
+    "fieldtype": "Currency",
+    "label": "Subsidy Amount (Govt Portion)",
+    "insert_after": "grand_total",
+    "depends_on": "eval:doc.agriflow_sale_mode=='Project Sale'",
+    "description": "Amount to be received from govt subsidy"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_farmer_portion",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_farmer_portion",
+    "fieldtype": "Currency",
+    "label": "Farmer Portion (Cash)",
+    "insert_after": "agriflow_subsidy_amount",
+    "depends_on": "eval:doc.agriflow_sale_mode=='Project Sale'",
+    "description": "Amount to collect from farmer immediately"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_payment_mode_extra",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_payment_mode_extra",
+    "fieldtype": "Select",
+    "label": "Payment Mode (Quick)",
+    "options": "Cash\nUPI\nCard\nBank Transfer\nMixed",
+    "insert_after": "agriflow_farmer_portion",
+    "default": "Cash"
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_whatsapp_status",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_whatsapp_status",
+    "fieldtype": "Select",
+    "label": "WhatsApp Invoice Status",
+    "options": "Not Sent\nQueued\nSent\nDelivered\nFailed",
+    "insert_after": "agriflow_payment_mode_extra",
+    "default": "Not Sent",
+    "read_only": 1
+  },
+  {
+    "doctype": "Custom Field",
+    "name": "Sales Invoice-agriflow_created_via",
+    "dt": "Sales Invoice",
+    "fieldname": "agriflow_created_via",
+    "fieldtype": "Select",
+    "label": "Created Via",
+    "options": "Mobile App\nDesk\nAPI",
+    "insert_after": "agriflow_whatsapp_status",
+    "default": "Desk",
+    "read_only": 1
+  }
+]
