@@ -243,6 +243,8 @@ app_license = "mit"
 
 after_migrate = [
 	"agriflow.project_lifecycle.install.seed_project_stages.after_migrate",
+	"agriflow.project_lifecycle.install.install_farmer_project_workflow.after_migrate",
+	"agriflow.project_lifecycle.install.migrate_project_workflow_state.after_migrate",
 	"agriflow.farmer_registry.install.apply_farmer_link_filters.apply_farmer_link_filters",
 	"agriflow.farmer_registry.install.farmer_cascading_client_script.after_migrate",
 ]
@@ -255,6 +257,8 @@ commands = [
 # Fixtures
 # --------
 fixtures = [
+    {"dt": "Role", "filters": [["role_name", "like", "Agriflow%"]]},
+    {"dt": "Workflow", "filters": [["name", "=", "Farmer Project Lifecycle"]]},
     {"dt": "Warehouse"},
     {"dt": "Inventory Item"},
     {"dt": "District"},

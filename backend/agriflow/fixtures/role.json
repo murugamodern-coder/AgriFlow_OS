@@ -1,0 +1,10 @@
+[
+  {"doctype": "Role", "role_name": "Agriflow Owner", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Office Manager", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Office Staff", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Field Staff", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Installer Lead", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Installer", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Service Technician", "desk_access": 1},
+  {"doctype": "Role", "role_name": "Agriflow Store Keeper", "desk_access": 1}
+]

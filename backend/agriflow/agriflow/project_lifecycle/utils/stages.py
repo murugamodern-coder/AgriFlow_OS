@@ -50,7 +50,7 @@ def validate_stage_key(stage_key: str) -> None:
 
 @lru_cache(maxsize=1)
 def get_role_matrix() -> dict[str, list[str]]:
-	path = FIXTURES_DIR / "project_stage_role_matrix.json"
+	path = Path(frappe.get_app_path("agriflow")) / "fixture_data" / "project_stage_role_matrix.json"
 	if not path.exists():
 		return {}
 	with path.open(encoding="utf-8") as handle:

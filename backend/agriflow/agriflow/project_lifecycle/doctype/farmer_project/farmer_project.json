@@ -12,6 +12,7 @@
   "farmer",
   "project_type",
   "lifecycle_section",
+  "workflow_state",
   "current_stage",
   "stage_sequence",
   "status",
@@ -102,6 +103,18 @@
    "read_only": 0,
    "in_list_view": 0,
    "in_standard_filter": 0,
+   "search_index": 0,
+   "unique": 0
+  },
+  {
+   "fieldname": "workflow_state",
+   "fieldtype": "Link",
+   "label": "Workflow State",
+   "options": "Workflow State",
+   "reqd": 0,
+   "read_only": 0,
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "search_index": 0,
    "unique": 0
   },
@@ -493,6 +506,7 @@
   }
  ],
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
  "modified": "2026-05-20 00:00:00.000000",
  "modified_by": "Administrator",

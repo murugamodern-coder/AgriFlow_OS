@@ -17,7 +17,7 @@ def template_client_id(farmer_project: str, template_id: str) -> str:
 
 from agriflow.task_engine.services.lifecycle import TaskLifecycleService
 
-FIXTURE_PATH = Path(__file__).resolve().parents[3] / "fixtures" / "task_template.json"
+FIXTURE_PATH = Path(__file__).resolve().parents[3] / "fixture_data" / "task_template.json"
 
 
 def load_task_templates() -> list[dict]:

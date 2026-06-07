@@ -19,7 +19,7 @@ from agriflow.task_engine.services.lifecycle import TaskLifecycleService
 
 DEMO_USER = "field.officer@agriflow.local"
 DISTRICT = "TVM"
-GEO_FIXTURE = Path(__file__).resolve().parents[1] / "fixtures" / "demo_geo.json"
+GEO_FIXTURE = Path(__file__).resolve().parents[2] / "fixture_data" / "demo_geo.json"
 
 BLOCKS = [
 	("POLUR", "Polur"),

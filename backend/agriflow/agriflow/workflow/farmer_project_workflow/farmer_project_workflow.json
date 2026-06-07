@@ -1,0 +1,171 @@
+{
+ "actions": [],
+ "creation": "2026-05-30 00:00:00.000000",
+ "doctype": "Workflow",
+ "docstatus": 0,
+ "document_type": "Farmer Project",
+ "is_active": 1,
+ "modified": "2026-05-30 00:00:00.000000",
+ "modified_by": "Administrator",
+ "name": "Farmer Project Lifecycle",
+ "override_status": 0,
+ "owner": "Administrator",
+ "send_email_alert": 0,
+ "states": [
+  {
+   "allow_edit": "Agriflow Owner",
+   "doc_status": "0",
+   "state": "Lead Captured",
+   "style": "Primary",
+   "update_field": null,
+   "update_value": null
+  },
+  {
+   "allow_edit": "Agriflow Office Manager",
+   "doc_status": "0",
+   "state": "Eligibility Check",
+   "style": "Primary"
+  },
+  {
+   "allow_edit": "Agriflow Office Staff",
+   "doc_status": "0",
+   "state": "Documents Collected",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Office Staff",
+   "doc_status": "0",
+   "state": "MIMIS Registered",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Field Staff",
+   "doc_status": "0",
+   "state": "Field Survey",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Office Manager",
+   "doc_status": "1",
+   "state": "Quotation Generated",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Office Manager",
+   "doc_status": "1",
+   "state": "Pre-Inspection Approval",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Office Manager",
+   "doc_status": "1",
+   "state": "Work Order Received",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Store Keeper",
+   "doc_status": "1",
+   "state": "Material Dispatched",
+   "style": "Warning"
+  },
+  {
+   "allow_edit": "Agriflow Installer Lead",
+   "doc_status": "1",
+   "state": "Installation Done",
+   "style": "Success"
+  },
+  {
+   "allow_edit": "Agriflow Office Manager",
+   "doc_status": "1",
+   "state": "Post-Inspection Approval",
+   "style": "Success"
+  },
+  {
+   "allow_edit": "Agriflow Owner",
+   "doc_status": "1",
+   "state": "Subsidy Released",
+   "style": "Inverse"
+  }
+ ],
+ "transitions": [
+  {
+   "action": "Verify Eligibility",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Manager",
+   "next_state": "Eligibility Check",
+   "state": "Lead Captured"
+  },
+  {
+   "action": "Collect Documents",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Staff",
+   "next_state": "Documents Collected",
+   "state": "Eligibility Check"
+  },
+  {
+   "action": "Register in MIMIS",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Staff",
+   "next_state": "MIMIS Registered",
+   "state": "Documents Collected"
+  },
+  {
+   "action": "Schedule Field Survey",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Field Staff",
+   "next_state": "Field Survey",
+   "state": "MIMIS Registered"
+  },
+  {
+   "action": "Generate Quotation",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Manager",
+   "next_state": "Quotation Generated",
+   "state": "Field Survey"
+  },
+  {
+   "action": "Submit for Pre-Inspection",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Manager",
+   "next_state": "Pre-Inspection Approval",
+   "state": "Quotation Generated"
+  },
+  {
+   "action": "Receive Work Order",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Manager",
+   "next_state": "Work Order Received",
+   "state": "Pre-Inspection Approval"
+  },
+  {
+   "action": "Dispatch Material",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Store Keeper",
+   "next_state": "Material Dispatched",
+   "state": "Work Order Received"
+  },
+  {
+   "action": "Complete Installation",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Installer Lead",
+   "next_state": "Installation Done",
+   "state": "Material Dispatched"
+  },
+  {
+   "action": "Submit for Post-Inspection",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Office Manager",
+   "next_state": "Post-Inspection Approval",
+   "state": "Installation Done"
+  },
+  {
+   "action": "Release Subsidy",
+   "allow_self_approval": 1,
+   "allowed": "Agriflow Owner",
+   "next_state": "Subsidy Released",
+   "state": "Post-Inspection Approval"
+  }
+ ],
+ "workflow_name": "Farmer Project Lifecycle",
+ "workflow_state_field": "workflow_state"
+}

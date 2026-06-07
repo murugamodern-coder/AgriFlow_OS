@@ -5,19 +5,27 @@ from frappe.model.document import Document
 from agriflow.farmer_registry.utils.validation import validate_geography_chain
 from agriflow.project_lifecycle.services.lifecycle import LIFECYCLE_FLAG
 from agriflow.project_lifecycle.services.timeline import get_timeline_service
+from agriflow.project_lifecycle.workflow_bridge import (
+	on_workflow_state_change,
+	sync_workflow_state_from_stage,
+)
 
 
 class FarmerProject(Document):
+	def before_insert(self):
+		sync_workflow_state_from_stage(self)
+
 	def before_save(self):
 		if self.is_new():
 			return
 		prev = frappe.db.get_value(
 			"Farmer Project",
 			self.name,
-			["status", "mimis_gate_status", "mimis_reconciliation_ref"],
+			["status", "mimis_gate_status", "mimis_reconciliation_ref", "workflow_state"],
 			as_dict=True,
 		)
 		self._timeline_prev = prev or {}
+		self._prev_workflow_state = (prev or {}).get("workflow_state")
 
 	def validate(self):
 		if self.is_deleted:
@@ -56,6 +64,7 @@ class FarmerProject(Document):
 				frappe.throw(frappe._("Client ID already exists"))
 
 	def on_update(self):
+		on_workflow_state_change(self)
 		if self.is_new() or frappe.flags.get(LIFECYCLE_FLAG):
 			return
 		prev = getattr(self, "_timeline_prev", None) or {}
