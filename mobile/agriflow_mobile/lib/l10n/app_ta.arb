@@ -351,5 +351,34 @@
   },
   "workflowNoActionsForRole": "இந்த பங்குக்கு செயல்கள் இல்லை",
   "cancel": "ரத்து",
-  "confirm": "உறுதி"
+  "confirm": "உறுதி",
+  "billing": "பில்லிங்",
+  "cashCarryTitle": "பணம் வாங்கல்",
+  "cashAndCarryPos": "பணம் வாங்கல் POS",
+  "itemSearchHint": "பொருட்கள் தேடல் (Drip, Pipe, Motor)...",
+  "cartTotal": "மொத்தம்",
+  "cartEmpty": "வண்டி காலியாக உள்ளது",
+  "cartEmptyHint": "மேலே தேடி பொருளை சேர்க்கவும்",
+  "cartClear": "அழி",
+  "saveInvoice": "பில் சேமி",
+  "proceedToPayment": "கட்டணத்திற்கு தொடரவும்",
+  "customerNameOptional": "வாடிக்கையாளர் பெயர் (விருப்பம்)",
+  "customerMobileOptional": "மொபைல் எண் (விருப்பம்)",
+  "paymentModeLabel": "கட்டண முறை",
+  "customerDetailsTitle": "வாடிக்கையாளர் விவரம்",
+  "invoiceCreatedTitle": "பில் உருவாக்கப்பட்டது!",
+  "noItemsFound": "பொருட்கள் இல்லை",
+  "itemAddedToCart": "{item} வண்டியில் சேர்க்கப்பட்டது",
+  "@itemAddedToCart": {
+    "placeholders": { "item": { "type": "String" } }
+  },
+  "invoiceItemsCount": "{count} பொருட்கள்",
+  "@invoiceItemsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "paymentModeCash": "பணம்",
+  "paymentModeUpi": "UPI",
+  "paymentModeCard": "கார்டு",
+  "paymentModeBankTransfer": "வங்கி பரிமாற்றம்",
+  "paymentModeMixed": "கலவை"
 }

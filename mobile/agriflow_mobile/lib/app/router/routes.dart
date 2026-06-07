@@ -20,4 +20,5 @@ abstract final class AppRoutes {
   static const sync = '/sync';
   static const feedback = '/feedback';
   static const onboarding = '/onboarding';
+  static const cashCarryPos = '/billing/cash-carry';
 }

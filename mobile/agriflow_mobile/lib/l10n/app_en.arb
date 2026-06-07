@@ -401,5 +401,34 @@
   },
   "workflowNoActionsForRole": "No actions available for your role",
   "cancel": "Cancel",
-  "confirm": "Confirm"
+  "confirm": "Confirm",
+  "billing": "Billing",
+  "cashCarryTitle": "Cash & Carry",
+  "cashAndCarryPos": "Cash & Carry POS",
+  "itemSearchHint": "Search items (e.g. Drip, Pipe, Motor)...",
+  "cartTotal": "Total",
+  "cartEmpty": "Cart is empty",
+  "cartEmptyHint": "Search items above and tap to add",
+  "cartClear": "Clear",
+  "saveInvoice": "Save invoice",
+  "proceedToPayment": "Proceed to payment",
+  "customerNameOptional": "Customer name (optional)",
+  "customerMobileOptional": "Mobile (optional)",
+  "paymentModeLabel": "Payment mode",
+  "customerDetailsTitle": "Customer details",
+  "invoiceCreatedTitle": "Invoice created!",
+  "noItemsFound": "No items found",
+  "itemAddedToCart": "{item} added to cart",
+  "@itemAddedToCart": {
+    "placeholders": { "item": { "type": "String" } }
+  },
+  "invoiceItemsCount": "{count} items",
+  "@invoiceItemsCount": {
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "paymentModeCash": "Cash",
+  "paymentModeUpi": "UPI",
+  "paymentModeCard": "Card",
+  "paymentModeBankTransfer": "Bank transfer",
+  "paymentModeMixed": "Mixed"
 }

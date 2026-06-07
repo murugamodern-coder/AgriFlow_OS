@@ -106,6 +106,12 @@ class HomeDashboardScreen extends ConsumerWidget {
               label: Text(l10n.dashboardViewFarmers),
             ),
             const SizedBox(height: 12),
+            FilledButton.icon(
+              onPressed: () => context.push(AppRoutes.cashCarryPos),
+              icon: const Icon(Icons.point_of_sale),
+              label: Text(l10n.cashAndCarryPos),
+            ),
+            const SizedBox(height: 12),
             OutlinedButton.icon(
               onPressed: () async {
                 await ref.read(syncOrchestratorProvider).syncNow();
