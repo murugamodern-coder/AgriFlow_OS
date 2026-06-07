@@ -751,4 +751,66 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get geoOptionalHelper => 'விருப்பப்பட்டது - தேவையில்லை';
+
+  @override
+  String get actionVerifyEligibility => 'தகுதி சரிபார்க்க';
+
+  @override
+  String get actionCollectDocuments => 'ஆவணங்கள் சேகரிக்க';
+
+  @override
+  String get actionRegisterInMimis => 'MIMIS பதிவு செய்ய';
+
+  @override
+  String get actionScheduleFieldSurvey => 'களப்பணி திட்டமிட';
+
+  @override
+  String get actionGenerateQuotation => 'விலை மதிப்பீடு உருவாக்க';
+
+  @override
+  String get actionSubmitForPreInspection => 'முன் ஆய்வுக்கு சமர்ப்பிக்க';
+
+  @override
+  String get actionReceiveWorkOrder => 'பணி உத்தரவு பெற';
+
+  @override
+  String get actionDispatchMaterial => 'பொருள் அனுப்ப';
+
+  @override
+  String get actionCompleteInstallation => 'நிறுவலை முடிக்க';
+
+  @override
+  String get actionSubmitForPostInspection => 'பின் ஆய்வுக்கு சமர்ப்பிக்க';
+
+  @override
+  String get actionReleaseSubsidy => 'மானியம் வழங்க';
+
+  @override
+  String get confirmStageTransition => 'நிலை மாற்றம் உறுதி';
+
+  @override
+  String get confirmMessageAdvance => 'முன்னோக்கி அடுத்த நிலைக்கு செல்லட்டுமா?';
+
+  @override
+  String get transitionSuccess => 'நிலை மாற்றம் வெற்றி';
+
+  @override
+  String get transitionFailed => 'நிலை மாற்றம் தோல்வி';
+
+  @override
+  String get currentStageLabel => 'தற்போதைய நிலை';
+
+  @override
+  String stageXOf12(int current) {
+    return '$current / 12';
+  }
+
+  @override
+  String get workflowNoActionsForRole => 'இந்த பங்குக்கு செயல்கள் இல்லை';
+
+  @override
+  String get cancel => 'ரத்து';
+
+  @override
+  String get confirm => 'உறுதி';
 }

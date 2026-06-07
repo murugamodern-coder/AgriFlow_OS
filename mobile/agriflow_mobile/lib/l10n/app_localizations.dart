@@ -1381,6 +1381,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Optional — not required'**
   String get geoOptionalHelper;
+
+  /// No description provided for @actionVerifyEligibility.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify eligibility'**
+  String get actionVerifyEligibility;
+
+  /// No description provided for @actionCollectDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'Collect documents'**
+  String get actionCollectDocuments;
+
+  /// No description provided for @actionRegisterInMimis.
+  ///
+  /// In en, this message translates to:
+  /// **'Register in MIMIS'**
+  String get actionRegisterInMimis;
+
+  /// No description provided for @actionScheduleFieldSurvey.
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule field survey'**
+  String get actionScheduleFieldSurvey;
+
+  /// No description provided for @actionGenerateQuotation.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate quotation'**
+  String get actionGenerateQuotation;
+
+  /// No description provided for @actionSubmitForPreInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for pre-inspection'**
+  String get actionSubmitForPreInspection;
+
+  /// No description provided for @actionReceiveWorkOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive work order'**
+  String get actionReceiveWorkOrder;
+
+  /// No description provided for @actionDispatchMaterial.
+  ///
+  /// In en, this message translates to:
+  /// **'Dispatch material'**
+  String get actionDispatchMaterial;
+
+  /// No description provided for @actionCompleteInstallation.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete installation'**
+  String get actionCompleteInstallation;
+
+  /// No description provided for @actionSubmitForPostInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit for post-inspection'**
+  String get actionSubmitForPostInspection;
+
+  /// No description provided for @actionReleaseSubsidy.
+  ///
+  /// In en, this message translates to:
+  /// **'Release subsidy'**
+  String get actionReleaseSubsidy;
+
+  /// No description provided for @confirmStageTransition.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm stage transition'**
+  String get confirmStageTransition;
+
+  /// No description provided for @confirmMessageAdvance.
+  ///
+  /// In en, this message translates to:
+  /// **'Advance to the next stage?'**
+  String get confirmMessageAdvance;
+
+  /// No description provided for @transitionSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage updated successfully'**
+  String get transitionSuccess;
+
+  /// No description provided for @transitionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage transition failed'**
+  String get transitionFailed;
+
+  /// No description provided for @currentStageLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Current stage'**
+  String get currentStageLabel;
+
+  /// No description provided for @stageXOf12.
+  ///
+  /// In en, this message translates to:
+  /// **'{current} / 12'**
+  String stageXOf12(int current);
+
+  /// No description provided for @workflowNoActionsForRole.
+  ///
+  /// In en, this message translates to:
+  /// **'No actions available for your role'**
+  String get workflowNoActionsForRole;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
 }
 
 class _AppLocalizationsDelegate

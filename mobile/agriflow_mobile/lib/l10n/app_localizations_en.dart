@@ -753,4 +753,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get geoOptionalHelper => 'Optional — not required';
+
+  @override
+  String get actionVerifyEligibility => 'Verify eligibility';
+
+  @override
+  String get actionCollectDocuments => 'Collect documents';
+
+  @override
+  String get actionRegisterInMimis => 'Register in MIMIS';
+
+  @override
+  String get actionScheduleFieldSurvey => 'Schedule field survey';
+
+  @override
+  String get actionGenerateQuotation => 'Generate quotation';
+
+  @override
+  String get actionSubmitForPreInspection => 'Submit for pre-inspection';
+
+  @override
+  String get actionReceiveWorkOrder => 'Receive work order';
+
+  @override
+  String get actionDispatchMaterial => 'Dispatch material';
+
+  @override
+  String get actionCompleteInstallation => 'Complete installation';
+
+  @override
+  String get actionSubmitForPostInspection => 'Submit for post-inspection';
+
+  @override
+  String get actionReleaseSubsidy => 'Release subsidy';
+
+  @override
+  String get confirmStageTransition => 'Confirm stage transition';
+
+  @override
+  String get confirmMessageAdvance => 'Advance to the next stage?';
+
+  @override
+  String get transitionSuccess => 'Stage updated successfully';
+
+  @override
+  String get transitionFailed => 'Stage transition failed';
+
+  @override
+  String get currentStageLabel => 'Current stage';
+
+  @override
+  String stageXOf12(int current) {
+    return '$current / 12';
+  }
+
+  @override
+  String get workflowNoActionsForRole => 'No actions available for your role';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get confirm => 'Confirm';
 }

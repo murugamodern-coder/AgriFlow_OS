@@ -376,5 +376,30 @@
   "geoClusterLabel": "Cluster",
   "geoOfficerLabel": "Officer",
   "geoOptionalSection": "Optional",
-  "geoOptionalHelper": "Optional — not required"
+  "geoOptionalHelper": "Optional — not required",
+  "actionVerifyEligibility": "Verify eligibility",
+  "actionCollectDocuments": "Collect documents",
+  "actionRegisterInMimis": "Register in MIMIS",
+  "actionScheduleFieldSurvey": "Schedule field survey",
+  "actionGenerateQuotation": "Generate quotation",
+  "actionSubmitForPreInspection": "Submit for pre-inspection",
+  "actionReceiveWorkOrder": "Receive work order",
+  "actionDispatchMaterial": "Dispatch material",
+  "actionCompleteInstallation": "Complete installation",
+  "actionSubmitForPostInspection": "Submit for post-inspection",
+  "actionReleaseSubsidy": "Release subsidy",
+  "confirmStageTransition": "Confirm stage transition",
+  "confirmMessageAdvance": "Advance to the next stage?",
+  "transitionSuccess": "Stage updated successfully",
+  "transitionFailed": "Stage transition failed",
+  "currentStageLabel": "Current stage",
+  "stageXOf12": "{current} / 12",
+  "@stageXOf12": {
+    "placeholders": {
+      "current": { "type": "int" }
+    }
+  },
+  "workflowNoActionsForRole": "No actions available for your role",
+  "cancel": "Cancel",
+  "confirm": "Confirm"
 }

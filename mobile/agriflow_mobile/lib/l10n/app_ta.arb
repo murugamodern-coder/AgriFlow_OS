@@ -326,5 +326,30 @@
   "geoClusterLabel": "கூட்டம்",
   "geoOfficerLabel": "அதிகாரி",
   "geoOptionalSection": "கூடுதல் (Optional)",
-  "geoOptionalHelper": "விருப்பப்பட்டது - தேவையில்லை"
+  "geoOptionalHelper": "விருப்பப்பட்டது - தேவையில்லை",
+  "actionVerifyEligibility": "தகுதி சரிபார்க்க",
+  "actionCollectDocuments": "ஆவணங்கள் சேகரிக்க",
+  "actionRegisterInMimis": "MIMIS பதிவு செய்ய",
+  "actionScheduleFieldSurvey": "களப்பணி திட்டமிட",
+  "actionGenerateQuotation": "விலை மதிப்பீடு உருவாக்க",
+  "actionSubmitForPreInspection": "முன் ஆய்வுக்கு சமர்ப்பிக்க",
+  "actionReceiveWorkOrder": "பணி உத்தரவு பெற",
+  "actionDispatchMaterial": "பொருள் அனுப்ப",
+  "actionCompleteInstallation": "நிறுவலை முடிக்க",
+  "actionSubmitForPostInspection": "பின் ஆய்வுக்கு சமர்ப்பிக்க",
+  "actionReleaseSubsidy": "மானியம் வழங்க",
+  "confirmStageTransition": "நிலை மாற்றம் உறுதி",
+  "confirmMessageAdvance": "முன்னோக்கி அடுத்த நிலைக்கு செல்லட்டுமா?",
+  "transitionSuccess": "நிலை மாற்றம் வெற்றி",
+  "transitionFailed": "நிலை மாற்றம் தோல்வி",
+  "currentStageLabel": "தற்போதைய நிலை",
+  "stageXOf12": "{current} / 12",
+  "@stageXOf12": {
+    "placeholders": {
+      "current": { "type": "int" }
+    }
+  },
+  "workflowNoActionsForRole": "இந்த பங்குக்கு செயல்கள் இல்லை",
+  "cancel": "ரத்து",
+  "confirm": "உறுதி"
 }
