@@ -813,4 +813,77 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get confirm => 'உறுதி';
+
+  @override
+  String get billing => 'பில்லிங்';
+
+  @override
+  String get cashCarryTitle => 'பணம் வாங்கல்';
+
+  @override
+  String get cashAndCarryPos => 'பணம் வாங்கல் POS';
+
+  @override
+  String get itemSearchHint => 'பொருட்கள் தேடல் (Drip, Pipe, Motor)...';
+
+  @override
+  String get cartTotal => 'மொத்தம்';
+
+  @override
+  String get cartEmpty => 'வண்டி காலியாக உள்ளது';
+
+  @override
+  String get cartEmptyHint => 'மேலே தேடி பொருளை சேர்க்கவும்';
+
+  @override
+  String get cartClear => 'அழி';
+
+  @override
+  String get saveInvoice => 'பில் சேமி';
+
+  @override
+  String get proceedToPayment => 'கட்டணத்திற்கு தொடரவும்';
+
+  @override
+  String get customerNameOptional => 'வாடிக்கையாளர் பெயர் (விருப்பம்)';
+
+  @override
+  String get customerMobileOptional => 'மொபைல் எண் (விருப்பம்)';
+
+  @override
+  String get paymentModeLabel => 'கட்டண முறை';
+
+  @override
+  String get customerDetailsTitle => 'வாடிக்கையாளர் விவரம்';
+
+  @override
+  String get invoiceCreatedTitle => 'பில் உருவாக்கப்பட்டது!';
+
+  @override
+  String get noItemsFound => 'பொருட்கள் இல்லை';
+
+  @override
+  String itemAddedToCart(String item) {
+    return '$item வண்டியில் சேர்க்கப்பட்டது';
+  }
+
+  @override
+  String invoiceItemsCount(int count) {
+    return '$count பொருட்கள்';
+  }
+
+  @override
+  String get paymentModeCash => 'பணம்';
+
+  @override
+  String get paymentModeUpi => 'UPI';
+
+  @override
+  String get paymentModeCard => 'கார்டு';
+
+  @override
+  String get paymentModeBankTransfer => 'வங்கி பரிமாற்றம்';
+
+  @override
+  String get paymentModeMixed => 'கலவை';
 }

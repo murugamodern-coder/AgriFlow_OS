@@ -1501,6 +1501,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm'**
   String get confirm;
+
+  /// No description provided for @billing.
+  ///
+  /// In en, this message translates to:
+  /// **'Billing'**
+  String get billing;
+
+  /// No description provided for @cashCarryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash & Carry'**
+  String get cashCarryTitle;
+
+  /// No description provided for @cashAndCarryPos.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash & Carry POS'**
+  String get cashAndCarryPos;
+
+  /// No description provided for @itemSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items (e.g. Drip, Pipe, Motor)...'**
+  String get itemSearchHint;
+
+  /// No description provided for @cartTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get cartTotal;
+
+  /// No description provided for @cartEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart is empty'**
+  String get cartEmpty;
+
+  /// No description provided for @cartEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items above and tap to add'**
+  String get cartEmptyHint;
+
+  /// No description provided for @cartClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get cartClear;
+
+  /// No description provided for @saveInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Save invoice'**
+  String get saveInvoice;
+
+  /// No description provided for @proceedToPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Proceed to payment'**
+  String get proceedToPayment;
+
+  /// No description provided for @customerNameOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer name (optional)'**
+  String get customerNameOptional;
+
+  /// No description provided for @customerMobileOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Mobile (optional)'**
+  String get customerMobileOptional;
+
+  /// No description provided for @paymentModeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment mode'**
+  String get paymentModeLabel;
+
+  /// No description provided for @customerDetailsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer details'**
+  String get customerDetailsTitle;
+
+  /// No description provided for @invoiceCreatedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice created!'**
+  String get invoiceCreatedTitle;
+
+  /// No description provided for @noItemsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No items found'**
+  String get noItemsFound;
+
+  /// No description provided for @itemAddedToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'{item} added to cart'**
+  String itemAddedToCart(String item);
+
+  /// No description provided for @invoiceItemsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} items'**
+  String invoiceItemsCount(int count);
+
+  /// No description provided for @paymentModeCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentModeCash;
+
+  /// No description provided for @paymentModeUpi.
+  ///
+  /// In en, this message translates to:
+  /// **'UPI'**
+  String get paymentModeUpi;
+
+  /// No description provided for @paymentModeCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentModeCard;
+
+  /// No description provided for @paymentModeBankTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get paymentModeBankTransfer;
+
+  /// No description provided for @paymentModeMixed.
+  ///
+  /// In en, this message translates to:
+  /// **'Mixed'**
+  String get paymentModeMixed;
 }
 
 class _AppLocalizationsDelegate

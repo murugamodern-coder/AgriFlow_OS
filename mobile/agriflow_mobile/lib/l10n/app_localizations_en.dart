@@ -815,4 +815,77 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get confirm => 'Confirm';
+
+  @override
+  String get billing => 'Billing';
+
+  @override
+  String get cashCarryTitle => 'Cash & Carry';
+
+  @override
+  String get cashAndCarryPos => 'Cash & Carry POS';
+
+  @override
+  String get itemSearchHint => 'Search items (e.g. Drip, Pipe, Motor)...';
+
+  @override
+  String get cartTotal => 'Total';
+
+  @override
+  String get cartEmpty => 'Cart is empty';
+
+  @override
+  String get cartEmptyHint => 'Search items above and tap to add';
+
+  @override
+  String get cartClear => 'Clear';
+
+  @override
+  String get saveInvoice => 'Save invoice';
+
+  @override
+  String get proceedToPayment => 'Proceed to payment';
+
+  @override
+  String get customerNameOptional => 'Customer name (optional)';
+
+  @override
+  String get customerMobileOptional => 'Mobile (optional)';
+
+  @override
+  String get paymentModeLabel => 'Payment mode';
+
+  @override
+  String get customerDetailsTitle => 'Customer details';
+
+  @override
+  String get invoiceCreatedTitle => 'Invoice created!';
+
+  @override
+  String get noItemsFound => 'No items found';
+
+  @override
+  String itemAddedToCart(String item) {
+    return '$item added to cart';
+  }
+
+  @override
+  String invoiceItemsCount(int count) {
+    return '$count items';
+  }
+
+  @override
+  String get paymentModeCash => 'Cash';
+
+  @override
+  String get paymentModeUpi => 'UPI';
+
+  @override
+  String get paymentModeCard => 'Card';
+
+  @override
+  String get paymentModeBankTransfer => 'Bank transfer';
+
+  @override
+  String get paymentModeMixed => 'Mixed';
 }
