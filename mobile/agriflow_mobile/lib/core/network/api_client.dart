@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:agriflow_mobile/core/errors/failure.dart';
 import 'package:agriflow_mobile/core/network/api_envelope.dart';
 import 'package:dio/dio.dart';
@@ -48,8 +50,21 @@ class ApiClient {
   }
 
   JsonMap _normalizeBody(dynamic raw) {
-    if (raw is Map<String, dynamic>) return raw;
+    if (raw is Map<String, dynamic>) {
+      if (raw['message'] is Map<String, dynamic>) {
+        return raw['message'] as JsonMap;
+      }
+      return raw;
+    }
     if (raw is String) {
+      try {
+        final decoded = jsonDecode(raw);
+        if (decoded is Map<String, dynamic>) {
+          return _normalizeBody(decoded);
+        }
+      } catch (_) {
+        // ignore malformed raw string bodies
+      }
       return {};
     }
     return {};
