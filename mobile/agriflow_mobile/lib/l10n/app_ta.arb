@@ -399,8 +399,11 @@
   "projectSaleFarmerLabel": "விவசாயி",
   "govtSubsidyAmount": "அரசு மானியம் ₹",
   "farmerPortionAmount": "விவசாயி ₹",
-  "projectSaleSplitError": "மானியம் + விவசாயி பங்கு மொத்தத்திற்கு சமமாக இருக்க வேண்டும் (₹{total})",
+"projectSaleSplitError": "மானியம் + விவசாயி பங்கு மொத்தத்திற்கு சமமாக இருக்க வேண்டும் (₹{total})",
   "@projectSaleSplitError": {
     "placeholders": { "total": { "type": "double", "format": "decimalPattern" } }
-  }
+  },
+  "share_pdf": "PDF பகிர்",
+  "share_failed": "பகிர முடியவில்லை",
+  "pdf_generated": "PDF உருவாக்கப்பட்டது"
 }

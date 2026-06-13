@@ -1,3 +1,4 @@
+import 'package:agriflow_mobile/features/billing/data/print_service.dart';
 import 'package:agriflow_mobile/features/billing/domain/models/billing_models.dart';
 import 'package:agriflow_mobile/features/billing/presentation/providers/billing_providers.dart';
 import 'package:agriflow_mobile/l10n/app_localizations.dart';
@@ -355,6 +356,27 @@ class _CashCarryPosScreenState extends ConsumerState<CashCarryPosScreen> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(l10n.confirm),
+            ),
+            ElevatedButton.icon(
+              icon: const Icon(Icons.share, size: 18),
+              label: const Text('Share PDF'),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+              onPressed: () async {
+                try {
+                  final repo = ref.read(billingRepositoryProvider);
+                  final pdfData = await repo.getInvoicePdf(result.name);
+                  await PrintService().shareInvoicePdf(
+                    filename: pdfData['filename'] as String,
+                    base64Pdf: pdfData['pdf_base64'] as String,
+                  );
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Share failed: $e'), backgroundColor: Colors.red),
+                    );
+                  }
+                }
+              },
             ),
           ],
         ),

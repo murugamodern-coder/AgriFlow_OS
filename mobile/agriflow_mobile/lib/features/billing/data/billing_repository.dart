@@ -86,4 +86,16 @@ class BillingRepository {
         .map((e) => Map<String, dynamic>.from(e as Map))
         .toList();
   }
+
+  Future<Map<String, dynamic>> getInvoicePdf(String invoiceName) async {
+    final response = await _dio.post<dynamic>(
+      _config.methodUrl('agriflow.api.v1.billing.get_invoice_pdf'),
+      data: {'invoice_name': invoiceName},
+    );
+    final raw = response.data['message'];
+    final data = raw is Map && raw['data'] is Map
+        ? raw['data'] as Map<String, dynamic>
+        : raw as Map<String, dynamic>;
+    return data;
+  }
 }

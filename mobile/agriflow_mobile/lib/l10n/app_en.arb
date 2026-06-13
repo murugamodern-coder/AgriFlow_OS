@@ -452,5 +452,8 @@
   "projectSaleSplitError": "Subsidy + farmer portion must equal total (₹{total})",
   "@projectSaleSplitError": {
     "placeholders": { "total": { "type": "double", "format": "decimalPattern" } }
-  }
+  },
+  "share_pdf": "Share PDF",
+  "share_failed": "Share failed",
+  "pdf_generated": "PDF generated"
 }

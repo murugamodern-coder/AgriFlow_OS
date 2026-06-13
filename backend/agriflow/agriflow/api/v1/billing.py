@@ -9,6 +9,8 @@ import frappe
 from frappe import _
 from frappe.utils import flt, nowdate
 
+from agriflow.api.v1.response import fail, success
+
 
 def _selling_defaults(company: str) -> dict:
 	price_list = (
@@ -218,3 +220,54 @@ def get_item_search(search="", limit=20):
 		order_by="item_name",
 		limit_page_length=limit,
 	)
+
+
+@frappe.whitelist()
+def get_invoice_pdf(invoice_name=None, print_format="Standard", **kwargs):
+	"""Generate PDF for sales invoice as base64."""
+	import base64
+	from frappe.utils.pdf import get_pdf
+	
+	from frappe import _
+	
+	# Handle parameter passing from different sources
+	if not invoice_name:
+		invoice_name = kwargs.get("invoice_name") or (frappe.form_dict or {}).get("invoice_name") or ""
+	
+	# Support POST with JSON body (data parameter)
+	import json as _json
+	if not invoice_name and frappe.request and frappe.request.data:
+		try:
+			body = _json.loads(frappe.request.data)
+			invoice_name = body.get("invoice_name", "")
+		except (ValueError, TypeError, AttributeError):
+			pass
+	
+	if not invoice_name:
+		return fail("VAL_REQUIRED_FIELD", _("invoice_name required"), http_status=400)
+	
+	if not frappe.db.exists("Sales Invoice", invoice_name):
+		return fail("INVOICE_NOT_FOUND", _("Invoice not found"), http_status=404)
+	
+	if not frappe.has_permission("Sales Invoice", "read", doc=invoice_name):
+		return fail("PERMISSION_DENIED", _("Not allowed"), http_status=403)
+	
+	try:
+		html = frappe.get_print(
+			"Sales Invoice",
+			invoice_name,
+			print_format=print_format,
+			as_pdf=False,
+		)
+		pdf_bytes = get_pdf(html)
+		pdf_b64 = base64.b64encode(pdf_bytes).decode("utf-8")
+		
+		return success({
+			"invoice_name": invoice_name,
+			"pdf_base64": pdf_b64,
+			"filename": f"{invoice_name}.pdf",
+			"size_bytes": len(pdf_bytes),
+		})
+	except Exception as exc:
+		frappe.log_error(title="get_invoice_pdf", message=str(exc))
+		return fail("PDF_GENERATION_FAILED", str(exc), http_status=500)
