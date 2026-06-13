@@ -21,4 +21,7 @@ abstract final class AppRoutes {
   static const feedback = '/feedback';
   static const onboarding = '/onboarding';
   static const cashCarryPos = '/billing/cash-carry';
+
+  static String projectSale(String projectName) =>
+      '/billing/project-sale/$projectName';
 }

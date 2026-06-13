@@ -1,5 +1,6 @@
 import 'package:agriflow_mobile/app/router/routes.dart';
 import 'package:agriflow_mobile/features/billing/presentation/screens/cash_carry_pos_screen.dart';
+import 'package:agriflow_mobile/features/billing/presentation/screens/project_sale_screen.dart';
 import 'package:agriflow_mobile/features/auth/data/auth_repository.dart';
 import 'package:agriflow_mobile/features/auth/presentation/login_screen.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/dashboard_shell.dart';
@@ -119,6 +120,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.cashCarryPos,
         builder: (context, state) => const CashCarryPosScreen(),
+      ),
+      GoRoute(
+        path: '/billing/project-sale/:projectName',
+        builder: (context, state) => ProjectSaleScreen(
+          projectName: state.pathParameters['projectName']!,
+        ),
       ),
     ],
   );

@@ -41,6 +41,36 @@ class BillingRepository {
     return InvoiceResult.fromJson(data);
   }
 
+  Future<Map<String, dynamic>> getProjectDetails(String projectName) async {
+    final response = await _dio.post<dynamic>(
+      _config.methodUrl('agriflow.api.v1.project.timeline'),
+      data: {'name': projectName},
+    );
+    final message = Map<String, dynamic>.from(response.data['message'] as Map);
+    return Map<String, dynamic>.from(message['project'] as Map? ?? {});
+  }
+
+  Future<InvoiceResult> createProjectInvoice({
+    required String projectName,
+    required List<CartLine> items,
+    required double subsidyAmount,
+    required double farmerPortion,
+    PaymentMode paymentMode = PaymentMode.cash,
+  }) async {
+    final response = await _dio.post<dynamic>(
+      _config.methodUrl('agriflow.api.v1.billing.create_project_invoice'),
+      data: {
+        'project_name': projectName,
+        'items': items.map((c) => c.toApiPayload()).toList(),
+        'subsidy_amount': subsidyAmount,
+        'farmer_portion': farmerPortion,
+        'payment_mode': paymentMode.apiValue,
+      },
+    );
+    final data = Map<String, dynamic>.from(response.data['message'] as Map);
+    return InvoiceResult.fromProjectJson(data, itemsCount: items.length);
+  }
+
   Future<List<Map<String, dynamic>>> recentInvoices({
     int limit = 20,
     String? saleMode,

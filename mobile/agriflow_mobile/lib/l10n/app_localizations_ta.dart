@@ -886,4 +886,61 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get paymentModeMixed => 'கலவை';
+
+  @override
+  String get projectSale => 'திட்ட விற்பனை';
+
+  @override
+  String projectSaleTitle(String project) {
+    return 'திட்ட விற்பனை: $project';
+  }
+
+  @override
+  String get generateInvoice => 'பில் உருவாக்கு';
+
+  @override
+  String get generateProjectInvoice => 'திட்ட பில் உருவாக்கு';
+
+  @override
+  String get govtSubsidy => 'அரசு மானியம் (80%)';
+
+  @override
+  String get farmerPortion => 'விவசாயி பங்கு (20%)';
+
+  @override
+  String get subsidySplit => 'மானிய பிரிவு';
+
+  @override
+  String get confirmGenerate => 'உறுதிப்படுத்தி உருவாக்கு';
+
+  @override
+  String get projectSaleSearchHint => 'விலை மதிப்பீட்டுக்கு பொருட்கள் தேடல்...';
+
+  @override
+  String get projectSaleEmptyHint =>
+      'விலை மதிப்பீட்டுக்கு பொருட்களை சேர்க்கவும்';
+
+  @override
+  String get projectSaleConfirmTitle => 'திட்ட பில் உறுதிப்படுத்தல்';
+
+  @override
+  String get projectSaleProjectLabel => 'திட்டம்';
+
+  @override
+  String get projectSaleFarmerLabel => 'விவசாயி';
+
+  @override
+  String get govtSubsidyAmount => 'அரசு மானியம் ₹';
+
+  @override
+  String get farmerPortionAmount => 'விவசாயி ₹';
+
+  @override
+  String projectSaleSplitError(double total) {
+    final intl.NumberFormat totalNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String totalString = totalNumberFormat.format(total);
+
+    return 'மானியம் + விவசாயி பங்கு மொத்தத்திற்கு சமமாக இருக்க வேண்டும் (₹$totalString)';
+  }
 }

@@ -430,5 +430,27 @@
   "paymentModeUpi": "UPI",
   "paymentModeCard": "Card",
   "paymentModeBankTransfer": "Bank transfer",
-  "paymentModeMixed": "Mixed"
+  "paymentModeMixed": "Mixed",
+  "projectSale": "Project Sale",
+  "projectSaleTitle": "Project Sale: {project}",
+  "@projectSaleTitle": {
+    "placeholders": { "project": { "type": "String" } }
+  },
+  "generateInvoice": "Generate invoice",
+  "generateProjectInvoice": "Generate project invoice",
+  "govtSubsidy": "Govt subsidy (80%)",
+  "farmerPortion": "Farmer portion (20%)",
+  "subsidySplit": "Subsidy split",
+  "confirmGenerate": "Confirm & generate",
+  "projectSaleSearchHint": "Search items for quotation...",
+  "projectSaleEmptyHint": "Add items to create quotation",
+  "projectSaleConfirmTitle": "Confirm project invoice",
+  "projectSaleProjectLabel": "Project",
+  "projectSaleFarmerLabel": "Farmer",
+  "govtSubsidyAmount": "Govt subsidy ₹",
+  "farmerPortionAmount": "Farmer ₹",
+  "projectSaleSplitError": "Subsidy + farmer portion must equal total (₹{total})",
+  "@projectSaleSplitError": {
+    "placeholders": { "total": { "type": "double", "format": "decimalPattern" } }
+  }
 }

@@ -380,5 +380,27 @@
   "paymentModeUpi": "UPI",
   "paymentModeCard": "கார்டு",
   "paymentModeBankTransfer": "வங்கி பரிமாற்றம்",
-  "paymentModeMixed": "கலவை"
+  "paymentModeMixed": "கலவை",
+  "projectSale": "திட்ட விற்பனை",
+  "projectSaleTitle": "திட்ட விற்பனை: {project}",
+  "@projectSaleTitle": {
+    "placeholders": { "project": { "type": "String" } }
+  },
+  "generateInvoice": "பில் உருவாக்கு",
+  "generateProjectInvoice": "திட்ட பில் உருவாக்கு",
+  "govtSubsidy": "அரசு மானியம் (80%)",
+  "farmerPortion": "விவசாயி பங்கு (20%)",
+  "subsidySplit": "மானிய பிரிவு",
+  "confirmGenerate": "உறுதிப்படுத்தி உருவாக்கு",
+  "projectSaleSearchHint": "விலை மதிப்பீட்டுக்கு பொருட்கள் தேடல்...",
+  "projectSaleEmptyHint": "விலை மதிப்பீட்டுக்கு பொருட்களை சேர்க்கவும்",
+  "projectSaleConfirmTitle": "திட்ட பில் உறுதிப்படுத்தல்",
+  "projectSaleProjectLabel": "திட்டம்",
+  "projectSaleFarmerLabel": "விவசாயி",
+  "govtSubsidyAmount": "அரசு மானியம் ₹",
+  "farmerPortionAmount": "விவசாயி ₹",
+  "projectSaleSplitError": "மானியம் + விவசாயி பங்கு மொத்தத்திற்கு சமமாக இருக்க வேண்டும் (₹{total})",
+  "@projectSaleSplitError": {
+    "placeholders": { "total": { "type": "double", "format": "decimalPattern" } }
+  }
 }

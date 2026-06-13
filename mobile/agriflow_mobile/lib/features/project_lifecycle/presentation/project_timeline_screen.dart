@@ -7,6 +7,7 @@ import 'package:agriflow_mobile/features/project_lifecycle/presentation/provider
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/timeline_feed_screen.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_actions_bar.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_header_card.dart';
+import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_project_sale_button.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_workflow_actions.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/timeline_workflow_progress_card.dart';
 import 'package:agriflow_mobile/features/project_lifecycle/presentation/widgets/workflow_timeline_stage_row.dart';
@@ -136,6 +137,11 @@ class _ProjectTimelineScreenState extends ConsumerState<ProjectTimelineScreen> {
                           children: [
                             TimelineWorkflowActions(
                               projectName: widget.projectName,
+                            ),
+                            TimelineProjectSaleButton(
+                              projectName: widget.projectName,
+                              farmerDisplayName:
+                                  farmer['farmer_name'] as String?,
                             ),
                             const SizedBox(height: AgriFlowSpacing.space16),
                             TimelineActionsBar(

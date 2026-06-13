@@ -1639,6 +1639,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mixed'**
   String get paymentModeMixed;
+
+  /// No description provided for @projectSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Sale'**
+  String get projectSale;
+
+  /// No description provided for @projectSaleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Project Sale: {project}'**
+  String projectSaleTitle(String project);
+
+  /// No description provided for @generateInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate invoice'**
+  String get generateInvoice;
+
+  /// No description provided for @generateProjectInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Generate project invoice'**
+  String get generateProjectInvoice;
+
+  /// No description provided for @govtSubsidy.
+  ///
+  /// In en, this message translates to:
+  /// **'Govt subsidy (80%)'**
+  String get govtSubsidy;
+
+  /// No description provided for @farmerPortion.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer portion (20%)'**
+  String get farmerPortion;
+
+  /// No description provided for @subsidySplit.
+  ///
+  /// In en, this message translates to:
+  /// **'Subsidy split'**
+  String get subsidySplit;
+
+  /// No description provided for @confirmGenerate.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm & generate'**
+  String get confirmGenerate;
+
+  /// No description provided for @projectSaleSearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search items for quotation...'**
+  String get projectSaleSearchHint;
+
+  /// No description provided for @projectSaleEmptyHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add items to create quotation'**
+  String get projectSaleEmptyHint;
+
+  /// No description provided for @projectSaleConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm project invoice'**
+  String get projectSaleConfirmTitle;
+
+  /// No description provided for @projectSaleProjectLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Project'**
+  String get projectSaleProjectLabel;
+
+  /// No description provided for @projectSaleFarmerLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer'**
+  String get projectSaleFarmerLabel;
+
+  /// No description provided for @govtSubsidyAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Govt subsidy ₹'**
+  String get govtSubsidyAmount;
+
+  /// No description provided for @farmerPortionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer ₹'**
+  String get farmerPortionAmount;
+
+  /// No description provided for @projectSaleSplitError.
+  ///
+  /// In en, this message translates to:
+  /// **'Subsidy + farmer portion must equal total (₹{total})'**
+  String projectSaleSplitError(double total);
 }
 
 class _AppLocalizationsDelegate

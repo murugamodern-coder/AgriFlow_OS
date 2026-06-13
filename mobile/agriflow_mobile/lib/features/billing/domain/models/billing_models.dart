@@ -49,16 +49,35 @@ class InvoiceResult {
     required this.name,
     required this.total,
     required this.itemsCount,
+    this.subsidyPortion,
+    this.farmerPortion,
+    this.draft = false,
   });
 
   final String name;
   final double total;
   final int itemsCount;
+  final double? subsidyPortion;
+  final double? farmerPortion;
+  final bool draft;
 
   factory InvoiceResult.fromJson(Map<String, dynamic> json) => InvoiceResult(
         name: json['name'] as String,
         total: (json['total'] as num).toDouble(),
         itemsCount: (json['items_count'] as int?) ?? 0,
+      );
+
+  factory InvoiceResult.fromProjectJson(
+    Map<String, dynamic> json, {
+    required int itemsCount,
+  }) =>
+      InvoiceResult(
+        name: json['name'] as String,
+        total: (json['total'] as num).toDouble(),
+        itemsCount: itemsCount,
+        subsidyPortion: (json['subsidy_portion'] as num?)?.toDouble(),
+        farmerPortion: (json['farmer_portion'] as num?)?.toDouble(),
+        draft: json['draft'] == true || json['draft'] == 1,
       );
 }
 

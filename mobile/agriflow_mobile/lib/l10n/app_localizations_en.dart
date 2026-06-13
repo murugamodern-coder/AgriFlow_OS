@@ -888,4 +888,60 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentModeMixed => 'Mixed';
+
+  @override
+  String get projectSale => 'Project Sale';
+
+  @override
+  String projectSaleTitle(String project) {
+    return 'Project Sale: $project';
+  }
+
+  @override
+  String get generateInvoice => 'Generate invoice';
+
+  @override
+  String get generateProjectInvoice => 'Generate project invoice';
+
+  @override
+  String get govtSubsidy => 'Govt subsidy (80%)';
+
+  @override
+  String get farmerPortion => 'Farmer portion (20%)';
+
+  @override
+  String get subsidySplit => 'Subsidy split';
+
+  @override
+  String get confirmGenerate => 'Confirm & generate';
+
+  @override
+  String get projectSaleSearchHint => 'Search items for quotation...';
+
+  @override
+  String get projectSaleEmptyHint => 'Add items to create quotation';
+
+  @override
+  String get projectSaleConfirmTitle => 'Confirm project invoice';
+
+  @override
+  String get projectSaleProjectLabel => 'Project';
+
+  @override
+  String get projectSaleFarmerLabel => 'Farmer';
+
+  @override
+  String get govtSubsidyAmount => 'Govt subsidy ₹';
+
+  @override
+  String get farmerPortionAmount => 'Farmer ₹';
+
+  @override
+  String projectSaleSplitError(double total) {
+    final intl.NumberFormat totalNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String totalString = totalNumberFormat.format(total);
+
+    return 'Subsidy + farmer portion must equal total (₹$totalString)';
+  }
 }
