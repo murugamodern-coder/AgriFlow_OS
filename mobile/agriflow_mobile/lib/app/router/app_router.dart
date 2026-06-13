@@ -3,7 +3,7 @@ import 'package:agriflow_mobile/features/billing/presentation/screens/cash_carry
 import 'package:agriflow_mobile/features/auth/data/auth_repository.dart';
 import 'package:agriflow_mobile/features/auth/presentation/login_screen.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/dashboard_shell.dart';
-import 'package:agriflow_mobile/features/dashboard/presentation/home_dashboard_screen.dart';
+import 'package:agriflow_mobile/features/dashboard/presentation/role_based_home.dart';
 import 'package:agriflow_mobile/features/farmer/presentation/farmer_create_screen.dart';
 import 'package:agriflow_mobile/features/farmer/presentation/farmer_list_screen.dart';
 import 'package:agriflow_mobile/features/notifications/presentation/notification_inbox_screen.dart';
@@ -14,7 +14,6 @@ import 'package:agriflow_mobile/features/pilot_ops/presentation/onboarding_scree
 import 'package:agriflow_mobile/features/sync/presentation/sync_status_screen.dart';
 import 'package:agriflow_mobile/features/tasks/presentation/task_detail_screen.dart';
 import 'package:agriflow_mobile/features/tasks/presentation/task_inbox_screen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -60,7 +59,7 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: AppRoutes.home,
-                builder: (context, state) => const HomeDashboardScreen(),
+                builder: (context, state) => const RoleBasedHome(),
               ),
             ],
           ),
