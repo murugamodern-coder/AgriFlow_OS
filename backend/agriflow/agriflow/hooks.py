@@ -5,6 +5,8 @@ app_description = "Irrigation workflow platform"
 app_email = "muruga.modern@gmail.com"
 app_license = "mit"
 
+auth_hooks = ["agriflow.api.v1.auth_jwt.validate_auth_via_header"]
+
 # Apps
 # ------------------
 
