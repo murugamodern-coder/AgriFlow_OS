@@ -1,0 +1,56 @@
+[
+ {
+  "doctype": "Workspace",
+  "name": "Farmer Registry",
+  "label": "Farmer Registry",
+  "title": "Farmer Registry",
+  "module": "Farmer Registry",
+  "icon": "users",
+  "indicator_color": "green",
+  "public": 1,
+  "is_hidden": 0,
+  "for_user": "",
+  "parent_page": "",
+  "restrict_to_domain": "",
+  "sequence_id": 10.0,
+  "app": "agriflow",
+  "content": "[{\"id\": \"agriflow_farmer_hdr_shortcuts\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_farmer_sc_0_farmer\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Farmer\", \"col\": 4}}, {\"id\": \"agriflow_farmer_hdr_links\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Registry</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_farmer_card_masters\", \"type\": \"card\", \"data\": {\"card_name\": \"Masters\", \"col\": 4}}]",
+  "shortcuts": [
+   {
+    "color": "Green",
+    "doc_view": "List",
+    "label": "Farmer",
+    "link_to": "Farmer",
+    "type": "DocType",
+    "format": "{} Active",
+    "stats_filter": "[[\"Farmer\",\"is_active\",\"=\",1]]"
+   }
+  ],
+  "links": [
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Masters",
+    "link_count": 1,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Farmer",
+    "link_count": 0,
+    "link_to": "Farmer",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   }
+  ],
+  "charts": [],
+  "quick_lists": [],
+  "number_cards": [],
+  "custom_blocks": [],
+  "roles": []
+ }
+]

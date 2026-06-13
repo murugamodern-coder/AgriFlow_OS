@@ -1,0 +1,138 @@
+[
+ {
+  "doctype": "Workspace",
+  "name": "Project Lifecycle",
+  "label": "Project Lifecycle",
+  "title": "Project Lifecycle",
+  "module": "Project Lifecycle",
+  "icon": "milestones",
+  "indicator_color": "blue",
+  "public": 1,
+  "is_hidden": 0,
+  "for_user": "",
+  "parent_page": "",
+  "restrict_to_domain": "",
+  "sequence_id": 25.0,
+  "app": "agriflow",
+  "content": "[{\"id\": \"agriflow_lifecycle_hdr_shortcuts\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_lifecycle_sc_0_farmer_project\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Farmer Project\", \"col\": 3}}, {\"id\": \"agriflow_lifecycle_sc_1_timeline_event\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Timeline Event\", \"col\": 3}}, {\"id\": \"agriflow_lifecycle_sc_2_project_stage\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Project Stage\", \"col\": 3}}, {\"id\": \"agriflow_lifecycle_sc_3_support_ticket\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Support Ticket\", \"col\": 3}}, {\"id\": \"agriflow_lifecycle_hdr_links\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Workflow & Operations</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_lifecycle_card_workflow\", \"type\": \"card\", \"data\": {\"card_name\": \"Workflow\", \"col\": 4}}, {\"id\": \"agriflow_lifecycle_card_operations\", \"type\": \"card\", \"data\": {\"card_name\": \"Operations\", \"col\": 4}}]",
+  "shortcuts": [
+   {
+    "color": "Blue",
+    "doc_view": "List",
+    "label": "Farmer Project",
+    "link_to": "Farmer Project",
+    "type": "DocType"
+   },
+   {
+    "color": "Green",
+    "doc_view": "List",
+    "label": "Timeline Event",
+    "link_to": "Timeline Event",
+    "type": "DocType"
+   },
+   {
+    "color": "Orange",
+    "doc_view": "List",
+    "label": "Project Stage",
+    "link_to": "Project Stage",
+    "type": "DocType"
+   },
+   {
+    "color": "Red",
+    "doc_view": "List",
+    "label": "Support Ticket",
+    "link_to": "Support Ticket",
+    "type": "DocType"
+   }
+  ],
+  "links": [
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Workflow",
+    "link_count": 3,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Farmer Project",
+    "link_count": 0,
+    "link_to": "Farmer Project",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Timeline Event",
+    "link_count": 0,
+    "link_to": "Timeline Event",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Project Stage",
+    "link_count": 0,
+    "link_to": "Project Stage",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Operations",
+    "link_count": 3,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Customer Onboarding",
+    "link_count": 0,
+    "link_to": "Customer Onboarding",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Support Ticket",
+    "link_count": 0,
+    "link_to": "Support Ticket",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Device Push Token",
+    "link_count": 0,
+    "link_to": "Device Push Token",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   }
+  ],
+  "charts": [],
+  "quick_lists": [],
+  "number_cards": [],
+  "custom_blocks": [],
+  "roles": []
+ }
+]

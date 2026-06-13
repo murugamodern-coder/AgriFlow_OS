@@ -64,7 +64,7 @@ Future<void> bootstrap() async {
   final notificationRemote = NotificationRemote(api: api, config: config);
   final inventoryRemote = InventoryRemote(api: api, config: config);
   final inventoryQueue = InventoryQueue(db);
-  final pilotRemote = PilotOpsRemote(api: api);
+  final pilotRemote = PilotOpsRemote(api: api, config: config);
   final pilotTelemetry = PilotTelemetryService(
     remote: pilotRemote,
     db: db,
@@ -99,7 +99,11 @@ Future<void> bootstrap() async {
   ).start();
   await WorkmanagerRegistration.register();
 
-  final pushService = PushService(api: api, telemetry: pilotTelemetry);
+  final pushService = PushService(
+    api: api,
+    config: config,
+    telemetry: pilotTelemetry,
+  );
 
   runApp(
     ProviderScope(

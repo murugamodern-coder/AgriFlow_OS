@@ -1,0 +1,138 @@
+[
+ {
+  "doctype": "Workspace",
+  "name": "Officer Network",
+  "label": "Officer Network",
+  "title": "Officer Network",
+  "module": "Officer Network",
+  "icon": "organization",
+  "indicator_color": "orange",
+  "public": 1,
+  "is_hidden": 0,
+  "for_user": "",
+  "parent_page": "",
+  "restrict_to_domain": "",
+  "sequence_id": 15.0,
+  "app": "agriflow",
+  "content": "[{\"id\": \"agriflow_officer_hdr_shortcuts\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_officer_sc_0_officer\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Officer\", \"col\": 3}}, {\"id\": \"agriflow_officer_sc_1_village\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Village\", \"col\": 3}}, {\"id\": \"agriflow_officer_sc_2_block\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Block\", \"col\": 3}}, {\"id\": \"agriflow_officer_sc_3_district\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"District\", \"col\": 3}}, {\"id\": \"agriflow_officer_hdr_links\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Geography & Officers</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_officer_card_geography\", \"type\": \"card\", \"data\": {\"card_name\": \"Geography\", \"col\": 4}}, {\"id\": \"agriflow_officer_card_officers\", \"type\": \"card\", \"data\": {\"card_name\": \"Officers\", \"col\": 4}}]",
+  "shortcuts": [
+   {
+    "color": "Blue",
+    "doc_view": "List",
+    "label": "Officer",
+    "link_to": "Officer",
+    "type": "DocType"
+   },
+   {
+    "color": "Green",
+    "doc_view": "List",
+    "label": "Village",
+    "link_to": "Village",
+    "type": "DocType"
+   },
+   {
+    "color": "Orange",
+    "doc_view": "List",
+    "label": "Block",
+    "link_to": "Block",
+    "type": "DocType"
+   },
+   {
+    "color": "Purple",
+    "doc_view": "List",
+    "label": "District",
+    "link_to": "District",
+    "type": "DocType"
+   }
+  ],
+  "links": [
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Geography",
+    "link_count": 4,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "District",
+    "link_count": 0,
+    "link_to": "District",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Block",
+    "link_count": 0,
+    "link_to": "Block",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Cluster",
+    "link_count": 0,
+    "link_to": "Cluster",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Village",
+    "link_count": 0,
+    "link_to": "Village",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Officers",
+    "link_count": 2,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Officer",
+    "link_count": 0,
+    "link_to": "Officer",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Officer Assignment History",
+    "link_count": 0,
+    "link_to": "Officer Assignment History",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   }
+  ],
+  "charts": [],
+  "quick_lists": [],
+  "number_cards": [],
+  "custom_blocks": [],
+  "roles": []
+ }
+]

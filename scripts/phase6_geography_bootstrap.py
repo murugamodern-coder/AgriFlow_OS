@@ -96,12 +96,13 @@ def doctype_json(
     *,
     autoname: str,
     title_field: str,
+    search_fields: str | None = None,
     track_changes: int = 1,
     allow_rename: int = 0,
     allow_import: int = 0,
 ) -> dict:
     field_order = [f["fieldname"] for f in fields]
-    return {
+    doc = {
         "actions": [],
         "allow_import": allow_import,
         "allow_rename": allow_rename,
@@ -122,8 +123,12 @@ def doctype_json(
         "sort_field": "modified",
         "sort_order": "DESC",
         "states": [],
+        "title_field": title_field,
         "track_changes": track_changes,
     }
+    if search_fields:
+        doc["search_fields"] = search_fields
+    return doc
 
 
 def controller_py(class_name: str, body: str) -> str:
@@ -203,7 +208,14 @@ def build_doctypes() -> dict[str, dict]:
 """,
         },
         "block": {
-            "json": doctype_json("Block", block_fields, autoname="field:block_code", title_field="block_name", allow_import=1),
+            "json": doctype_json(
+                "Block",
+                block_fields,
+                autoname="field:block_code",
+                title_field="block_name",
+                search_fields="block_name,block_code",
+                allow_import=1,
+            ),
             "class": "Block",
             "validate": """
 \tdef validate(self):
@@ -220,7 +232,14 @@ def build_doctypes() -> dict[str, dict]:
 """,
         },
         "cluster": {
-            "json": doctype_json("Cluster", cluster_fields, autoname="field:cluster_code", title_field="cluster_name", allow_import=1),
+            "json": doctype_json(
+                "Cluster",
+                cluster_fields,
+                autoname="field:cluster_code",
+                title_field="cluster_name",
+                search_fields="cluster_name,cluster_code",
+                allow_import=1,
+            ),
             "class": "Cluster",
             "validate": """
 \tdef validate(self):
@@ -238,7 +257,14 @@ def build_doctypes() -> dict[str, dict]:
 """,
         },
         "village": {
-            "json": doctype_json("Village", village_fields, autoname="field:village_code", title_field="village_name", allow_import=1),
+            "json": doctype_json(
+                "Village",
+                village_fields,
+                autoname="field:village_code",
+                title_field="village_name",
+                search_fields="village_name,village_code",
+                allow_import=1,
+            ),
             "class": "Village",
             "validate": """
 \tdef validate(self):

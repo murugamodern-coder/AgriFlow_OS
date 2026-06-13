@@ -4,9 +4,10 @@ import 'package:agriflow_mobile/core/errors/failure.dart';
 import 'package:agriflow_mobile/core/network/api_client.dart';
 import 'package:agriflow_mobile/core/storage/hive_boxes.dart';
 import 'package:agriflow_mobile/core/storage/secure_token_store.dart';
+import 'package:agriflow_mobile/features/auth/data/auth_bootstrap_log.dart';
+import 'package:agriflow_mobile/features/auth/data/dev_stub_tokens.dart';
 import 'package:agriflow_mobile/features/auth/domain/auth_session.dart';
 import 'package:agriflow_mobile/features/auth/domain/permission_manifest.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final authRepositoryProvider = Provider<AuthRepository>((ref) {
@@ -71,22 +72,79 @@ class AuthRepository {
   AuthSession? _cached;
 
   Future<AuthSession?> restoreSession() async {
+    AuthBootstrapLog.logEnv();
+
+    final accessToken = await _tokens.readAccessToken();
+    final refreshToken = await _tokens.readRefreshToken();
+    final manifest = _hive.getPermissions();
+    final hasManifest = manifest != null && manifest.isNotEmpty;
+
+    final stubTokens = DevStubTokens.isStubAccessToken(accessToken) ||
+        DevStubTokens.isStubRefreshToken(refreshToken);
+    final stubManifest = DevStubTokens.isStubManifest(manifest);
+
+    if (!Env.devAuthStubEnabled && (stubTokens || stubManifest)) {
+      AuthBootstrapLog.logRestore(
+        path: 'reject_dev_stub_purge',
+        accessToken: accessToken,
+        hasManifest: hasManifest,
+        manifestUser: manifest?['user'] as String?,
+      );
+      AuthBootstrapLog.logPurge(
+        'DEV_AUTH_STUB=false but stub token/manifest found in '
+        'SecureTokenStore/Hive (separate from agriflow_mobile cache folders)',
+      );
+      await _purgeDevStubPersistence();
+      return null;
+    }
+
     if (Env.devAuthStubEnabled) {
-      final manifest = _hive.getPermissions();
-      if (manifest != null) {
+      if (hasManifest) {
+        AuthBootstrapLog.logRestore(
+          path: 'dev_stub_manifest',
+          accessToken: accessToken,
+          hasManifest: true,
+          manifestUser: manifest['user'] as String?,
+        );
         _cached = AuthSession(
-          userName: 'dev@agriflow.local',
-          fullName: 'Dev Officer',
+          userName: DevStubTokens.user,
+          fullName: DevStubTokens.fullName,
           permissions: PermissionManifest.fromJson(manifest),
           isDevStub: true,
         );
         return _cached;
       }
+      AuthBootstrapLog.logRestore(
+        path: 'dev_stub_no_manifest',
+        accessToken: accessToken,
+        hasManifest: false,
+      );
+      return null;
     }
-    final token = await _tokens.readAccessToken();
-    if (token == null || token.isEmpty) return null;
-    final manifest = _hive.getPermissions();
-    if (manifest == null) return null;
+
+    if (accessToken == null || accessToken.isEmpty) {
+      AuthBootstrapLog.logRestore(
+        path: 'no_access_token',
+        hasManifest: hasManifest,
+        manifestUser: manifest?['user'] as String?,
+      );
+      return null;
+    }
+    if (!hasManifest) {
+      AuthBootstrapLog.logRestore(
+        path: 'no_permissions_manifest',
+        accessToken: accessToken,
+        hasManifest: false,
+      );
+      return null;
+    }
+
+    AuthBootstrapLog.logRestore(
+      path: 'token_and_manifest',
+      accessToken: accessToken,
+      hasManifest: true,
+      manifestUser: manifest['user'] as String?,
+    );
     _cached = AuthSession(
       userName: manifest['user'] as String? ?? 'user',
       fullName: manifest['full_name'] as String? ?? 'Officer',
@@ -94,6 +152,12 @@ class AuthRepository {
       isDevStub: false,
     );
     return _cached;
+  }
+
+  Future<void> _purgeDevStubPersistence() async {
+    _cached = null;
+    await _tokens.clear();
+    await _hive.savePermissions({});
   }
 
   Future<AuthSession> login({
@@ -133,22 +197,22 @@ class AuthRepository {
       throw StateError('Dev auth stub disabled');
     }
     await _tokens.saveTokens(
-      accessToken: 'dev-stub-access',
-      refreshToken: 'dev-stub-refresh',
+      accessToken: DevStubTokens.access,
+      refreshToken: DevStubTokens.refresh,
     );
     const permissions = PermissionManifest(
       roles: ['Field Staff'],
-      blocks: ['BLK-DEV-01'],
+      blocks: [DevStubTokens.block],
       districts: ['TVM'],
     );
     await _hive.savePermissions({
-      'user': 'dev@agriflow.local',
-      'full_name': 'Dev Officer',
+      'user': DevStubTokens.user,
+      'full_name': DevStubTokens.fullName,
       ...permissions.toJson(),
     });
     _cached = const AuthSession(
-      userName: 'dev@agriflow.local',
-      fullName: 'Dev Officer',
+      userName: DevStubTokens.user,
+      fullName: DevStubTokens.fullName,
       permissions: permissions,
       isDevStub: true,
     );
@@ -158,8 +222,13 @@ class AuthRepository {
   Future<String?> refreshAccessToken() async {
     final refresh = await _tokens.readRefreshToken();
     if (refresh == null || refresh.isEmpty) return null;
-    if (Env.devAuthStubEnabled && refresh == 'dev-stub-refresh') {
-      return 'dev-stub-access';
+    if (DevStubTokens.isStubRefreshToken(refresh)) {
+      if (Env.devAuthStubEnabled) {
+        return DevStubTokens.access;
+      }
+      AuthBootstrapLog.logPurge('refresh blocked: stub token with DEV_AUTH_STUB=false');
+      await _purgeDevStubPersistence();
+      return null;
     }
     try {
       final envelope = await _api.postMethod<Map<String, dynamic>>(

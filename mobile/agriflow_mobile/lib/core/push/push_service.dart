@@ -1,22 +1,25 @@
 import 'package:agriflow_mobile/app/router/deep_link.dart';
+import 'package:agriflow_mobile/core/config/api_config.dart';
 import 'package:agriflow_mobile/core/config/env.dart';
 import 'package:agriflow_mobile/core/network/api_client.dart';
 import 'package:agriflow_mobile/core/observability/pilot_telemetry_service.dart';
 import 'package:agriflow_mobile/core/observability/telemetry.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:go_router/go_router.dart';
 
 /// Push foundation — token registration + local notification deep links.
 class PushService {
   PushService({
     required ApiClient api,
+    required ApiConfig config,
     required PilotTelemetryService telemetry,
     FlutterLocalNotificationsPlugin? notifications,
   })  : _api = api,
+        _config = config,
         _telemetry = telemetry,
         _notifications = notifications ?? FlutterLocalNotificationsPlugin();
 
   final ApiClient _api;
+  final ApiConfig _config;
   final PilotTelemetryService _telemetry;
   final FlutterLocalNotificationsPlugin _notifications;
   static const _channelId = 'agriflow_ops';
@@ -45,7 +48,7 @@ class PushService {
           ? fcmToken
           : (Env.pushDebugStub ? 'debug-push-$deviceId' : deviceId);
       await _api.postMethod<void>(
-        methodUrl: '/api/method/agriflow.api.v1.push.register_token',
+        methodUrl: _config.methodUrl('agriflow.api.v1.push.register_token'),
         data: {
           'device_id': deviceId,
           'push_token': token,
@@ -73,7 +76,7 @@ class PushService {
       DateTime.now().millisecondsSinceEpoch ~/ 1000,
       title,
       null,
-      NotificationDetails(android: android),
+      const NotificationDetails(android: android),
       payload: deepLink,
     );
   }

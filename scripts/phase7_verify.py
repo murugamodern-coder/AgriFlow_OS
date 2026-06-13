@@ -36,7 +36,7 @@ def execute() -> dict:
     farmers = frappe.get_all(
         "Farmer",
         filters={"is_deleted": 0},
-        fields=["name", "farmer_name", "mobile_normalized", "district", "block", "village", "cluster"],
+        fields=["name", "farmer_name", "mobile_normalized", "district", "block", "village", "cluster", "state"],
         limit=5,
     )
     for f in farmers:
@@ -51,27 +51,34 @@ def execute() -> dict:
         if vc and f.cluster and vc != f.cluster:
             errors.append(f"{f.name}: cluster fetch mismatch")
 
-    # Duplicate mobile should fail
+    # Duplicate mobile in same district is allowed (warn only, no throw)
+    duplicate_mobile_ok = False
     if farmers:
         ref = farmers[0]
+        dup_name = None
         try:
             dup = frappe.get_doc(
                 {
                     "doctype": "Farmer",
-                    "farmer_name": "Duplicate Test",
+                    "farmer_name": "Duplicate Mobile Test",
                     "mobile": ref.mobile_normalized,
+                    "state": ref.state or "Tamil Nadu",
                     "district": ref.district,
                     "block": ref.block,
                     "village": ref.village,
                 }
             )
             dup.insert(ignore_permissions=True)
-            errors.append("Duplicate mobile validation did not throw")
-            dup.delete(ignore_permissions=True)
-        except frappe.ValidationError:
-            print("  duplicate mobile validation: OK")
+            dup_name = dup.name
+            duplicate_mobile_ok = True
+            print(f"  duplicate mobile in same district: OK (saved {dup_name})")
+        except frappe.ValidationError as exc:
+            errors.append(f"duplicate mobile should not throw: {exc}")
         except Exception as exc:
             errors.append(f"duplicate mobile unexpected error: {exc}")
+        finally:
+            if dup_name and frappe.db.exists("Farmer", dup_name):
+                frappe.delete_doc("Farmer", dup_name, force=True, ignore_permissions=True)
 
     if errors:
         frappe.throw("Phase 7 verification failed: " + "; ".join(errors))
@@ -86,5 +93,5 @@ def execute() -> dict:
         "land_parcel_count": parcel_count,
         "module_def": module,
         "farmers": farmers,
-        "duplicate_mobile_validation": "ok",
+        "duplicate_mobile_allowed": duplicate_mobile_ok,
     }

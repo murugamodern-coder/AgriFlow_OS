@@ -1,0 +1,80 @@
+[
+ {
+  "doctype": "Workspace",
+  "name": "Sync Engine",
+  "label": "Sync Engine",
+  "title": "Sync Engine",
+  "module": "Sync Engine",
+  "icon": "retweet",
+  "indicator_color": "blue",
+  "public": 1,
+  "is_hidden": 0,
+  "for_user": "",
+  "parent_page": "",
+  "restrict_to_domain": "",
+  "sequence_id": 30.0,
+  "app": "agriflow",
+  "content": "[{\"id\": \"agriflow_sync_hdr_shortcuts\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Your Shortcuts</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_sync_sc_0_sync_session\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sync Session\", \"col\": 3}}, {\"id\": \"agriflow_sync_sc_1_sync_mutation_log\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sync Mutation Log\", \"col\": 3}}, {\"id\": \"agriflow_sync_hdr_links\", \"type\": \"header\", \"data\": {\"text\": \"<span class=\\\"h4\\\"><b>Sessions & Audit</b></span>\", \"col\": 12}}, {\"id\": \"agriflow_sync_card_sessions\", \"type\": \"card\", \"data\": {\"card_name\": \"Sessions\", \"col\": 4}}, {\"id\": \"agriflow_sync_card_audit\", \"type\": \"card\", \"data\": {\"card_name\": \"Audit\", \"col\": 4}}]",
+  "shortcuts": [
+   {
+    "color": "Blue",
+    "doc_view": "List",
+    "label": "Sync Session",
+    "link_to": "Sync Session",
+    "type": "DocType"
+   },
+   {
+    "color": "Orange",
+    "doc_view": "List",
+    "label": "Sync Mutation Log",
+    "link_to": "Sync Mutation Log",
+    "type": "DocType"
+   }
+  ],
+  "links": [
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Sessions",
+    "link_count": 1,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Sync Session",
+    "link_count": 0,
+    "link_to": "Sync Session",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   },
+   {
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Audit",
+    "link_count": 1,
+    "onboard": 0,
+    "type": "Card Break"
+   },
+   {
+    "dependencies": "",
+    "hidden": 0,
+    "is_query_report": 0,
+    "label": "Sync Mutation Log",
+    "link_count": 0,
+    "link_to": "Sync Mutation Log",
+    "link_type": "DocType",
+    "onboard": 1,
+    "type": "Link"
+   }
+  ],
+  "charts": [],
+  "quick_lists": [],
+  "number_cards": [],
+  "custom_blocks": [],
+  "roles": []
+ }
+]

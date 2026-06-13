@@ -88,6 +88,7 @@ def validate_geography_chain(
 
 
 def validate_mobile_unique_per_district(mobile_normalized: str, district: str, name: str | None) -> None:
+	"""Warn when mobile is reused in the same district; save is still allowed."""
 	if not mobile_normalized or not district:
 		return
 	filters = {
@@ -99,7 +100,11 @@ def validate_mobile_unique_per_district(mobile_normalized: str, district: str, n
 		filters["name"] = ("!=", name)
 	existing = frappe.db.exists("Farmer", filters)
 	if existing:
-		frappe.throw(_("Mobile number already registered for this district"))
+		frappe.msgprint(
+			_("Mobile number already registered for this district"),
+			indicator="orange",
+			alert=True,
+		)
 
 
 def has_active_farmer_project(farmer_name: str) -> bool:

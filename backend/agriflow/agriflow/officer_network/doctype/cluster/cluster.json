@@ -95,8 +95,10 @@
    "share": 1
   }
  ],
+ "search_fields": "cluster_name,cluster_code",
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [],
+ "title_field": "cluster_name",
  "track_changes": 1
 }
