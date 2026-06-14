@@ -405,5 +405,55 @@
   },
   "share_pdf": "PDF பகிர்",
   "share_failed": "பகிர முடியவில்லை",
-  "pdf_generated": "PDF உருவாக்கப்பட்டது"
+  "pdf_generated": "PDF உருவாக்கப்பட்டது",
+  "syncInProgress": "ஒத்திசைக்கப்படுகிறது…",
+  "syncLastSuccess": "கடைசி ஒத்திசைவு: {time}",
+  "@syncLastSuccess": {
+    "placeholders": {
+      "time": { "type": "String" }
+    }
+  },
+  "@syncPending": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@syncPhaseLabel": {
+    "placeholders": {
+      "phase": { "type": "String" }
+    }
+  },
+  "@queueRepairResult": {
+    "placeholders": {
+      "reset": { "type": "int" },
+      "deduped": { "type": "int" }
+    }
+  },
+  "@offlinePendingHint": {
+    "placeholders": {
+      "count": { "type": "int" }
+    }
+  },
+  "@deviceHealthLabel": {
+    "placeholders": {
+      "score": { "type": "String" }
+    }
+  },
+  "@appVersionLabel": {
+    "placeholders": {
+      "version": { "type": "String" }
+    }
+  },
+  "@dashboardWelcome": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "@dashboardRoleLine": {
+    "placeholders": { "role": { "type": "String" } }
+  },
+  "@dashboardBlocksLine": {
+    "placeholders": { "blocks": { "type": "String" } }
+  },
+  "@advanceStage": {
+    "placeholders": { "stage": { "type": "String" } }
+  }
 }
