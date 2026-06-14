@@ -1735,6 +1735,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subsidy + farmer portion must equal total (₹{total})'**
   String projectSaleSplitError(double total);
+
+  /// No description provided for @share_pdf.
+  ///
+  /// In en, this message translates to:
+  /// **'Share PDF'**
+  String get share_pdf;
+
+  /// No description provided for @share_failed.
+  ///
+  /// In en, this message translates to:
+  /// **'Share failed'**
+  String get share_failed;
+
+  /// No description provided for @pdf_generated.
+  ///
+  /// In en, this message translates to:
+  /// **'PDF generated'**
+  String get pdf_generated;
+
+  /// No description provided for @service_visits.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Visits'**
+  String get service_visits;
+
+  /// No description provided for @upcoming_visits.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming Visits'**
+  String get upcoming_visits;
+
+  /// No description provided for @visit_completed.
+  ///
+  /// In en, this message translates to:
+  /// **'Visit Completed'**
+  String get visit_completed;
+
+  /// No description provided for @mark_complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark Complete'**
+  String get mark_complete;
+
+  /// No description provided for @farmer_satisfaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Farmer Satisfaction'**
+  String get farmer_satisfaction;
+
+  /// No description provided for @issues_found.
+  ///
+  /// In en, this message translates to:
+  /// **'Issues Found'**
+  String get issues_found;
+
+  /// No description provided for @actions_taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions Taken'**
+  String get actions_taken;
+
+  /// No description provided for @follow_up_required.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow-up Required'**
+  String get follow_up_required;
+
+  /// No description provided for @service_checklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Service Checklist'**
+  String get service_checklist;
 }
 
 class _AppLocalizationsDelegate

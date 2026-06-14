@@ -944,4 +944,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
     return 'Subsidy + farmer portion must equal total (₹$totalString)';
   }
+
+  @override
+  String get share_pdf => 'Share PDF';
+
+  @override
+  String get share_failed => 'Share failed';
+
+  @override
+  String get pdf_generated => 'PDF generated';
+
+  @override
+  String get service_visits => 'Service Visits';
+
+  @override
+  String get upcoming_visits => 'Upcoming Visits';
+
+  @override
+  String get visit_completed => 'Visit Completed';
+
+  @override
+  String get mark_complete => 'Mark Complete';
+
+  @override
+  String get farmer_satisfaction => 'Farmer Satisfaction';
+
+  @override
+  String get issues_found => 'Issues Found';
+
+  @override
+  String get actions_taken => 'Actions Taken';
+
+  @override
+  String get follow_up_required => 'Follow-up Required';
+
+  @override
+  String get service_checklist => 'Service Checklist';
 }

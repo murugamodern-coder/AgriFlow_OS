@@ -455,5 +455,14 @@
   },
   "share_pdf": "Share PDF",
   "share_failed": "Share failed",
-  "pdf_generated": "PDF generated"
+  "pdf_generated": "PDF generated",
+  "service_visits": "Service Visits",
+  "upcoming_visits": "Upcoming Visits",
+  "visit_completed": "Visit Completed",
+  "mark_complete": "Mark Complete",
+  "farmer_satisfaction": "Farmer Satisfaction",
+  "issues_found": "Issues Found",
+  "actions_taken": "Actions Taken",
+  "follow_up_required": "Follow-up Required",
+  "service_checklist": "Service Checklist"
 }

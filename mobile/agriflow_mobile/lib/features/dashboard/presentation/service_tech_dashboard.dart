@@ -2,6 +2,7 @@ import 'package:agriflow_mobile/app/router/routes.dart';
 import 'package:agriflow_mobile/core/auth/user_role_provider.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/dashboard_stats.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/widgets/dashboard_widgets.dart';
+import 'package:agriflow_mobile/features/service/presentation/service_visit_list_screen.dart';
 import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:agriflow_mobile/shared/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -46,6 +47,23 @@ class ServiceTechDashboard extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 16),
+
+        // -- Service Visits --
+        ListTile(
+          leading: Icon(Icons.build, color: Colors.green.shade700),
+          title: const Text('Service Visits / பணி பார்வைகள்'),
+          subtitle: const Text('Upcoming AMC visits'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const ServiceVisitListScreen(),
+              ),
+            );
+          },
+        ),
+        const Divider(),
+
         DashboardSectionTitle(title: l10n.navTasks),
         Row(
           children: [

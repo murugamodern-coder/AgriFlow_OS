@@ -57,11 +57,11 @@ class AppLocalizationsTa extends AppLocalizations {
   }
 
   @override
-  String get syncInProgress => 'Syncing…';
+  String get syncInProgress => 'ஒத்திசைக்கப்படுகிறது…';
 
   @override
   String syncLastSuccess(String time) {
-    return 'Last sync: $time';
+    return 'கடைசி ஒத்திசைவு: $time';
   }
 
   @override
@@ -943,4 +943,40 @@ class AppLocalizationsTa extends AppLocalizations {
 
     return 'மானியம் + விவசாயி பங்கு மொத்தத்திற்கு சமமாக இருக்க வேண்டும் (₹$totalString)';
   }
+
+  @override
+  String get share_pdf => 'PDF பகிர்';
+
+  @override
+  String get share_failed => 'பகிர முடியவில்லை';
+
+  @override
+  String get pdf_generated => 'PDF உருவாக்கப்பட்டது';
+
+  @override
+  String get service_visits => 'பணி பார்வைகள்';
+
+  @override
+  String get upcoming_visits => 'எதிர்வரும் பார்வைகள்';
+
+  @override
+  String get visit_completed => 'பார்வை முடிந்தது';
+
+  @override
+  String get mark_complete => 'முடித்தது என குறிக்க';
+
+  @override
+  String get farmer_satisfaction => 'விவசாயி திருப்தி';
+
+  @override
+  String get issues_found => 'கண்டறிந்த பிரச்சினைகள்';
+
+  @override
+  String get actions_taken => 'எடுக்கப்பட்ட நடவடிக்கைகள்';
+
+  @override
+  String get follow_up_required => 'மறுபடி பார்க்க வேண்டும்';
+
+  @override
+  String get service_checklist => 'பணி பட்டியல்';
 }
