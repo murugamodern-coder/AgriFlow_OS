@@ -415,6 +415,10 @@
   "actions_taken": "எடுக்கப்பட்ட நடவடிக்கைகள்",
   "follow_up_required": "மறுபடி பார்க்க வேண்டும்",
   "service_checklist": "பணி பட்டியல்",
+  "officers": "அதிகாரிகள்",
+  "officer_list": "அதிகாரி பட்டியல்",
+  "active_projects": "செயலில் உள்ள திட்டங்கள்",
+  "call_officer": "அதிகாரியை அழைக்க",
   "syncInProgress": "ஒத்திசைக்கப்படுகிறது…",
   "syncLastSuccess": "கடைசி ஒத்திசைவு: {time}",
   "@syncLastSuccess": {

@@ -980,4 +980,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get service_checklist => 'Service Checklist';
+
+  @override
+  String get officers => 'Officers';
+
+  @override
+  String get officer_list => 'Officer List';
+
+  @override
+  String get active_projects => 'Active Projects';
+
+  @override
+  String get call_officer => 'Call Officer';
 }

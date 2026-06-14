@@ -464,5 +464,9 @@
   "issues_found": "Issues Found",
   "actions_taken": "Actions Taken",
   "follow_up_required": "Follow-up Required",
-  "service_checklist": "Service Checklist"
+  "service_checklist": "Service Checklist",
+  "officers": "Officers",
+  "officer_list": "Officer List",
+  "active_projects": "Active Projects",
+  "call_officer": "Call Officer"
 }

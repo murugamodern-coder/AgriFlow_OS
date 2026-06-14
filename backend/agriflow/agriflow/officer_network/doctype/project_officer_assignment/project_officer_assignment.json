@@ -1,0 +1,49 @@
+{
+  "actions": [],
+  "autoname": "format:POA-{####}",
+  "creation": "2026-06-14 12:00:00.000000",
+  "doctype": "DocType",
+  "engine": "InnoDB",
+  "field_order": [
+    "farmer_project",
+    "officer",
+    "column_break_1",
+    "role_in_project",
+    "assigned_date",
+    "section_break_status",
+    "status",
+    "last_interaction",
+    "notes",
+    "module"
+  ],
+  "fields": [
+    {"fieldname": "farmer_project", "fieldtype": "Link", "label": "Farmer Project", "options": "Farmer Project", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "officer", "fieldtype": "Link", "label": "Officer", "options": "Government Officer", "reqd": 1, "in_list_view": 1},
+    {"fieldname": "column_break_1", "fieldtype": "Column Break"},
+    {"fieldname": "role_in_project", "fieldtype": "Select", "label": "Role in Project", "options": "Field Survey\nQuotation Approval\nInspection\nFinal Approval\nFollow-up\nOther", "in_list_view": 1},
+    {"fieldname": "assigned_date", "fieldtype": "Date", "label": "Assigned Date", "default": "Today"},
+    {"fieldname": "section_break_status", "fieldtype": "Section Break"},
+    {"fieldname": "status", "fieldtype": "Select", "label": "Status", "options": "Active\nCompleted\nReassigned\nOn Hold", "default": "Active", "in_list_view": 1},
+    {"fieldname": "last_interaction", "fieldtype": "Date", "label": "Last Interaction"},
+    {"fieldname": "notes", "fieldtype": "Text", "label": "Notes"},
+    {"fieldname": "module", "fieldtype": "Data", "label": "Module", "default": "Agriflow", "hidden": 1}
+  ],
+  "links": [],
+  "modified": "2026-06-14 12:00:00.000000",
+  "modified_by": "Administrator",
+  "module": "Agriflow",
+  "name": "Project Officer Assignment",
+  "naming_rule": "Expression",
+  "owner": "Administrator",
+  "permissions": [
+    {"role": "System Manager", "create": 1, "read": 1, "write": 1, "delete": 1, "report": 1, "export": 1, "import": 1, "share": 1, "print": 1},
+    {"role": "Agriflow Owner", "create": 1, "read": 1, "write": 1, "report": 1, "print": 1},
+    {"role": "Agriflow Office Manager", "create": 1, "read": 1, "write": 1, "report": 1, "print": 1},
+    {"role": "Agriflow Field Staff", "read": 1, "create": 1, "write": 1}
+  ],
+  "sort_field": "modified",
+  "sort_order": "DESC",
+  "states": [],
+  "track_changes": 1,
+  "is_submittable": 0
+}

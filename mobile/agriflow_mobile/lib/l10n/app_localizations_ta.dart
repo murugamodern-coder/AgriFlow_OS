@@ -979,4 +979,16 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get service_checklist => 'பணி பட்டியல்';
+
+  @override
+  String get officers => 'அதிகாரிகள்';
+
+  @override
+  String get officer_list => 'அதிகாரி பட்டியல்';
+
+  @override
+  String get active_projects => 'செயலில் உள்ள திட்டங்கள்';
+
+  @override
+  String get call_officer => 'அதிகாரியை அழைக்க';
 }

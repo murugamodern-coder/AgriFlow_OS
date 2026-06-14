@@ -1807,6 +1807,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Service Checklist'**
   String get service_checklist;
+
+  /// No description provided for @officers.
+  ///
+  /// In en, this message translates to:
+  /// **'Officers'**
+  String get officers;
+
+  /// No description provided for @officer_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Officer List'**
+  String get officer_list;
+
+  /// No description provided for @active_projects.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Projects'**
+  String get active_projects;
+
+  /// No description provided for @call_officer.
+  ///
+  /// In en, this message translates to:
+  /// **'Call Officer'**
+  String get call_officer;
 }
 
 class _AppLocalizationsDelegate
