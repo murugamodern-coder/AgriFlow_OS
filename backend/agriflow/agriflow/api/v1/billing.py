@@ -223,16 +223,22 @@ def get_item_search(search="", limit=20):
 
 
 @frappe.whitelist()
-def get_invoice_pdf(invoice_name=None, print_format="Standard", **kwargs):
-	"""Generate PDF for sales invoice as base64."""
+def get_invoice_pdf(**kwargs):
+	"""Generate PDF for sales invoice as base64.
+	
+	Auto-selects print format based on agriflow_sale_mode:
+	- "Cash & Carry" -> Agriflow Cash and Carry
+	- "Project Sale" -> Agriflow Project Sale
+	- (other)        -> Standard
+	"""
 	import base64
 	from frappe.utils.pdf import get_pdf
 	
 	from frappe import _
 	
 	# Handle parameter passing from different sources
-	if not invoice_name:
-		invoice_name = kwargs.get("invoice_name") or (frappe.form_dict or {}).get("invoice_name") or ""
+	invoice_name = kwargs.get("invoice_name") or (frappe.form_dict or {}).get("invoice_name") or ""
+	print_format = kwargs.get("print_format") or (frappe.form_dict or {}).get("print_format") or ""
 	
 	# Support POST with JSON body (data parameter)
 	import json as _json
@@ -240,6 +246,7 @@ def get_invoice_pdf(invoice_name=None, print_format="Standard", **kwargs):
 		try:
 			body = _json.loads(frappe.request.data)
 			invoice_name = body.get("invoice_name", "")
+			print_format = body.get("print_format", "")
 		except (ValueError, TypeError, AttributeError):
 			pass
 	
@@ -251,6 +258,16 @@ def get_invoice_pdf(invoice_name=None, print_format="Standard", **kwargs):
 	
 	if not frappe.has_permission("Sales Invoice", "read", doc=invoice_name):
 		return fail("PERMISSION_DENIED", _("Not allowed"), http_status=403)
+	
+	# Auto-select print format based on sale mode if not explicitly provided
+	if not print_format:
+		sale_mode = frappe.db.get_value("Sales Invoice", invoice_name, "agriflow_sale_mode") or ""
+		if sale_mode == "Project Sale":
+			print_format = "Agriflow Project Sale"
+		elif sale_mode == "Cash & Carry":
+			print_format = "Agriflow Cash and Carry"
+		else:
+			print_format = "Standard"
 	
 	try:
 		html = frappe.get_print(
@@ -267,6 +284,7 @@ def get_invoice_pdf(invoice_name=None, print_format="Standard", **kwargs):
 			"pdf_base64": pdf_b64,
 			"filename": f"{invoice_name}.pdf",
 			"size_bytes": len(pdf_bytes),
+			"print_format_used": print_format,
 		})
 	except Exception as exc:
 		frappe.log_error(title="get_invoice_pdf", message=str(exc))

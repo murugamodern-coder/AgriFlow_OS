@@ -263,6 +263,7 @@ fixtures = [
     {"dt": "Role", "filters": [["role_name", "like", "Agriflow%"]]},
     {"dt": "Workflow", "filters": [["name", "=", "Farmer Project Lifecycle"]]},
     {"dt": "Custom Field", "filters": [["dt", "=", "Sales Invoice"], ["fieldname", "like", "agriflow_%"]]},
+    {"dt": "Print Format", "filters": [["module", "=", "Agriflow"]]},
     {"dt": "Warehouse"},
     {"dt": "Inventory Item"},
     {"dt": "District"},
