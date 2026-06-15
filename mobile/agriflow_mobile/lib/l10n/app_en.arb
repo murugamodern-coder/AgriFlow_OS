@@ -468,5 +468,10 @@
   "officers": "Officers",
   "officer_list": "Officer List",
   "active_projects": "Active Projects",
-  "call_officer": "Call Officer"
+  "call_officer": "Call Officer",
+  "profit_dashboard": "Profit Dashboard",
+  "month_revenue": "Month Revenue",
+  "project_funnel": "Project Funnel",
+  "scheme_performance": "Scheme Performance",
+  "top_farmers": "Top Farmers"
 }

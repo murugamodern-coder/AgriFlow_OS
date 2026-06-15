@@ -4,6 +4,7 @@ import 'package:agriflow_mobile/core/providers/core_providers.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/dashboard_stats.dart';
 import 'package:agriflow_mobile/features/dashboard/presentation/widgets/dashboard_widgets.dart';
 import 'package:agriflow_mobile/features/officer/presentation/officer_list_screen.dart';
+import 'package:agriflow_mobile/features/profit/presentation/profit_dashboard_screen.dart';
 import 'package:agriflow_mobile/l10n/app_localizations.dart';
 import 'package:agriflow_mobile/shared/widgets/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -152,22 +153,39 @@ class OwnerDashboard extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.account_balance, color: Colors.indigo.shade700),
-            title: const Text('Officers / அதிகாரிகள்'),
-            subtitle: const Text('Government officer network'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const OfficerListScreen(),
-                ),
-              );
-            },
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.account_balance, color: Colors.indigo.shade700),
+              title: const Text('Officers / அதிகாரிகள்'),
+              subtitle: const Text('Government officer network'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const OfficerListScreen(),
+                  ),
+                );
+              },
+            ),
           ),
-        ),
+          const SizedBox(height: 8),
+          Card(
+            child: ListTile(
+              leading: Icon(Icons.dashboard, color: Colors.deepPurple.shade700),
+              title: const Text('Profit Dashboard / லாப டாஷ்போர்டு'),
+              subtitle: const Text('Sales + project insights'),
+              trailing: const Icon(Icons.chevron_right),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProfitDashboardScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
       ],
     );
   }
