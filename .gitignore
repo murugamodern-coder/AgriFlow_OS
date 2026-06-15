@@ -17,6 +17,12 @@ frappe-bench/
 sites/
 *.log
 
+# Production configs (never commit)
+site_config.json
+common_site_config.json
+.env.production
+.env.local
+
 # Flutter
 mobile/agriflow_mobile/.dart_tool/
 mobile/agriflow_mobile/build/
@@ -32,3 +38,16 @@ Thumbs.db
 
 # Tunnel / demo runtime
 /tmp/agriflow-tunnel/
+
+# Backups
+backups/
+*.sql.gz
+*.tar
+
+# Temp scripts
+_tmp_*.py
+
+# Build outputs
+build/
+dist/
+*.apk
